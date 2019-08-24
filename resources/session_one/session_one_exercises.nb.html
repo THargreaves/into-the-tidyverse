@@ -1768,30 +1768,38 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<div id="first-steps" class="section level1">
-<h1>First Steps</h1>
-<div id="more-plots-with-the-mpg-dataset" class="section level2">
-<h2>More plots with the mpg dataset</h2>
+<p>Remember, before you can use <code>ggplot2</code>, you need to load the package.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxuYGBgIn0= -->
+<pre class="r"><code>library(ggplot2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="first-steps" class="section level2">
+<h2>First Steps</h2>
+<div id="more-plots-with-the-mpg-dataset" class="section level4">
+<h4>More plots with the mpg dataset</h4>
 <p>(<strong>Taken form R4DS</strong>)</p>
 <ol style="list-style-type: decimal">
 <li>Run <code>ggplot(data = mpg)</code>. What do you see?</li>
 <li>How many rows are in mpg? How many columns?</li>
 <li>What does the <code>drv</code> variable describe? You may want to use <code>?mpg</code> to find out</li>
 <li>Make a scatter plot of <code>hwy</code> vs <code>cyl</code></li>
-<li>What happens if you make a scatterplot of <code>class</code> vs <code>drv</code>? Why is the plot not useful</li>
+<li>What happens if you make a scatter plot of <code>class</code> vs <code>drv</code>? Why is the plot not useful?</li>
 </ol>
 </div>
-<div id="plots-with-other-datasets" class="section level2">
-<h2>Plots with other datasets</h2>
+<div id="plots-with-other-datasets" class="section level4">
+<h4>Plots with other datasets</h4>
 <ol style="list-style-type: decimal">
 <li>Take a look at the <code>iris</code> dataset. What are its dimensions? What do its columns represent?</li>
-<li>What are the ranges of each of the numeric columns. The <code>summary</code> function might help you here</li>
-<li>Make a plot of sepal width vs sepal length</li>
-<li>Remake the previous plot but colour each point by the species of the flower</li>
+<li>What are the ranges of each of the numeric columns. The <code>summary()</code> function might help you here</li>
+<li>Make a plot of sepal width vs sepal length, and set all of the points to be green</li>
+<li>Repeat the previous plot but colour each point by the species of the flower</li>
 </ol>
 </div>
-<div id="remaking-plots" class="section level2">
-<h2>Remaking plots</h2>
+<div id="remaking-plots" class="section level4">
+<h4>Remaking plots</h4>
 <ol style="list-style-type: decimal">
 <li>Take a look at the first and last few rows of the <code>mtcars</code> dataset</li>
 <li>Access the <code>cyl</code> column of the dataset. Is this variable categorical, discrete, or continuous?</li>
@@ -1799,16 +1807,196 @@ $(document).ready(function () {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0IjoyOTguNTE2Nywic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjQ4M30= -->
-<p><img src="data:image/png;base64,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" /></p>
-<!-- rnb-plot-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+</div>
+<div id="more-aesthetics" class="section level2">
+<h2>More Aesthetics</h2>
+<div id="size-transparency-and-shape" class="section level4">
+<h4>Size, Transparency, and Shape</h4>
+<ol style="list-style-type: decimal">
+<li>Using the <code>mpg</code> dataset, make a plot of city mileage vs highway mileage where the size of each point is determined by engine size (<code>displ</code>)</li>
+<li>Plot sepal length vs sepal width using the <code>iris</code> dataset and control the transparency (<code>alpha</code>) of each point using the <code>species</code> variable.</li>
+<li>Have a play with the <code>Orange</code> data set (note the capital ‘O’). Make a scatter plot of circumference against age where the shape of each point is determined by which tree the observation belongs to</li>
+<li>Remake the standard <code>hwy</code> vs <code>displ</code> plot using the <code>mpg</code> data set but make all of the points hollow diamonds. How about solid triangles?</li>
+</ol>
+</div>
+<div id="choosing-appropriate-aesthetics" class="section level4">
+<h4>Choosing Appropriate Aesthetics</h4>
+<p>(<strong>Q1/2 form R4DS</strong>)</p>
+<ol style="list-style-type: decimal">
+<li>Which variables in <code>mpg</code> are categorical? Which are continuous/discrete? (The data set help file may be of use)</li>
+<li>Map a continuous variable to colour, size, and shape. How does this differ from when you map a categorical variable?</li>
+<li>Plot the standard <code>hwy</code> vs <code>displ</code> graph using <code>mpg</code> and map the variable <code>class</code> to the <code>size</code> aesthetic. Was this a good idea?</li>
+<li>Have a discussion with a partner or think for yourself: Which of the aesthetics you know are the clearest for displaying categorical data and which are best for continuous?</li>
+<li>In your own opinion, order the following aesthetics by how clear they are in representing a continuous variable: size, colour, transparency</li>
+</ol>
+</div>
+<div id="common-problems" class="section level4">
+<h4>Common Problems</h4>
+<ol style="list-style-type: decimal">
+<li>Using the <code>mpg</code> data set, make a plot of city milage against engine size. Map the variable <code>class</code> to the aesthetic <code>shape</code>. Is everything as you would expect?</li>
+<li>Type the following code into the console. Why do you recieve an error message?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChkYXRhID0gaXJpcykgKyIsIiAgZ2VvbV9wb2ludCh4ID0gU2VwYWwuTGVuZ3RoLCB5ID0gUGV0YWwuTGVuZ3RoKSJdfQ== -->
+<pre class="r"><code>ggplot(data = iris) +
+  geom_point(x = Sepal.Length, y = Petal.Length)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>Take a look at the <code>airquality</code> dataset. Type the following code into the console. Is the plot as you expected?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChhaXJxdWFsaXR5KSArIiwiICBnZW9tX3BvaW50KGFlcyh4ID0gV2luZCwgeSA9IFRlbXAsIGNvbCA9IE1vbnRoKSkiXX0= -->
+<pre class="r"><code>ggplot(airquality) +
+  geom_point(aes(x = Wind, y = Temp, col = Month))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>Why are the points in this plot not blue?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRhdGEgPSBtcGcpICtcbiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSBkaXNwbCwgeSA9IGh3eSwgY29sb3VyID0gJ2JsdWUnKSlcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = &#39;blue&#39;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>What happens when you map a variable to multiple aesthetics (say colour and size)? (It’s okay to answer, “nothing”, to this question but make sure you verify that first!)</li>
+</ol>
+</div>
+</div>
+<div id="facetting" class="section level2">
+<h2>Facetting</h2>
+<div id="basic-faceting" class="section level4">
+<h4>Basic Faceting</h4>
+<p>(<strong>Taken form R4DS</strong>)</p>
+<ol style="list-style-type: decimal">
+<li>What happens when you facet a continuous variable?</li>
+<li>What do the empty cells in a plot with <code>facet_grid(drv ~ cpl)</code> mean? How do they relate to this plot?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChkYXRhID0gbXBnKSArIiwiICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRydiwgeSA9IGN5bCkpIl19 -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = drv, y = cyl))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>What plots does the following code make? What does the <code>.</code> do?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChkYXRhID0gbXBnKSArIiwiICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3BsLCB5ID0gaHd5KSkgKyIsIiAgZmFjZXRfZ3JpZChkcnYgfiAuKSIsIiIsImdncGxvdChkYXRhID0gbXBnKSArIiwiICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3BsLCB5ID0gaHd5KSkgKyIsIiAgZmFjZXRfZ3JpZCguIH4gY3lsKSJdfQ== -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>Take the first faceted plot from the presentation:</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChkYXRhID0gbXBnKSArIiwiICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3BsLCB5ID0gaHd5KSkgKyIsIiAgZmFjZXRfZ3JpZCh+IGNsYXNzLCBucm93ID0gMikiXX0= -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(~ class, nrow = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>What advantages of faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger data set?</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Read <code>?facet_wrap</code>. What does <code>nrow</code> do? What does <code>ncol</code> do? What other options control the layout of the individual panels? Why doesn’t <code>facet_grid()</code> have <code>nrow</code> and <code>ncol</code> parameters?</li>
+<li>When using <code>facet_grid()</code> you should usually put the variable with more unique levels in the columns. Why?</li>
+</ol>
+</div>
+<div id="combining-facets-with-aesthetics" class="section level4">
+<h4>Combining Facets with Aesthetics</h4>
+<ol style="list-style-type: decimal">
+<li>Create a scatter plot of petal length vs petal width using the <code>iris</code> dataset and facet by species</li>
+<li>Repeat the above plot whilst also colouring the species. Don’t forget to hide the colour legend</li>
+<li>Using the <code>mpg</code> dataset, plot <code>hwy</code> vs <code>cty</code>, map <code>displ</code> to the <code>size</code> aesthetic, map <code>class</code> to point colour, and facet columns by <code>cyl</code> and rows by <code>drv</code>. This plot is ridiculous but it does demonstrate the flexibilty of <code>ggplot2</code></li>
+</ol>
+</div>
+</div>
+<div id="going-beyond" class="section level2">
+<h2>Going Beyond</h2>
+<div id="labelling" class="section level4">
+<h4>Labelling</h4>
+<ol style="list-style-type: decimal">
+<li>Run the following code. What does the extra <code>labs(...)</code> layer do?</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjpbImdncGxvdChkYXRhID0gbXBnKSArIiwiICBnZW9tX3BvaW50KGFlcyh4ID0gZGlzcGwsIHkgPSBod3ksIGNvbG91ciA9IGNsYXNzKSkgKyIsIiAgbGFicyh4ID0gXCJFbmdpbmUgRGlzcGxhY21lbnQgKGxpdHJlcylcIiwgeSA9IFwiSGlnaHdheSBNaWxhZ2UgKG1pbGVzL2dhbGxvbilcIiwiLCIgICAgICAgY29sb3VyID0gXCJDYXIgVHlwZVwiLCIsIiAgICAgICB0aXRsZSA9IFwiQSBzY2F0dGVyIHBsb3Qgb2YgZW5naW5lIGRpc3BsYWNtZW50IHZzIGhpZ2h3YXkgbWlsYWdlXCIsIiwiICAgICAgIHN1YnRpdGxlID0gXCJDb2xvdXJlZCBieSBjYXIgdHlwZVwiLCIsIiAgICAgICBjYXB0aW9uID0gXCJTb3VyY2U6IEVQQSAoaHR0cDovL2Z1ZWxlY29ub215LmdvdilcIikiXX0= -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, colour = class)) +
+  labs(x = &quot;Engine Displacment (litres)&quot;, y = &quot;Highway Milage (miles/gallon)&quot;,
+       colour = &quot;Car Type&quot;,
+       title = &quot;A scatter plot of engine displacment vs highway milage&quot;,
+       subtitle = &quot;Coloured by car type&quot;,
+       caption = &quot;Source: EPA (http://fueleconomy.gov)&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li>Use this to take the plot from the ‘Remaking plots’ section and beautify it</li>
+<li>Pick any plot of your choosing an give it appropriate axis labels, a title, and - if possible - a data source</li>
+</ol>
+</div>
+<div id="diamonds-and-overplotting" class="section level4">
+<h4>Diamonds and Overplotting</h4>
+<ol style="list-style-type: decimal">
+<li>Have a look at the <code>diamonds</code> dataset</li>
+<li>Make a scatter plot of <code>price</code> against <code>caret</code> (this may take a long time to run). Is this plot easy to read?</li>
+<li>How could you fix this problem? (perhaps you could manually set a certain aesthetic)</li>
+</ol>
+</div>
+<div id="explanatory-and-response-variables" class="section level4">
+<h4>Explanatory and Response variables</h4>
+<ol style="list-style-type: decimal">
+<li>How do you decide which variable to map to the x-axis and which to plot to the y-axis?</li>
+<li>If you are unsure, web-search for the phrase “explanatory and response variables”</li>
+</ol>
+</div>
+<div id="positional-arguments" class="section level4">
+<h4>Positional Arguments</h4>
+<p>Begin with the following code</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRhdGEgPSBtcGcpICtcbiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSBkaXNwbCwgeSA9IGh3eSwgY29sb3VyID0gZmFjdG9yKGNsYXNzKSkpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = factor(class)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol style="list-style-type: decimal">
+<li>Try removing <code>data =</code> from your <code>ggplot</code> call. Does everything still work?</li>
+<li>Try removing <code>mapping =</code> from your <code>geom_point</code> call. Does everything still work?</li>
+<li>Try removing <code>x =</code> and <code>y =</code> from your <code>geom_point</code> call. Does everything still work?</li>
+<li>Try removing <code>colour =</code> from your <code>geom_point</code> call. Does everything still work?</li>
+<li>Take the original plot and specify the aesthetics in a different order, say <code>y</code> then <code>colour</code> then <code>x</code>. Does everything still work?</li>
+</ol>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFuIEludHJvZHVjdGlvbiB0byB0aGUgVGlkeXZlcnNlIg0Kc3VidGl0bGU6ICJTZXNzaW9uIE9uZSBFeGVyY2lzZXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQojIEZpcnN0IFN0ZXBzDQoNCiMjIE1vcmUgcGxvdHMgd2l0aCB0aGUgbXBnIGRhdGFzZXQNCg0KKCoqVGFrZW4gZm9ybSBSNERTKiopDQoNCjEuIFJ1biBgZ2dwbG90KGRhdGEgPSBtcGcpYC4gV2hhdCBkbyB5b3Ugc2VlPw0KMi4gSG93IG1hbnkgcm93cyBhcmUgaW4gbXBnPyBIb3cgbWFueSBjb2x1bW5zPw0KMy4gV2hhdCBkb2VzIHRoZSBgZHJ2YCB2YXJpYWJsZSBkZXNjcmliZT8gWW91IG1heSB3YW50IHRvIHVzZSBgP21wZ2AgdG8gZmluZCBvdXQNCjQuIE1ha2UgYSBzY2F0dGVyIHBsb3Qgb2YgYGh3eWAgdnMgYGN5bGANCjUuIFdoYXQgaGFwcGVucyBpZiB5b3UgbWFrZSBhIHNjYXR0ZXJwbG90IG9mIGBjbGFzc2AgdnMgYGRydmA/IFdoeSBpcyB0aGUgcGxvdCBub3QgdXNlZnVsDQoNCiMjIFBsb3RzIHdpdGggb3RoZXIgZGF0YXNldHMNCg0KMS4gVGFrZSBhIGxvb2sgYXQgdGhlIGBpcmlzYCBkYXRhc2V0LiBXaGF0IGFyZSBpdHMgZGltZW5zaW9ucz8gV2hhdCBkbyBpdHMgY29sdW1ucyByZXByZXNlbnQ/DQoyLiBXaGF0IGFyZSB0aGUgcmFuZ2VzIG9mIGVhY2ggb2YgdGhlIG51bWVyaWMgY29sdW1ucy4gVGhlIGBzdW1tYXJ5YCBmdW5jdGlvbiBtaWdodCBoZWxwIHlvdSBoZXJlDQozLiBNYWtlIGEgcGxvdCBvZiBzZXBhbCB3aWR0aCB2cyBzZXBhbCBsZW5ndGgNCjQuIFJlbWFrZSB0aGUgcHJldmlvdXMgcGxvdCBidXQgY29sb3VyIGVhY2ggcG9pbnQgYnkgdGhlIHNwZWNpZXMgb2YgdGhlIGZsb3dlcg0KDQojIyBSZW1ha2luZyBwbG90cw0KDQoxLiBUYWtlIGEgbG9vayBhdCB0aGUgZmlyc3QgYW5kIGxhc3QgZmV3IHJvd3Mgb2YgdGhlIGBtdGNhcnNgIGRhdGFzZXQNCjIuIEFjY2VzcyB0aGUgYGN5bGAgY29sdW1uIG9mIHRoZSBkYXRhc2V0LiBJcyB0aGlzIHZhcmlhYmxlIGNhdGVnb3JpY2FsLCBkaXNjcmV0ZSwgb3IgY29udGludW91cz8NCjMuIFdoYXQgc3RlcHMgd291bGQgeW91IGdvIGFib3V0IHRvIHJlbWFrZSB0aGUgZm9sbG93aW5nIHBsb3Q/DQoNCmBgYHtyIGVjaG89RkFMU0V9DQpnZ3Bsb3QoZGF0YSA9IG10Y2FycykgKw0KICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3AsIHkgPSBocCwgY29sb3VyID0gZmFjdG9yKGN5bCkpKQ0KYGBgDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFuIEludHJvZHVjdGlvbiB0byB0aGUgVGlkeXZlcnNlIg0Kc3VidGl0bGU6ICJTZXNzaW9uIE9uZSBFeGVyY2lzZXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpSZW1lbWJlciwgYmVmb3JlIHlvdSBjYW4gdXNlIGBnZ3Bsb3QyYCwgeW91IG5lZWQgdG8gbG9hZCB0aGUgcGFja2FnZS4NCg0KYGBge3IgbWVzc2FnZT1GQUxTRX0NCmxpYnJhcnkoZ2dwbG90MikNCmBgYA0KDQoNCiMjIEZpcnN0IFN0ZXBzDQoNCiMjIyMgTW9yZSBwbG90cyB3aXRoIHRoZSBtcGcgZGF0YXNldA0KDQooKipUYWtlbiBmb3JtIFI0RFMqKikNCg0KMS4gUnVuIGBnZ3Bsb3QoZGF0YSA9IG1wZylgLiBXaGF0IGRvIHlvdSBzZWU/DQoyLiBIb3cgbWFueSByb3dzIGFyZSBpbiBtcGc/IEhvdyBtYW55IGNvbHVtbnM/DQozLiBXaGF0IGRvZXMgdGhlIGBkcnZgIHZhcmlhYmxlIGRlc2NyaWJlPyBZb3UgbWF5IHdhbnQgdG8gdXNlIGA/bXBnYCB0byBmaW5kIG91dA0KNC4gTWFrZSBhIHNjYXR0ZXIgcGxvdCBvZiBgaHd5YCB2cyBgY3lsYA0KNS4gV2hhdCBoYXBwZW5zIGlmIHlvdSBtYWtlIGEgc2NhdHRlciBwbG90IG9mIGBjbGFzc2AgdnMgYGRydmA/IFdoeSBpcyB0aGUgcGxvdCBub3QgdXNlZnVsPw0KDQojIyMjIFBsb3RzIHdpdGggb3RoZXIgZGF0YXNldHMNCg0KMS4gVGFrZSBhIGxvb2sgYXQgdGhlIGBpcmlzYCBkYXRhc2V0LiBXaGF0IGFyZSBpdHMgZGltZW5zaW9ucz8gV2hhdCBkbyBpdHMgY29sdW1ucyByZXByZXNlbnQ/DQoyLiBXaGF0IGFyZSB0aGUgcmFuZ2VzIG9mIGVhY2ggb2YgdGhlIG51bWVyaWMgY29sdW1ucy4gVGhlIGBzdW1tYXJ5KClgIGZ1bmN0aW9uIG1pZ2h0IGhlbHAgeW91IGhlcmUNCjMuIE1ha2UgYSBwbG90IG9mIHNlcGFsIHdpZHRoIHZzIHNlcGFsIGxlbmd0aCwgYW5kIHNldCBhbGwgb2YgdGhlIHBvaW50cyB0byBiZSBncmVlbg0KNC4gUmVwZWF0IHRoZSBwcmV2aW91cyBwbG90IGJ1dCBjb2xvdXIgZWFjaCBwb2ludCBieSB0aGUgc3BlY2llcyBvZiB0aGUgZmxvd2VyDQoNCiMjIyMgUmVtYWtpbmcgcGxvdHMNCg0KMS4gVGFrZSBhIGxvb2sgYXQgdGhlIGZpcnN0IGFuZCBsYXN0IGZldyByb3dzIG9mIHRoZSBgbXRjYXJzYCBkYXRhc2V0DQoyLiBBY2Nlc3MgdGhlIGBjeWxgIGNvbHVtbiBvZiB0aGUgZGF0YXNldC4gSXMgdGhpcyB2YXJpYWJsZSBjYXRlZ29yaWNhbCwgZGlzY3JldGUsIG9yIGNvbnRpbnVvdXM/DQozLiBXaGF0IHN0ZXBzIHdvdWxkIHlvdSBnbyBhYm91dCB0byByZW1ha2UgdGhlIGZvbGxvd2luZyBwbG90Pw0KDQpgYGB7ciBlY2hvPUZBTFNFfQ0KZ2dwbG90KGRhdGEgPSBtdGNhcnMpICsNCiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSBkaXNwLCB5ID0gaHAsIGNvbG91ciA9IGZhY3RvcihjeWwpKSkNCmBgYA0KDQojIyBNb3JlIEFlc3RoZXRpY3MgDQoNCiMjIyMgU2l6ZSwgVHJhbnNwYXJlbmN5LCBhbmQgU2hhcGUNCg0KMS4gVXNpbmcgdGhlIGBtcGdgIGRhdGFzZXQsIG1ha2UgYSBwbG90IG9mIGNpdHkgbWlsZWFnZSB2cyBoaWdod2F5IG1pbGVhZ2Ugd2hlcmUgdGhlIHNpemUgb2YgZWFjaCBwb2ludCBpcyBkZXRlcm1pbmVkIGJ5IGVuZ2luZSBzaXplIChgZGlzcGxgKQ0KMi4gUGxvdCBzZXBhbCBsZW5ndGggdnMgc2VwYWwgd2lkdGggdXNpbmcgdGhlIGBpcmlzYCBkYXRhc2V0IGFuZCBjb250cm9sIHRoZSB0cmFuc3BhcmVuY3kgKGBhbHBoYWApIG9mIGVhY2ggcG9pbnQgdXNpbmcgdGhlIGBzcGVjaWVzYCB2YXJpYWJsZS4NCjMuIEhhdmUgYSBwbGF5IHdpdGggdGhlIGBPcmFuZ2VgIGRhdGEgc2V0IChub3RlIHRoZSBjYXBpdGFsICdPJykuIE1ha2UgYSBzY2F0dGVyIHBsb3Qgb2YgY2lyY3VtZmVyZW5jZSBhZ2FpbnN0IGFnZSB3aGVyZSB0aGUgc2hhcGUgb2YgZWFjaCBwb2ludCBpcyBkZXRlcm1pbmVkIGJ5IHdoaWNoIHRyZWUgdGhlIG9ic2VydmF0aW9uIGJlbG9uZ3MgdG8NCjQuIFJlbWFrZSB0aGUgc3RhbmRhcmQgYGh3eWAgdnMgYGRpc3BsYCBwbG90IHVzaW5nIHRoZSBgbXBnYCBkYXRhIHNldCBidXQgbWFrZSBhbGwgb2YgdGhlIHBvaW50cyBob2xsb3cgZGlhbW9uZHMuIEhvdyBhYm91dCBzb2xpZCB0cmlhbmdsZXM/DQoNCiMjIyMgQ2hvb3NpbmcgQXBwcm9wcmlhdGUgQWVzdGhldGljcw0KDQooKipRMS8yIGZvcm0gUjREUyoqKQ0KDQoxLiBXaGljaCB2YXJpYWJsZXMgaW4gYG1wZ2AgYXJlIGNhdGVnb3JpY2FsPyBXaGljaCBhcmUgY29udGludW91cy9kaXNjcmV0ZT8gKFRoZSBkYXRhIHNldCBoZWxwIGZpbGUgbWF5IGJlIG9mIHVzZSkNCjIuIE1hcCBhIGNvbnRpbnVvdXMgdmFyaWFibGUgdG8gY29sb3VyLCBzaXplLCBhbmQgc2hhcGUuIEhvdyBkb2VzIHRoaXMgZGlmZmVyIGZyb20gd2hlbiB5b3UgbWFwIGEgY2F0ZWdvcmljYWwgdmFyaWFibGU/DQozLiBQbG90IHRoZSBzdGFuZGFyZCBgaHd5YCB2cyBgZGlzcGxgIGdyYXBoIHVzaW5nIGBtcGdgIGFuZCBtYXAgdGhlIHZhcmlhYmxlIGBjbGFzc2AgdG8gdGhlIGBzaXplYCBhZXN0aGV0aWMuIFdhcyB0aGlzIGEgZ29vZCBpZGVhPw0KNC4gSGF2ZSBhIGRpc2N1c3Npb24gd2l0aCBhIHBhcnRuZXIgb3IgdGhpbmsgZm9yIHlvdXJzZWxmOiBXaGljaCBvZiB0aGUgYWVzdGhldGljcyB5b3Uga25vdyBhcmUgdGhlIGNsZWFyZXN0IGZvciBkaXNwbGF5aW5nIGNhdGVnb3JpY2FsIGRhdGEgYW5kIHdoaWNoIGFyZSBiZXN0IGZvciBjb250aW51b3VzPyANCjUuIEluIHlvdXIgb3duIG9waW5pb24sIG9yZGVyIHRoZSBmb2xsb3dpbmcgYWVzdGhldGljcyBieSBob3cgY2xlYXIgdGhleSBhcmUgaW4gcmVwcmVzZW50aW5nIGEgY29udGludW91cyB2YXJpYWJsZTogc2l6ZSwgY29sb3VyLCB0cmFuc3BhcmVuY3kNCg0KIyMjIyBDb21tb24gUHJvYmxlbXMNCg0KMS4gVXNpbmcgdGhlIGBtcGdgIGRhdGEgc2V0LCBtYWtlIGEgcGxvdCBvZiBjaXR5IG1pbGFnZSBhZ2FpbnN0IGVuZ2luZSBzaXplLiBNYXAgdGhlIHZhcmlhYmxlIGBjbGFzc2AgdG8gdGhlIGFlc3RoZXRpYyBgc2hhcGVgLiBJcyBldmVyeXRoaW5nIGFzIHlvdSB3b3VsZCBleHBlY3Q/DQoyLiBUeXBlIHRoZSBmb2xsb3dpbmcgY29kZSBpbnRvIHRoZSBjb25zb2xlLiBXaHkgZG8geW91IHJlY2lldmUgYW4gZXJyb3IgbWVzc2FnZT8NCg0KYGBge3IgZXZhbCA9IEZBTFNFfQ0KZ2dwbG90KGRhdGEgPSBpcmlzKSArDQogIGdlb21fcG9pbnQoeCA9IFNlcGFsLkxlbmd0aCwgeSA9IFBldGFsLkxlbmd0aCkNCmBgYA0KDQozLiBUYWtlIGEgbG9vayBhdCB0aGUgYGFpcnF1YWxpdHlgIGRhdGFzZXQuIFR5cGUgdGhlIGZvbGxvd2luZyBjb2RlIGludG8gdGhlIGNvbnNvbGUuIElzIHRoZSBwbG90IGFzIHlvdSBleHBlY3RlZD8NCg0KYGBge3IgZXZhbCA9IEZBTFNFfQ0KZ2dwbG90KGFpcnF1YWxpdHkpICsNCiAgZ2VvbV9wb2ludChhZXMoeCA9IFdpbmQsIHkgPSBUZW1wLCBjb2wgPSBNb250aCkpDQpgYGANCg0KNC4gV2h5IGFyZSB0aGUgcG9pbnRzIGluIHRoaXMgcGxvdCBub3QgYmx1ZT8NCg0KYGBge3IgbWVzc2FnZSA9IEZBTFNFfQ0KZ2dwbG90KGRhdGEgPSBtcGcpICsNCiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSBkaXNwbCwgeSA9IGh3eSwgY29sb3VyID0gJ2JsdWUnKSkNCmBgYA0KDQo1LiBXaGF0IGhhcHBlbnMgd2hlbiB5b3UgbWFwIGEgdmFyaWFibGUgdG8gbXVsdGlwbGUgYWVzdGhldGljcyAoc2F5IGNvbG91ciBhbmQgc2l6ZSk/IChJdCdzIG9rYXkgdG8gYW5zd2VyLCAibm90aGluZyIsIHRvIHRoaXMgcXVlc3Rpb24gYnV0IG1ha2Ugc3VyZSB5b3UgdmVyaWZ5IHRoYXQgZmlyc3QhKQ0KDQojIyBGYWNldHRpbmcNCg0KIyMjIyBCYXNpYyBGYWNldGluZw0KDQooKipUYWtlbiBmb3JtIFI0RFMqKikNCg0KMS4gV2hhdCBoYXBwZW5zIHdoZW4geW91IGZhY2V0IGEgY29udGludW91cyB2YXJpYWJsZT8NCjIuIFdoYXQgZG8gdGhlIGVtcHR5IGNlbGxzIGluIGEgcGxvdCB3aXRoIGBmYWNldF9ncmlkKGRydiB+IGNwbClgIG1lYW4/IEhvdyBkbyB0aGV5IHJlbGF0ZSB0byB0aGlzIHBsb3Q/DQoNCmBgYHtyIGV2YWwgPSBGQUxTRX0NCmdncGxvdChkYXRhID0gbXBnKSArDQogIGdlb21fcG9pbnQobWFwcGluZyA9IGFlcyh4ID0gZHJ2LCB5ID0gY3lsKSkNCmBgYA0KDQozLiBXaGF0IHBsb3RzIGRvZXMgdGhlIGZvbGxvd2luZyBjb2RlIG1ha2U/IFdoYXQgZG9lcyB0aGUgYC5gIGRvPw0KDQpgYGB7ciBldmFsID0gRkFMU0V9DQpnZ3Bsb3QoZGF0YSA9IG1wZykgKw0KICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3BsLCB5ID0gaHd5KSkgKw0KICBmYWNldF9ncmlkKGRydiB+IC4pDQoNCmdncGxvdChkYXRhID0gbXBnKSArDQogIGdlb21fcG9pbnQobWFwcGluZyA9IGFlcyh4ID0gZGlzcGwsIHkgPSBod3kpKSArDQogIGZhY2V0X2dyaWQoLiB+IGN5bCkNCmBgYA0KDQo0LiBUYWtlIHRoZSBmaXJzdCBmYWNldGVkIHBsb3QgZnJvbSB0aGUgcHJlc2VudGF0aW9uOg0KDQpgYGB7ciBldmFsID0gRkFMU0V9DQpnZ3Bsb3QoZGF0YSA9IG1wZykgKw0KICBnZW9tX3BvaW50KG1hcHBpbmcgPSBhZXMoeCA9IGRpc3BsLCB5ID0gaHd5KSkgKw0KICBmYWNldF9ncmlkKH4gY2xhc3MsIG5yb3cgPSAyKQ0KYGBgDQoNCldoYXQgYWR2YW50YWdlcyBvZiBmYWNldGluZyBpbnN0ZWFkIG9mIHRoZSBjb2xvdXIgYWVzdGhldGljPyBXaGF0IGFyZSB0aGUgZGlzYWR2YW50YWdlcz8gSG93IG1pZ2h0IHRoZSBiYWxhbmNlIGNoYW5nZSBpZiB5b3UgaGFkIGEgbGFyZ2VyIGRhdGEgc2V0Pw0KDQo1LiBSZWFkIGA/ZmFjZXRfd3JhcGAuIFdoYXQgZG9lcyBgbnJvd2AgZG8/IFdoYXQgZG9lcyBgbmNvbGAgZG8/IFdoYXQgb3RoZXIgb3B0aW9ucyBjb250cm9sIHRoZSBsYXlvdXQgb2YgdGhlIGluZGl2aWR1YWwgcGFuZWxzPyBXaHkgZG9lc24ndCBgZmFjZXRfZ3JpZCgpYCBoYXZlIGBucm93YCBhbmQgYG5jb2xgIHBhcmFtZXRlcnM/DQo2LiBXaGVuIHVzaW5nIGBmYWNldF9ncmlkKClgIHlvdSBzaG91bGQgdXN1YWxseSBwdXQgdGhlIHZhcmlhYmxlIHdpdGggbW9yZSB1bmlxdWUgbGV2ZWxzIGluIHRoZSBjb2x1bW5zLiBXaHk/DQoNCg0KIyMjIyBDb21iaW5pbmcgRmFjZXRzIHdpdGggQWVzdGhldGljcw0KDQoxLiBDcmVhdGUgYSBzY2F0dGVyIHBsb3Qgb2YgcGV0YWwgbGVuZ3RoIHZzIHBldGFsIHdpZHRoIHVzaW5nIHRoZSBgaXJpc2AgZGF0YXNldCBhbmQgZmFjZXQgYnkgc3BlY2llcw0KMi4gUmVwZWF0IHRoZSBhYm92ZSBwbG90IHdoaWxzdCBhbHNvIGNvbG91cmluZyB0aGUgc3BlY2llcy4gRG9uJ3QgZm9yZ2V0IHRvIGhpZGUgdGhlIGNvbG91ciBsZWdlbmQNCjMuIFVzaW5nIHRoZSBgbXBnYCBkYXRhc2V0LCBwbG90IGBod3lgIHZzIGBjdHlgLCBtYXAgYGRpc3BsYCB0byB0aGUgYHNpemVgIGFlc3RoZXRpYywgbWFwIGBjbGFzc2AgdG8gcG9pbnQgY29sb3VyLCBhbmQgZmFjZXQgY29sdW1ucyBieSBgY3lsYCBhbmQgcm93cyBieSBgZHJ2YC4gVGhpcyBwbG90IGlzIHJpZGljdWxvdXMgYnV0IGl0IGRvZXMgZGVtb25zdHJhdGUgdGhlIGZsZXhpYmlsdHkgb2YgYGdncGxvdDJgDQoNCiMjIEdvaW5nIEJleW9uZA0KDQojIyMjIExhYmVsbGluZw0KDQoxLiBSdW4gdGhlIGZvbGxvd2luZyBjb2RlLiBXaGF0IGRvZXMgdGhlIGV4dHJhIGBsYWJzKC4uLilgIGxheWVyIGRvPw0KDQpgYGB7ciBldmFsID0gRkFMU0V9DQpnZ3Bsb3QoZGF0YSA9IG1wZykgKw0KICBnZW9tX3BvaW50KGFlcyh4ID0gZGlzcGwsIHkgPSBod3ksIGNvbG91ciA9IGNsYXNzKSkgKw0KICBsYWJzKHggPSAiRW5naW5lIERpc3BsYWNtZW50IChsaXRyZXMpIiwgeSA9ICJIaWdod2F5IE1pbGFnZSAobWlsZXMvZ2FsbG9uKSIsDQogICAgICAgY29sb3VyID0gIkNhciBUeXBlIiwNCiAgICAgICB0aXRsZSA9ICJBIHNjYXR0ZXIgcGxvdCBvZiBlbmdpbmUgZGlzcGxhY21lbnQgdnMgaGlnaHdheSBtaWxhZ2UiLA0KICAgICAgIHN1YnRpdGxlID0gIkNvbG91cmVkIGJ5IGNhciB0eXBlIiwNCiAgICAgICBjYXB0aW9uID0gIlNvdXJjZTogRVBBIChodHRwOi8vZnVlbGVjb25vbXkuZ292KSIpDQpgYGANCg0KMi4gVXNlIHRoaXMgdG8gdGFrZSB0aGUgcGxvdCBmcm9tIHRoZSAnUmVtYWtpbmcgcGxvdHMnIHNlY3Rpb24gYW5kIGJlYXV0aWZ5IGl0DQozLiBQaWNrIGFueSBwbG90IG9mIHlvdXIgY2hvb3NpbmcgYW4gZ2l2ZSBpdCBhcHByb3ByaWF0ZSBheGlzIGxhYmVscywgYSB0aXRsZSwgYW5kIC0gaWYgcG9zc2libGUgLSBhIGRhdGEgc291cmNlDQoNCiMjIyMgRGlhbW9uZHMgYW5kIE92ZXJwbG90dGluZw0KDQoxLiBIYXZlIGEgbG9vayBhdCB0aGUgYGRpYW1vbmRzYCBkYXRhc2V0DQoyLiBNYWtlIGEgc2NhdHRlciBwbG90IG9mIGBwcmljZWAgYWdhaW5zdCBgY2FyZXRgICh0aGlzIG1heSB0YWtlIGEgbG9uZyB0aW1lIHRvIHJ1bikuIElzIHRoaXMgcGxvdCBlYXN5IHRvIHJlYWQ/DQozLiBIb3cgY291bGQgeW91IGZpeCB0aGlzIHByb2JsZW0/IChwZXJoYXBzIHlvdSBjb3VsZCBtYW51YWxseSBzZXQgYSBjZXJ0YWluIGFlc3RoZXRpYykNCg0KIyMjIyBFeHBsYW5hdG9yeSBhbmQgUmVzcG9uc2UgdmFyaWFibGVzDQoNCjEuIEhvdyBkbyB5b3UgZGVjaWRlIHdoaWNoIHZhcmlhYmxlIHRvIG1hcCB0byB0aGUgeC1heGlzIGFuZCB3aGljaCB0byBwbG90IHRvIHRoZSB5LWF4aXM/DQoyLiBJZiB5b3UgYXJlIHVuc3VyZSwgd2ViLXNlYXJjaCBmb3IgdGhlIHBocmFzZSAiZXhwbGFuYXRvcnkgYW5kIHJlc3BvbnNlIHZhcmlhYmxlcyINCg0KIyMjIyBQb3NpdGlvbmFsIEFyZ3VtZW50cw0KDQpCZWdpbiB3aXRoIHRoZSBmb2xsb3dpbmcgY29kZQ0KDQpgYGB7ciBldmFsIEZBTFNFfQ0KZ2dwbG90KGRhdGEgPSBtcGcpICsNCiAgZ2VvbV9wb2ludChtYXBwaW5nID0gYWVzKHggPSBkaXNwbCwgeSA9IGh3eSwgY29sb3VyID0gZmFjdG9yKGNsYXNzKSkpDQpgYGANCg0KDQoxLiBUcnkgcmVtb3ZpbmcgYGRhdGEgPSBgIGZyb20geW91ciBgZ2dwbG90YCBjYWxsLiBEb2VzIGV2ZXJ5dGhpbmcgc3RpbGwgd29yaz8NCjIuIFRyeSByZW1vdmluZyBgbWFwcGluZyA9IGAgZnJvbSB5b3VyIGBnZW9tX3BvaW50YCBjYWxsLiBEb2VzIGV2ZXJ5dGhpbmcgc3RpbGwgd29yaz8NCjMuIFRyeSByZW1vdmluZyBgeCA9IGAgYW5kIGB5ID0gYCBmcm9tIHlvdXIgYGdlb21fcG9pbnRgIGNhbGwuIERvZXMgZXZlcnl0aGluZyBzdGlsbCB3b3JrPw0KNC4gVHJ5IHJlbW92aW5nIGBjb2xvdXIgPSBgIGZyb20geW91ciBgZ2VvbV9wb2ludGAgY2FsbC4gRG9lcyBldmVyeXRoaW5nIHN0aWxsIHdvcms/DQo1LiBUYWtlIHRoZSBvcmlnaW5hbCBwbG90IGFuZCBzcGVjaWZ5IHRoZSBhZXN0aGV0aWNzIGluIGEgZGlmZmVyZW50IG9yZGVyLCBzYXkgYHlgIHRoZW4gYGNvbG91cmAgdGhlbiBgeGAuIERvZXMgZXZlcnl0aGluZyBzdGlsbCB3b3JrPw==</div>
 
 
 
