@@ -1,0 +1,179 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session One Exercises"
+output: html_notebook
+---
+
+Remember, before you can use `ggplot2`, you need to load the package.
+
+```{r message=FALSE}
+library(ggplot2)
+```
+
+
+## First Steps
+
+#### More plots with the mpg dataset
+
+(**Taken form R4DS**)
+
+1. Run `ggplot(data = mpg)`. What do you see?
+2. How many rows are in mpg? How many columns?
+3. What does the `drv` variable describe? You may want to use `?mpg` to find out
+4. Make a scatter plot of `hwy` vs `cyl`
+5. What happens if you make a scatter plot of `class` vs `drv`? Why is the plot not useful?
+
+#### Plots with other datasets
+
+1. Take a look at the `iris` dataset. What are its dimensions? What do its columns represent?
+2. What are the ranges of each of the numeric columns. The `summary()` function might help you here
+3. Make a plot of sepal width vs sepal length, and set all of the points to be green
+4. Repeat the previous plot but colour each point by the species of the flower
+
+#### Remaking plots
+
+1. Take a look at the first and last few rows of the `mtcars` dataset
+2. Access the `cyl` column of the dataset. Is this variable categorical, discrete, or continuous?
+3. What steps would you go about to remake the following plot?
+
+```{r echo=FALSE}
+ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = hp, colour = factor(cyl)))
+```
+
+## More Aesthetics 
+
+#### Size, Transparency, and Shape
+
+1. Using the `mpg` dataset, make a plot of city mileage vs highway mileage where the size of each point is determined by engine size (`displ`)
+2. Plot sepal length vs sepal width using the `iris` dataset and control the transparency (`alpha`) of each point using the `species` variable.
+3. Have a play with the `Orange` data set (note the capital 'O'). Make a scatter plot of circumference against age where the shape of each point is determined by which tree the observation belongs to
+4. Remake the standard `hwy` vs `displ` plot using the `mpg` data set but make all of the points hollow diamonds. How about solid triangles?
+
+#### Choosing Appropriate Aesthetics
+
+(**Q1/2 form R4DS**)
+
+1. Which variables in `mpg` are categorical? Which are continuous/discrete? (The data set help file may be of use)
+2. Map a continuous variable to colour, size, and shape. How does this differ from when you map a categorical variable?
+3. Plot the standard `hwy` vs `displ` graph using `mpg` and map the variable `class` to the `size` aesthetic. Was this a good idea?
+4. Have a discussion with a partner or think for yourself: Which of the aesthetics you know are the clearest for displaying categorical data and which are best for continuous? 
+5. In your own opinion, order the following aesthetics by how clear they are in representing a continuous variable: size, colour, transparency
+
+#### Common Problems
+
+1. Using the `mpg` data set, make a plot of city milage against engine size. Map the variable `class` to the aesthetic `shape`. Is everything as you would expect?
+2. Type the following code into the console. Why do you recieve an error message?
+
+```{r eval = FALSE}
+ggplot(data = iris) +
+  geom_point(x = Sepal.Length, y = Petal.Length)
+```
+
+3. Take a look at the `airquality` dataset. Type the following code into the console. Is the plot as you expected?
+
+```{r eval = FALSE}
+ggplot(airquality) +
+  geom_point(aes(x = Wind, y = Temp, col = Month))
+```
+
+4. Why are the points in this plot not blue?
+
+```{r message = FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = 'blue'))
+```
+
+5. What happens when you map a variable to multiple aesthetics (say colour and size)? (It's okay to answer, "nothing", to this question but make sure you verify that first!)
+
+## Facetting
+
+#### Basic Faceting
+
+(**Taken form R4DS**)
+
+1. What happens when you facet a continuous variable?
+2. What do the empty cells in a plot with `facet_grid(drv ~ cpl)` mean? How do they relate to this plot?
+
+```{r eval = FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = drv, y = cyl))
+```
+
+3. What plots does the following code make? What does the `.` do?
+
+```{r eval = FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
+
+4. Take the first faceted plot from the presentation:
+
+```{r eval = FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(~ class, nrow = 2)
+```
+
+What advantages of faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger data set?
+
+5. Read `?facet_wrap`. What does `nrow` do? What does `ncol` do? What other options control the layout of the individual panels? Why doesn't `facet_grid()` have `nrow` and `ncol` parameters?
+6. When using `facet_grid()` you should usually put the variable with more unique levels in the columns. Why?
+
+
+#### Combining Facets with Aesthetics
+
+1. Create a scatter plot of petal length vs petal width using the `iris` dataset and facet by species
+2. Repeat the above plot whilst also colouring the species. Don't forget to hide the colour legend
+3. Using the `mpg` dataset, plot `hwy` vs `cty`, map `displ` to the `size` aesthetic, map `class` to point colour, and facet columns by `cyl` and rows by `drv`. This plot is ridiculous but it does demonstrate the flexibilty of `ggplot2`
+
+## Going Beyond
+
+#### Labelling
+
+1. Run the following code. What does the extra `labs(...)` layer do?
+
+```{r eval = FALSE}
+ggplot(data = mpg) +
+  geom_point(aes(x = displ, y = hwy, colour = class)) +
+  labs(x = "Engine Displacment (litres)", y = "Highway Milage (miles/gallon)",
+       colour = "Car Type",
+       title = "A scatter plot of engine displacment vs highway milage",
+       subtitle = "Coloured by car type",
+       caption = "Source: EPA (http://fueleconomy.gov)")
+```
+
+2. Use this to take the plot from the 'Remaking plots' section and beautify it
+3. Pick any plot of your choosing an give it appropriate axis labels, a title, and - if possible - a data source
+
+#### Diamonds and Overplotting
+
+1. Have a look at the `diamonds` dataset
+2. Make a scatter plot of `price` against `caret` (this may take a long time to run). Is this plot easy to read?
+3. How could you fix this problem? (perhaps you could manually set a certain aesthetic)
+
+#### Explanatory and Response variables
+
+1. How do you decide which variable to map to the x-axis and which to plot to the y-axis?
+2. If you are unsure, web-search for the phrase "explanatory and response variables"
+
+#### Positional Arguments
+
+Begin with the following code
+
+```{r eval FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = factor(class)))
+```
+
+
+1. Try removing `data = ` from your `ggplot` call. Does everything still work?
+2. Try removing `mapping = ` from your `geom_point` call. Does everything still work?
+3. Try removing `x = ` and `y = ` from your `geom_point` call. Does everything still work?
+4. Try removing `colour = ` from your `geom_point` call. Does everything still work?
+5. Take the original plot and specify the aesthetics in a different order, say `y` then `colour` then `x`. Does everything still work?
