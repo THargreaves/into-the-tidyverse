@@ -1,0 +1,36 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session One Exercises"
+output: html_notebook
+---
+
+# First Steps
+
+## More plots with the mpg dataset
+
+(**Taken form R4DS**)
+
+1. Run `ggplot(data = mpg)`. What do you see?
+2. How many rows are in mpg? How many columns?
+3. What does the `drv` variable describe? You may want to use `?mpg` to find out
+4. Make a scatter plot of `hwy` vs `cyl`
+5. What happens if you make a scatterplot of `class` vs `drv`? Why is the plot not useful
+
+## Plots with other datasets
+
+1. Take a look at the `iris` dataset. What are its dimensions? What do its columns represent?
+2. What are the ranges of each of the numeric columns. The `summary` function might help you here
+3. Make a plot of sepal width vs sepal length
+4. Remake the previous plot but colour each point by the species of the flower
+
+## Remaking plots
+
+1. Take a look at the first and last few rows of the `mtcars` dataset
+2. Access the `cyl` column of the dataset. Is this variable categorical, discrete, or continuous?
+3. What steps would you go about to remake the following plot?
+
+```{r echo=FALSE}
+ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = hp, colour = factor(cyl)))
+```
+

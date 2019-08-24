@@ -10,7 +10,7 @@ height: 900
 Accessing Resources
 ====================================
 
-These slides, as well as other resources for the course can be found on the corresponding GitHub repository:
+These slides, as well as other resources for the course, can be found on the corresponding GitHub repository:
 
 https://github.com/THargreaves/introtothetidyverse
 
@@ -110,12 +110,12 @@ Why Bother Learning the Tidyverse?
 * Data skills are currently in high demand
 * In our modern economy, almost all professions process data in some way
 
-**Why use the tidyverse?**
+**Why use R/the tidyverse?**
 
 * Far more powerful and expandable than Excel or Tableau
 * Open-source and free to use (unlike SAS or SPSS)
 * A large and beginner-friendly community
-* A lot more intuitive than more conventional programming languages (Python, Julia)
+* A lot more intuitive than more conventional programming languages (Python, Julia, JavaScript, etc.)
 
 Course Agenda
 ====================================
@@ -218,6 +218,7 @@ Running R Code
 ```
 
 * Here the first line shows what I typed into the console and the second shows the output that R gave us
+* Have a go at writing your own mathematical experssions! The main operators are `+`, `-`, `*`, `/`, and `^`. Figure out what these do by trying some simple examples.
 
 The Tidyverse
 ====================================
@@ -263,6 +264,7 @@ library('tidyverse')
 ```
 
 * This must be re-run each time you open RStudio
+* Think of `install.packages(...)` as installing a new piece of software, and `libary(...)` as clicking its icon to open it.
 
 Data Visualisation - ggplot2
 ====================================
@@ -283,9 +285,9 @@ Where Are We?
 Where Are We? (cont.)
 ====================================
 
-* By beginning this course by learning how to perform data visualisation, we are taking things slightly out of order
-* The pay-off for learning data visualisation is very clear however and so we will start there and return to early topics in the future
-* This means that, until next week, we will be forced to used datasets that are included in the tidyverse
+* In beginning this course by learning how to perform data visualisation, we are taking things slightly out of order
+* The pay-off for learning data visualisation is very clear however, and so we will start there and return to earlier topics in the future
+* This means that, until next week, we will be forced to used datasets that come pre-packaged with the tidyverse
 
 What is ggplot2?
 ====================================
@@ -293,7 +295,7 @@ left: 70%
 
 * `ggplot2` is one of the many packages included in the tidyverse
 *  It allows you to easy construct stylish graphs using a coherent and consistent system
-*  A `ggplot2` graph is follows the *grammar of graphics*, in which plots are built by adding layers one at a time
+*  A `ggplot2` graph follows the *grammar of graphics*, in which plots are built by adding layers one at a time
 
 ***
 
@@ -365,8 +367,8 @@ ggplot(data = mpg) +
 
 * We first start by calling the `ggplot()` function. This creates an empty graph which we can then add layers to
 * We pass in the `mpg` data frame as the `data` argument so that `ggplot2` knows we will be using that for our plot
-* We then use the `+` symbol to add a new layer. Specifically we a point geometry using the `geom_point()` function
-* We need to tell `ggplot2` which variables in the data frame to map to the various aesthetics of the plot. In this case, we just specify the variables mapping to the x and y coordinates
+* We then use the `+` symbol to add a new layer. Specifically we a point *geometry* using the `geom_point()` function
+* We need to tell `ggplot2` which variables in the data frame to map to the various *aesthetics* of the plot. In this case, we just specify the variables mapping to the x and y coordinates
 
 A General Template
 ====================================
@@ -380,25 +382,26 @@ ggplot(data = <DATA>) +
 ```
 
 * All we have to do is fill in the blanks 
-* For example, we may want to ask how highway and city mileage are related
+* Note, that the indentation and spaces are just to help readability; R doesn't care whether or not these are include though it is advised to do so
+* For example, we may want to ask how highway (`hwy`) and city (`cty`) mileage are related
 
 
 
-Aside: Working With Dataframes
+Aside: Working With Data Frames
 ====================================
 type: sub-section
 
-Printing Dataframes
+Printing Data Frames
 ====================================
 
-* An entire dataframe can be printed to the console simply by typing it's name
+* An entire data frame can be printed to the console simply by typing it's name
 
 
 ```r
 mpg
 ```
 
-* The first few rows of a dataframe can be printed using the `head()` function
+* The first few rows of a data frame can be printed using the `head()` function
 
 
 ```r
@@ -414,17 +417,17 @@ head(mpg, n = 3)
 
 * `tail()` works the same as `head()` but gives you the bottom few rows. It also has an optional `n` parameter
 
-Dataframe Overviews
+Data Frame Overviews
 ====================================
 
-* The `str()` function displays the **str**ucture of a dataframe (column names, data types, etc.)
+* The `str()` function displays the **str**ucture of a data frame (column names, data types, etc.)
 
 
 ```r
 str(mpg)
 ```
 
-* The `summary()` function displays a statistical summary of each column of the dataframe
+* The `summary()` function displays a statistical summary of each column of the data frame
 
 
 ```r
@@ -434,7 +437,7 @@ summary(mpg)
 Accessing Columns
 ====================================
 
-* A specific column a dataframe can be accessed using either the `$` or `[[]]` accessor
+* A specific column a data frame can be accessed using either the `$` or `[[]]` accessor
 
 
 ```r
@@ -484,6 +487,7 @@ More Aesthetics
   * `alpha` - the transparency of each point
   * `shape` - the shape of the plotting character for each point
 * Depending on what type of data you are using (continuous, discrete, categorical, etc.) certain mappings will be more appropriate
+* Sometimes, a categorical variable may be stored in a dataset as a discrete/continuous variable. In this case you must explicitly tell ggplot that the variable is categorical by wrapping it in the `factor` function
 * Whenever you set an aesthetic mapping, `ggplot2` will automatically scale your variable as well as create a legend for the new aesthetic
 
 Manually Setting Aesthetics
@@ -496,7 +500,7 @@ Manually Setting Aesthetics
 
 ```r
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy), colour = "orange")
+  geom_point(mapping = aes(x = displ, y = hwy), colour = 'orange')
 ```
 
 <img src="session_one_presentation-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" />
@@ -508,7 +512,7 @@ left: 60%
 * It is important to specify a value that makes sense for the aesthetic:
   * The name of a colour should be a character string or a colour code (e.g. '#467A9F')
   * The size of a point should be a number (in mm)
-  * The shape of a point should be an integer chosen from the figure across or a single characcter to be used as the plotting character (e.g. 'P')
+  * The shape of a point should be an integer chosen from the figure across or a single character to be used as the plotting character (e.g. 'P')
   * If hollow shapes (0-14) have a border determined by `colour`; the solid shapes (15-18) are filled with `colour`; and the filled shapes (21-24) have a border of `colour` and are filled with `fill`
   
   
@@ -523,9 +527,9 @@ type: sub-section
 Introduction
 ====================================
 
-* Aesthetics offer one method of adding additonal variables to a plot
-* Another way, particulary when using categorical variabels, is to split a plot into facets
-* Facets are subplots that each show a subset of the entire dataset
+* Aesthetics offer one method of adding additional variables to a plot
+* Another way, particularly when using categorical variables, is to split a plot into facets
+* Facets are sub-plots that each show a subset of the entire dataset
 * Facets can be generated in two ways using either the `facet_wrap()` or `facet_grid` function
 
 Using facet_wrap()
@@ -535,7 +539,7 @@ Using facet_wrap()
 * The first argument of the `facet_wrap` should be a formula
 * A formula is created using the `~` symbol followed by a variable name
 * An example formula would be `~ class` which you read as "by `class`"
-* The varible using in the formula should be discrete
+* The variable using in the formula should be discrete
 * You can control the layout of the facets using the `nrow` or `ncol` parameters
 
 Using facet_wrap() (cont.)
@@ -589,7 +593,7 @@ ggplot(data = mpg) +
 Using facet_grid() (cont.)
 ====================================
 
-* If you only wish to use `facet_grid()` with one variable, you can use a `.` instead of a varible name on one side of the formula
+* If you only wish to use `facet_grid()` with one variable, you can use a `.` instead of a variable name on one side of the formula
 
 
 ```r
@@ -617,7 +621,7 @@ Online Resources
 ====================================
 
 * [Stack Overflow](https://stackoverflow.com/) is a great resource - avoid asking your own questions as almost every beginner question has already been asked
-* Simply Googling your problem followed by one of R, Tidyverse, or the specific tidyverse package you are using will return you many helpful guides
+* Simply web-searching your problem followed by one of 'R', 'Tidyverse', or the specific tidyverse package you are using will return you many helpful guides
 * The tidyverse has a [website](https://www.tidyverse.org/) with help guides, tutorials, and full documentation
 
 Help in R
