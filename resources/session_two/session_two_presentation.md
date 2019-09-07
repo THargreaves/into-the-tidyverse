@@ -454,11 +454,11 @@ sqrt(x)
 
 
 ```r
-x[1]  # R uses 1-based-indexing
+x[2]  # R uses 1-based-indexing
 ```
 
 ```
-[1] 1
+[1] 4
 ```
 
 Missing Values
@@ -701,13 +701,13 @@ ggplot(Orange) +
 
 <img src="session_two_presentation-figure/unnamed-chunk-32-1.png" title="plot of chunk unnamed-chunk-32" alt="plot of chunk unnamed-chunk-32" style="display: block; margin: auto;" />
 
-Inheritance of Aesthetics
+Global Aesthetics
 ====================================
 
 * The previous code is repetitive as we specify the mapping for aesthetics `x`, `y`, and `col` twice
 * We can instead specify these as the second argument of `ggplot()`
-* These will then be inherited by both geometries
-* You can still specify additional aesthetics in the geometry functions
+* These will be treated as global variables mappings
+* You can still specify local mappings in either of the geometry functions
 
 
 ```r
@@ -717,3 +717,11 @@ ggplot(Orange, aes(x = age, y = circumference, col = Tree)) +
 ```
 
 <img src="session_two_presentation-figure/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" style="display: block; margin: auto;" />
+
+Aesthetics for line graphs
+====================================
+
+* Both line graph geometries both come with a `linetype` aesthetic to control what type of line is used
+* This should have a categorical variable mapped to it or manually set to a positive integer value
+* Both aesthetics also has a `group()` aesthetic which allows you to separate the full data set before generating the lines (see exercises for examples of this)
+* This can be set to `-1` to use no grouping

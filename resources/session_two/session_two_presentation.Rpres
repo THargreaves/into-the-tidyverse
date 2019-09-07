@@ -333,7 +333,7 @@ sqrt(x)
 * A particular value of a vector can be accessed using the `[` accessor
 
 ```{r}
-x[1]  # R uses 1-based-indexing
+x[2]  # R uses 1-based-indexing
 ```
 
 Missing Values

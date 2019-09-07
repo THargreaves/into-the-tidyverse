@@ -1,0 +1,165 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session One Exercises"
+output: html_notebook
+---
+
+Remember, before you can use `ggplot2`, you need to load the package.
+
+```{r message=FALSE}
+library(ggplot2)
+```
+
+
+## Coding Basics
+
+#### R as a Calculator 1
+
+(**Taken form R4DS**)
+
+1. Create a sequence using the `seq()` function starting at 0 and ending at 100 assigning the output to an object called `integers`
+2. Create a new vector `squares` which contains the square of every value in `x`. Remember most mathematical functions in R act on each element individually. You might want to use the `^` operator.
+3. Create a data frame with these two vectors as columns by running `tibble(integers, squares)`. Assign the output to an object called `squares_df`
+4. Use `ggplot()` to produce either a scatter or line plot of these two variables
+
+#### R as a Calculator 2
+
+1. Create a new sequence called `x` containing 1000 numbers spaced uniformly between -6 and 6. You can do this by adding the `length.out` parameter to `seq()` and setting it to `1000` (this parameter must be specified by name)
+2. Calculate the sine of each value in `x` using `sin()` and assign the value to an object called `y`
+3. Create a dataframe as before and plot a line graph
+4. Change the line colour to any one of your choosing, set the `linetype` to `2` (dashed), and `size` to 1.5
+
+#### Specifying Parameters by Position
+
+1. Which parameters from the following code can you call without specifying their name? 
+
+```{r eval=FALSE}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, colour = factor(class)))
+```
+
+## Reading CSVs
+
+### The 'People' Dataset
+
+1. Read the `people.csv` file from this session's `data` folder. Make sure you specify that `sex` and `race` are factors (categorical variables) and that `earn` and `age` or integers.
+2. How does level of education affect salary? Make a scatter plot to find out. You should set `position = 'jitter'` in the `geom_point()` function to avoid overplotting and perhaps also set transparency to `0.5`.
+3. Facet the above plot by `sex`, colouring the points too. Make sure you hide the legend with `show.legend = FALSE`
+4. Label the plot using the `labs()` function
+5. Create a new plot showing how earnings change with age. Use `geom_smooth()` to show the general trend 
+6. Set the colour aesthetic in the above plot to represent the `race` variable. Include errors and set the thickness of each line to `2`
+
+## Inline CSVs
+
+1. Read the following in-line CSV into R (Unknown is used here to represent a missing value)
+
+```{r eval=FALSE}
+"
+Employee Database Version 3
+
+name, age, job
+John, 34, Analyst
+Ann, 44, Consultant
+Barry, 24, Unknown
+Freya, Unknown, Developer"
+```
+
+2. Read the following in-line CSV into R. The columns of this dataset are `City`, `Area`, `Population`. Make sure you don't try to read the comment line
+
+```{r eval=FALSE}
+"
+Shanghai, 6341, 24183300
+Tokyo, 627, 13515271
+Seoul, 605, 9806000
+>> Note: Mumbai was previously called Bombai
+Mumbai, 438, 12442373"
+```
+
+### The Weather Dataset 1
+
+1. Read the `camborne_map_oct_2015.csv` file from this session's `data` folder. Make sure you correctly specify how many lines to skip and the symbol for missing data (`n/a`)
+2. Use `str()`, `head()`, `summary()` and two new functions, `glimpse()` and `names()` to get used to the dataset structure. Note that I have renamed columns to make them easy to type
+3. Plot a line graph of `mean_temp` against the date
+4. Add a trend curve over the top of this using `geom_smooth()`. You can either keep or remove the error region depending on what you think looks best
+5. How is total rainfall affected by cloud coverage (`mean_cloud`)? Make a scatter plot to find out. Set `position = 'jitter'` to avoid overplotting
+6. Oktas is a confusing unit. Instead of setting `x = mean_cloud` try `x = mean_cloud / 8` to give cloud coverage as a proportion.
+
+### Datasets from the Web
+
+1. Go to the following webpage - https://gist.github.com/tiangechen/b68782efa49a16edaf07dc2cdaa855ea - which contains data on the top grossing movies between 2007 and 2011
+2. Select `download ZIP` extract the CSV file (if this is causing difficulties just use the copy in the `data` folder)
+3. Import this dataset into R
+4. Run this code to clean up the dataset (we'll learn how to make code like this next week)
+
+```{r, eval=FALSE}
+movies <- movies %>%
+  mutate(Genre = ifelse(Genre %in% c('Comdy', 'comedy'), 'Comedy', Genre)) %>%
+  mutate(Genre = ifelse(Genre %in% c('Romence', 'romance'), 'Romance', Genre)) %>%
+  mutate(`Worldwide Gross` = as.double(str_replace(`Worldwide Gross`, '\\$', '')))
+```
+
+5. Make a scatter plot of `Worldwide Gross` against `Audience score %` coloured by `Genre`. When using a column name with a space you need to surround the name with backticks (\`)
+
+## Fixed Width File
+
+### The Weather Dataset 2
+
+1. Use the `read_table()` function to import the fixed-width file for weather in Beijing 1987. Make sure you specify that the column `beaufort` is a factor
+2. Make a plot of wind speed over time. Colour the line by `beaufort`. This will look weird, don't worry!
+3. Currently each value of `beaufort` is being used as its own group for `geom_line` but we are after one single line. How do we remove grouping?
+4. **(Hard)** Instead of using `read_table()` can you try to manually import the dataset using `read_fwf()`
+
+## Line geometries
+
+### Groups
+
+1. Take a look at the built in `ChickWeight` dataset. What do the columns represent?
+2. Make a line plot of chick weight against time. Group by chick and colour by diet
+3. What happens if you forget to group by chick?
+4. The graph in (2) is very busy. Instead of using `geom_line`, use `geom_smooth` with the colour aesthetic set to `Diet`. There is no need to specify the group in this case - why? Hide the error regions with `se=FALSE`
+5. Overlay the data points coloured by diet also. Add a jitter to prevent overfitting and reduce transparency so this doesn't distract from the trend lines
+6. Label the plot
+
+### Smoothing Methods
+
+1. Create a plot of sepal length against sepal width for each observation in the `iris` dataset colouring by species
+2. Add a `geom_smooth` layer with colour mapped to Species still. Inside this call specify `method = 'lm'`. This tells `geom_smooth` to use a **l**inear **model** (straight line) for smoothing.
+3. Other methods include `loess` and `gam`. See what these look like
+4. If no method is specified or `method = 'auto'` is included, a method is chosen automatically. In this case, which method is used?
+
+## Going Beyond
+
+### Theming Graphs
+
+1. Using the `mpg` dataset create any graph of your choosing
+2. Label the graph by adding a title, caption, and axis labels
+3. Add a new layer to the graph using the function `theme_minimal()`
+4. Try using other themes. Type `theme_` and look at the various auto-complete options
+
+### ggplot Objects
+
+1. Run the following code
+
+```{r eval=FALSE}
+p <- ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, col = Species)) +
+  geom_point()
+```
+
+2. What do you think this did? What will happen if we type `p`? Give it a go
+3. Type the following code
+
+```{r eval=FALSE}
+p +
+  geom_smooth(se = FALSE, method = 'lm')
+```
+
+4. What did that do? How can you use this to re-use code?
+
+### Scripting
+
+1. In RStudio, select `File > New File > R Script`
+2. A new panel should open. Type the code required to generate any plot of the `Orange` dataset (Perhaps circumference against age coloured by tree. Add a trend curve if feeling confident)
+3. On the top bar of the script panel select `source > source`. What does this do? 
+4. Use `File > Save` to save this script somewhere. (Feel free to delete it after)
+
+
