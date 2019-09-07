@@ -5,8 +5,6 @@ date: [Session Date TBC]
 width: 1440
 height: 900
 
-
-
 Accessing Resources
 ====================================
 
@@ -160,17 +158,11 @@ Setting Up R
 * If the installation was successful, you will have a new entry in your start menu called *R x64 [Version Number]*
 * Clicking this will open a program in which you can write R code
 
-Problem:
+Limitations of Base R
 ====================================
-type: alert
 
-The standard R code editor is difficult to use, missing useful features, and frankly quite ugly
-
-Solution:
-====================================
-type: prompt
-
-Install RStudio and use it on top of R
+* Problem: The standard R code editor is difficult to use, missing useful features, and frankly quite ugly
+* Solution: Install RStudio and use it on top of R
 
 What is RStudio?
 ====================================
@@ -266,7 +258,7 @@ library('tidyverse')
 * This must be re-run each time you open RStudio
 * Think of `install.packages(...)` as installing a new piece of software, and `libary(...)` as clicking its icon to open it.
 
-Data Visualisation - ggplot2
+Data Visualisation
 ====================================
 type: section
 
