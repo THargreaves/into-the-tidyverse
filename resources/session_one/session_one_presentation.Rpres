@@ -563,6 +563,7 @@ Online Resources
 * [Stack Overflow](https://stackoverflow.com/) is a great resource - avoid asking your own questions as almost every beginner question has already been asked
 * Simply web-searching your problem followed by one of 'R', 'Tidyverse', or the specific tidyverse package you are using will return you many helpful guides
 * The tidyverse has a [website](https://www.tidyverse.org/) with help guides, tutorials, and full documentation
+* You can also check out the [cheat sheets](https://www.rstudio.com/resources/cheatsheets/) for each of the packages we're using, though these are quite in-depth
 
 Help in R
 ====================================
