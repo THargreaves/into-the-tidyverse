@@ -1,0 +1,677 @@
+An Introduction to the Tidyverse | Session Two
+====================================
+author: Tim Hargreaves
+date: [Session Date TBC]
+width: 1440
+height: 900
+css: presentation.css
+
+Recap
+====================================
+type: section
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(dpi = 70, dev.args = list(type = "cairo"))
+```
+
+Back to the Basics
+====================================
+type: section
+
+Introduction
+====================================
+
+* There are still many basic features that we have omitted learning about
+* These will be important when we start manipulating datasets
+* We therefore focus on them now
+
+R for Statistics
+====================================
+type: sub-section
+
+* Statistics is R's speciality
+* Despite this we've barely even used this functionality
+* A statistic is a function of data points
+* Examples include mean, median, maximum, etc.
+
+Measures of Location
+====================================
+
+```{r}
+x <- c(4, 10, 10, 12, 19)
+```
+
+```{r}
+mean(x)
+```
+
+```{r}
+median(x)
+```
+
+```{r}
+quantile(x)
+```
+
+```{r}
+quantile(x)[2]
+```
+
+Measures of Spread
+====================================
+
+```{r}
+x <- c(4, 10, 10, 12, 19)
+```
+
+```{r}
+# returns two values
+range(x)
+```
+
+```{r}
+# use diff() to find difference
+diff(range(x))
+```
+
+```{r}
+# returns one value
+IQR(x)
+```
+
+Measures of Spread (cont.)
+====================================
+
+```{r}
+x <- c(4, 10, 10, 12, 19)
+```
+
+```{r}
+# variance
+var(x)
+```
+
+```{r}
+# standard deviation = sqrt(variance)
+sd(x)
+```
+
+Handling Missing Values
+====================================
+
+* If a vector containing a missing value (`NA`) has a statistical transformation applied to it then the result will _always_ be `NA`
+
+```{r}
+x <- c(1, 5, 10, NA, 12)
+mean(x)
+```
+
+* This can be avoid by setting `na.rm = TRUE`
+
+```{r}
+mean(x, na.rm = TRUE)
+```
+
+Comparisons and Boolean Operators
+====================================
+type: sub-section
+
+* It is very useful to be able to compare two values and ask how they relate - Is one larger than the other? Are they the same value?
+* We can go even further by stringing these comparisons together using Boolean operators (and, or, etc.)
+
+Ordering Comparisions
+====================================
+
+```{r}
+4 < 6
+```
+
+```{r}
+3 <= 3
+```
+
+```{r}
+5 < 4
+```
+
+```{r}
+5 >= 4
+```
+
+Equality Comparisions
+====================================
+
+```{r}
+# use double ='s to check for equality
+# a single equals is already used for specifying parameters of function
+4 == 4
+```
+
+```{r}
+4 == 5
+```
+
+```{r}
+4 != 4
+```
+
+```{r}
+4 != 5
+```
+
+Comparisions on Vectors
+====================================
+
+* All comparisons in R are _vectorised_. This means that they act element-wise on vectors
+
+```{r}
+x <- c(2, 6, 10)
+y <- c(3, 5, 10)
+```
+
+```{r}
+x <= y
+```
+
+```{r}
+x == y
+```
+
+* You can transform a logical vector into a single logical value using `all()` and `any()`. See their corresponding help pages for more details
+
+Boolean Operators (and)
+====================================
+
+```{r}
+TRUE & TRUE
+```
+
+```{r}
+TRUE & FALSE
+```
+
+```{r}
+FALSE & FALSE
+```
+
+Boolean Operators (or)
+====================================
+
+```{r}
+TRUE | TRUE
+```
+
+```{r}
+TRUE | FALSE
+```
+
+```{r}
+FALSE | FALSE
+```
+
+* Note, unlike in normal usage, when programming, or is inclusive. I.e. if both inputs to `|` are `TRUE` then so is the output
+
+Boolean Operators (not)
+====================================
+
+```{r}
+!TRUE
+```
+
+```{r}
+!FALSE
+```
+
+Combining Boolean Operators
+====================================
+
+```{r}
+(4 > 3) & (2 == 1)
+```
+
+```{r}
+(7 != 5) | (4 < 2)
+```
+
+```{r}
+(!(4 < 3)) & (2 == 2)
+```
+
+* The brackets above are not actually needed due the order of operations in R
+* It is best to always include them until you have a lot of practice though as this avoids errors that are difficult to diagnose
+* See `?Syntax` for more information
+
+Boolean Operators on Vectors
+====================================
+
+* Boolean operators are also vectorised
+
+```{r}
+x <- c(1, 5, 9); y <- c(2, 5, 7); z <- c(1, 6, 8)
+
+x == y
+
+y < z
+
+(x == y) & (y < z)
+
+!(x == y)
+```
+
+Data Transformation
+====================================
+type: section
+
+Introduction
+====================================
+type: sub-section
+
+Where Are We?
+====================================
+
+* We now take a step backwards to look at data transformation using the tidyverse
+* This session is all about taking a dataset, transforming it into a form that meets our needs, and using it to answer questions
+
+![Data Analysis Map - Transform](images/data_analysis_map_transform.png)
+
+What is dplyr?
+====================================
+left: 70%
+
+* `dplyr` is the third tidyverse package that we will be looking at
+*  It has five main features, referred to as the `dplyr` _verbs_
+*  These allow you to transform a dataset by creating new variables or summaries
+*  You can also use these to reorder your observations to a dataset easier to work with
+
+***
+
+![dplyr Hex](images/dplyr_hex.png)
+
+The dplyr Verbs
+====================================
+
+* There are five key `dplyr` functions referred to as verbs. 
+* These alone allow you to handle the majority of data manipulation tasks
+* They are:
+  * `filter()` - pick observations by their values
+  * `arrange()` - reorder observations based on their values
+  * `select()` - pick variables by their names
+  * `mutate()` - create new variables as functions of existing variables
+  * `summarise()`/`summarize()` - collapse many values down to a single summary
+  
+The dplyr Verbs (cont.)
+====================================
+
+* These verbs can all be used in conjunction with `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. More on this later
+* All five main verbs plus the `group_by` verb work similarly:
+  * The first argument is a data frame
+  * The subsequent arguments describe what to do with the data frame, using the variable names (without quotes)
+  * The result is a new data frame
+
+
+```{r, echo=FALSE}
+library('tidyverse')
+```
+
+Filter Rows
+====================================
+type: sub-section
+
+Introduction
+====================================
+
+```{r}
+filter(mpg, cty > 30, cyl == 4)
+```
+
+* **Warning:** Don't confuse `==` with `=` else you'll get the error 
+
+  `Error: [...] must not be named, do you need '=='?`
+  
+Filtering with Boolean Operators
+====================================
+
+* We can use Boolean operators in filter clauses
+
+```{r}
+filter(mpg, model == 'land cruiser wagon 4wd' | displ > 6.8)
+```
+
+* Another useful operator is `%in%` which checks if a value is in a vector
+
+```{r}
+filter(band_members, name %in% c('John', 'Paul'))
+```
+
+Handling Floating-point Numbers
+====================================
+
+* Computers cannot perform arithmetic with infinite precision. This leads to peculiar results.
+
+```{r}
+sqrt(2) ^ 2 == 2
+(1 / 49) * 49 == 1
+```
+
+* When handling values that are not integers, use the `near()` function to check for equivalence.
+
+```{r}
+near(sqrt(2) ^ 2, 2)
+near((1 / 49) * 49, 1)
+```
+
+Handling Missing Values
+====================================
+
+* In many cases you may want to either remove missing values or look only at rows which contain a missing value
+* The `is.na()` function can be used to this extent
+
+```{r}
+df <- tibble(x = c(1, NA, 3), y = c(4, 5, 6))
+filter(df, is.na(x))
+filter(df, !is.na(x))
+```
+
+Handling Missing Values
+====================================
+
+* In many cases you may want to either remove missing values or look only at rows which contain a missing value
+* The `is.na()` function can be used to this extent
+
+```{r}
+df <- tibble(x = c(1, NA, 3), y = c(4, 5, 6))
+filter(df, is.na(x))
+filter(df, !is.na(x))
+```
+
+Arrange Rows
+====================================
+type: sub-section
+
+Introduction
+====================================
+
+* `arrange()` orders observations by one or more variables in **ascending** order
+* The observations are ordered by the first column, then ties are settled by the second, etc.
+
+```{r}
+arrange(mpg, class, year)
+```
+
+Descending Order
+====================================
+
+* You can wrap a variable in `desc()` to use descending order for that column
+
+```{r}
+arrange(mpg, class, desc(year))
+```
+
+* Note that there is a convention that `TRUE` is greater than `FALSE` since the underlying representation of these objects are `1` and `0` respectively
+
+Missing Values
+====================================
+
+* Missing values are always sorted at the end
+
+```{r}
+df <- tibble(x = c(1, NA, 5))
+arrange(df, x)
+arrange(df, desc(x))
+```
+
+Select Columns
+====================================
+type: sub-section
+
+Introduction
+====================================
+
+* It is not unusual to get be given a dataset with hundreds or even thousands of columns
+* In this case, you may want to narrow this down to variables you actually care about
+
+```{r echo=FALSE}
+iris <- as_tibble(iris)
+```
+
+
+```{r}
+select(iris, Petal.Length, Petal.Width, Species)
+```
+
+Dropping Columns
+====================================
+
+* You can get rid of columns by prefixing their name with a `-` symbol
+
+```{r}
+select(iris, -Species)
+```
+
+Selecting Ranges
+====================================
+
+* You can use the `:` operator to select or remove columns in a range (inclusive)
+
+```{r}
+select(iris, Sepal.Length:Petal.Length)
+```
+
+Selecting Ranges (cont.)
+====================================
+
+```{r}
+select(iris, -(Sepal.Length:Petal.Length))
+```
+
+Selection Helper Functions
+====================================
+
+* There are a number of helper functions you can use within `select()`:
+  * `starts_with('abc')`
+  * `ends_with('xyz')`
+  * `contains('ijk')`
+  * `num_range('var', 2:4)` - matches `var2`, `var3`, `var4`
+  * `everything` - matches all variables
+* See `?select_helpers`/`?select` for more information
+
+Renaming Columns
+====================================
+
+* `select()` can be used to rename columns but this can be more easily achieved using `rename()`
+
+```{r}
+rename(iris, length_of_sepal = Sepal.Length, width_of_sepal = Sepal.Width)
+```
+
+Add New Variables
+====================================
+type: sub-section
+
+Introduction
+====================================
+
+* `mutate()` lets you transform one or more variables currently in your dataset to create a new one
+* The new column is added at the end of the dataset or in the same place as before if it overwrites an existing column
+
+```{r}
+temps <- tibble(day = c('Mon', 'Tues', 'Wed'), temp_c = c(22, 24, 19))
+```
+
+```{r}
+mutate(temps, temp_f = temp_c * 1.8 + 32)
+```
+
+Functions of Multiple Variables
+====================================
+
+* You can use multiple variables to create a new column
+
+```{r}
+health <- tibble(name = c('Ann', 'Bob', 'Charlie'), 
+                 weight = c(71, 87, 65),
+                 height = c(1.68, 1.77, 1.72))
+```
+
+```{r}
+mutate(health, bmi = weight / height ^ 2)
+```
+
+Referencing New Columns
+====================================
+
+* You are also allowed to reference columns that you've just created
+
+```{r}
+sprint <- tibble(time_sec = c(1, 3, 5), dist_m = c(8, 26, 47))
+```
+
+```{r}
+mutate(sprint, 
+       avg_speed_m_sec = dist_m / time_sec,
+       avg_speed_km_hr = avg_speed_m_sec * 3.6)
+```
+
+Useful Creation Functions
+====================================
+
+* Basic arithmetic operators: `+`, `-`, `*`, `/`/ `^`
+* Aggregate functions: `x / sum(x)` (proportion), `y - mean(y)` (centring)
+* Modular arithmetic: `%/%` (integer division), `%%` (remainder)
+
+```{r}
+times <- tibble(time = c(0923, 1321, 1908))
+mutate(times,
+       hour = time %/% 100,
+       min = time %% 100)
+```
+
+* Logarithms: `log()` (natural), `log2()`, `log10()`
+
+Useful Creation Functions (cont.)
+====================================
+
+* Cummulative aggregates: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`, `cummean()`
+
+```{r}
+mutate(tibble(x = c(1, 4, 0)), sum = cumsum(x), prod = cumprod(x), 
+       min = cummin(x), max = cummax(x), mean = cummean(x))
+```
+
+* Logical Comparisons: `<`, `<=`, `>`, `>=`, `==`, `!=`
+
+```{r}
+mutate(tibble(time = c(1147, 1252)), afternoon = time >= 1200)
+```
+
+Group By/Ranking?
+====================================
+
+Summarise Values
+====================================
+type: sub-section
+
+Introduction
+====================================
+
+* `summarise()` (or US spelling `summarize()`) allows you to collapse a data frame to a single row based on an aggregation function
+
+```{r}
+profits <- tibble(day = c('Mon', 'Tues', 'Wed', 'Thurs', 'Fri'), 
+                  profit = c(323, 432, 491, NA, 402))
+```
+
+```{r}
+summarise(profits, avg_profit = mean(profit, na.rm = TRUE))
+```
+
+Group Summaries
+====================================
+
+* `summarise()` by itself is not very useful. We could have done this with `mean(profits$profit, na.rm = TRUE)`
+* The real power comes when it is combined with the `group_by()` function
+
+```{r}
+profits <- tibble(day = c('Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'),
+                  wkdy = c(TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE),
+                  profit = c(323, 432, 491, NA, 402, 631, 583))
+```
+
+```{r}
+by_wkdy = group_by(profits, wkdy)
+```
+
+```{r}
+summarise(by_wkdy, avg_profit = mean(profit, na.rm = TRUE))
+```
+
+Multiple Summaries
+====================================
+
+* You can summarise multiple variables in one go or have multiple summaries for a single variable
+
+```{r}
+by_species = group_by(iris, Species)
+```
+
+```{r}
+summarise(by_species, mean_sepal_len = mean(Sepal.Length),
+          count = n(),  # use function n() to count how many in each group
+          range_of_petal_width = diff(range(Petal.Width)))
+```
+
+
+Grouping by multiple variables
+====================================
+
+* You are not limited to grouping by only one variable
+
+```{r}
+mon_split = mutate(airquality, mon_half = ifelse(Day <= 15, 'Start', 'End'))
+```
+
+```{r}
+airquality_grpd = group_by(mon_split, Month, mon_half)
+```
+
+```{r}
+summarise(airquality_grpd, med_wind = median(Wind))
+```
+
+Aside: Piping
+====================================
+
+* `dpylr` comes with an amazing tool called the pipe - `%>%`
+* This allows you to pass the output of one function into the first argument of the next
+* Using this, the previous code can by rewritten as
+
+```{r eval=FALSE}
+airquality %>%
+  mutate(mon_half = ifelse(Day <= 15, 'Start', 'End')) %>%
+  group_by(Month, mon_half) %>%
+  summarise(med_wind = median(Wind))
+```
+
+* Essentially, you only need to mention a single data frame at the start and never need to create temporary objects
+
+Combining dpylr with ggplot
+====================================
+
+* Question: of all large diamonds of colour `G`, what is the median volmue (assume approximately ellisoidal) for each cut?
+
+```{r eval = FALSE}
+diamonds %>%
+  filter(color == 'G') %>%
+  # volume of ellipsoid: https://en.wikipedia.org/wiki/Ellipsoid#Volume
+  mutate(vol = 4/3 * pi * x * y * z) %>%
+  group_by(cut) %>%
+  summarise(med_vol = median(vol)) %>%
+  ggplot(aes(x = cut, y = med_vol)) +
+    # geom_point is not the best choice here
+    # we will learn better alternatives in session 5
+    geom_point() +
+    # set group = -1 so that line of best fit is for all points
+    geom_smooth(aes(group = -1), method = 'lm', se = FALSE)
+```
+
+* This is a very complex example so try to work through it bit by bit
