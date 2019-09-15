@@ -1,13 +1,13 @@
 ---
 title: "An Introduction to the Tidyverse"
-subtitle: "Session One Exercises"
+subtitle: "Session Two Exercises"
 output: html_notebook
 ---
 
-Remember, before you can use `ggplot2`, you need to load the package.
+Remember, before you can use the tidyverse, you need to load the package.
 
 ```{r message=FALSE}
-library(ggplot2)
+library(tidyverse)
 ```
 
 
@@ -161,5 +161,3 @@ p +
 2. A new panel should open. Type the code required to generate any plot of the `Orange` dataset (Perhaps circumference against age coloured by tree. Add a trend curve if feeling confident)
 3. On the top bar of the script panel select `source > source`. What does this do? 
 4. Use `File > Save` to save this script somewhere. (Feel free to delete it after)
-
-
