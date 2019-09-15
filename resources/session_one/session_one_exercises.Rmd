@@ -4,10 +4,10 @@ subtitle: "Session One Exercises"
 output: html_notebook
 ---
 
-Remember, before you can use `ggplot2`, you need to load the package.
+Remember, before you can use the tidyverse, you need to load the package.
 
 ```{r message=FALSE}
-library(ggplot2)
+library(tidyverse)
 ```
 
 
