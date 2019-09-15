@@ -666,12 +666,9 @@ diamonds %>%
   mutate(vol = 4/3 * pi * x * y * z) %>%
   group_by(cut) %>%
   summarise(med_vol = median(vol)) %>%
-  ggplot(aes(x = cut, y = med_vol)) +
-    # geom_point is not the best choice here
-    # we will learn better alternatives in session 5
-    geom_point() +
-    # set group = -1 so that line of best fit is for all points
-    geom_smooth(aes(group = -1), method = 'lm', se = FALSE)
+  ggplot(aes(x = cut, y = med_vol, fill = cut)) +
+    # we'll learn more about geom_col in session 5
+    geom_col()
 ```
 
 * This is a very complex example so try to work through it bit by bit
