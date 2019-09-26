@@ -1,9 +1,10 @@
 An Introduction to the Tidyverse | Session One
 ====================================
 author: Tim Hargreaves
-date: [Session Date TBC]
+date: 2019-09-26
 width: 1440
 height: 900
+css: presentation.css
 
 Accessing Resources
 ====================================
@@ -71,7 +72,7 @@ left: 70%
 This course differs from R4DS in two ways:
 
 * More focus on immediate gains rather than complete mastery of the tidyverse
-* Examples centre around the use of the A-Level weather dataset
+* Examples centre around the use of the A-Level weather dataset (once we know how to import it)
 
 ***
 
@@ -94,11 +95,11 @@ What Won't This Course Teach You?
 
 Sections of the R4DS book not covered in this course include:
 
-* Working with relational (multi-table) data sets (maybe?)
+* Working with complicated data types
 * Handling non-categorical text data
-* Iterative techniques
+* Iterative techniques (loops and maps)
 * Statistical modelling
-* Communicating results with wider audiences
+* Communicating results with wider audiencesss
 
 Why Bother Learning the Tidyverse?
 ====================================
@@ -210,7 +211,7 @@ Running R Code
 ```
 
 * Here the first line shows what I typed into the console and the second shows the output that R gave us
-* Have a go at writing your own mathematical experssions! The main operators are `+`, `-`, `*`, `/`, and `^`. Figure out what these do by trying some simple examples.
+* Have a go at writing your own mathematical expressions! The main operators are `+`, `-`, `*`, `/`, and `^`. Figure out what these do by trying some simple examples.
 
 The Tidyverse
 ====================================
@@ -522,15 +523,15 @@ Introduction
 * Aesthetics offer one method of adding additional variables to a plot
 * Another way, particularly when using categorical variables, is to split a plot into facets
 * Facets are sub-plots that each show a subset of the entire dataset
-* Facets can be generated in two ways using either the `facet_wrap()` or `facet_grid` function
+* Facets can be generated in two ways using either the `facet_wrap()` or `facet_grid()` function
 
 Using facet_wrap()
 ====================================
 
 * `facet_wrap()` is used to facet a plot by a single variable
-* The first argument of the `facet_wrap` should be a formula
+* The first argument of `facet_wrap()` should be a formula
 * A formula is created using the `~` symbol followed by a variable name
-* An example formula would be `~ class` which you read as "by `class`"
+* An example formula would be `~ class` which you read as "by class"
 * The variable using in the formula should be discrete
 * You can control the layout of the facets using the `nrow` or `ncol` parameters
 
@@ -615,6 +616,7 @@ Online Resources
 * [Stack Overflow](https://stackoverflow.com/) is a great resource - avoid asking your own questions as almost every beginner question has already been asked
 * Simply web-searching your problem followed by one of 'R', 'Tidyverse', or the specific tidyverse package you are using will return you many helpful guides
 * The tidyverse has a [website](https://www.tidyverse.org/) with help guides, tutorials, and full documentation
+* You can also check out the [cheat sheets](https://www.rstudio.com/resources/cheatsheets/) for each of the packages we're using, though these are quite in-depth
 
 Help in R
 ====================================
