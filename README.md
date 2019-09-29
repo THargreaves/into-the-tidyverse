@@ -1,16 +1,17 @@
 # An Introduction to the Tidyverse
-Slides, exercise sheets, and solutions sheets for my course, 'An Introduction to the Tidyverse'
 
-## Instructions
+## About this repository
 
-To download the slides for a certain session, navigate to
+Slides, exercise sheets, and solutions sheets for my course, 'An Introduction to the Tidyverse'.
 
-`resources > session_{number} > session_{number}_presentation.html`
+## Navigation
 
-and select download.
+This section will be updated as resources are added.
 
-To download the exercises for a certain session, repeat as above but look for 
+### Session One
 
-`session_{number}_exercises.nb.html`
+* [Presentation](https://thargreaves.github.io/introtothetidyverse/resources/session_one/session_one_presentation.html)
 
-Solutions can be found in a similar way, though these will be added at a later date (weekend perhaps?).
+* [Exercises](https://thargreaves.github.io/introtothetidyverse/resources/session_one/session_one_exercises.nb.html#/)
+
+* [Solutions](https://thargreaves.github.io/introtothetidyverse/resources/session_one/session_one_solutions.nb.html#/)
