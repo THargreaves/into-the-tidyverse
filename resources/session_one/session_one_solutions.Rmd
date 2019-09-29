@@ -1,0 +1,386 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session One Solutions"
+output: html_notebook
+---
+
+As always, we start by loading the tidyverse package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## First Steps
+
+### More plots with the mpg dataset
+
+#### Part 1
+
+```{r}
+ggplot(data = mpg)
+```
+
+We get an empty plot with no axes, grid lines or data.
+
+#### Part 2
+
+By printing the `mpg` dataset we can see that it has 234 rows and 11 columns.
+
+```{r}
+mpg
+```
+
+Alternatively, we could use the functions `nrow()` and `ncol()`.
+
+```{r}
+nrow(mpg)
+```
+
+```{r}
+ncol(mpg)
+```
+
+#### Part 3
+
+This column represents the drive-type of the car. There are 3 possibilities: f = front-wheel drive, r = rear wheel drive, 4 = 4wd.
+
+#### Part 4
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = cyl, y = hwy))
+```
+
+#### Part 5
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = drv, y = class))
+```
+
+There are several pairs of drive-type and class which relate to more than one car. Therefore the points for these cars are plotted one on top of the other so we can't see how many there are. This is called over-plotting.
+
+### Plots with other datasets
+
+#### Part 1
+
+The help file for the `iris` dataset gives all of the information we need. The dataset has 150 rows and 5 columns. The first 4 variables represent measurements of the sepal and petal of each plant and the last is the species of iris.
+
+Alternatively, we can get the dataset dimensions using `ncol()` and `nrow()` as above, or together using `dim()`.
+
+```{r}
+dim(iris)
+```
+
+#### Part 2
+
+```{r}
+summary(iris)
+```
+
+The ranges are 4.3 to 7.9, 2 to 4.4, 1.0 to 6.9, and 0.1 to 2.5 respectively. On top of this, we can see that there are equal numbers of each species in the dataset.
+
+#### Part 3
+
+```{r}
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length), 
+             col = 'darkgreen')  # I prefer dark green to the default green
+```
+
+#### Part 4
+
+```{r}
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length, col = Species))
+```
+
+### Remaking Plots
+
+#### Part 1
+
+I will select the first and last 4 rows
+
+```{r}
+head(mtcars, n = 4)
+```
+
+```{r}
+tail(mtcars, n = 4)
+```
+
+#### Part 2
+
+```{r}
+mtcars$cyl
+```
+
+This data is certainly discrete, taking only integer values. Further, from our domain knowledge we know that the number of cylinders in a car can only be a select few values and so is categorical.
+
+```{r}
+str(mtcars)
+```
+
+Note however that it is being stored as a general numeric (continuous) value in the data set and so if we were to use it for a categorical aesthetic, we would need to pass it through `factor()`
+
+#### Part 3
+
+```{r}
+ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = hp, col = factor(cyl)))
+```
+
+## More Aesthetics
+
+### Size, Transparency, and Shape
+
+#### Part 1
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = cty, y = hwy, size = displ))
+```
+
+#### Part 2
+
+```{r}
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Sepal.Length, y = Sepal.Width, alpha = Species))
+```
+
+Notice the warning here. Transparency is typically mapped to a continuous variable. Here, `Species` is categorical.
+
+#### Part 3
+
+```{r}
+ggplot(data = Orange) +
+  geom_point(mapping = aes(x = age, y = circumference, shape = Tree))
+```
+
+We get a warning here because the tree numbers are stored with an order attached to them (final circumference). This turns out to be a case where using a shape aesthetic is appropriate.
+
+#### Part 4
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = hwy, y = displ), shape = 5)
+```
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = hwy, y = displ), shape = 17)
+```
+
+### Choosing Appropriate Aesthetics
+
+#### Part 1
+
+Looking at the first few rows of `mpg` might help remind us.
+
+```{r}
+head(mpg)
+```
+
+The categorical variables are `manufacturer`, `model`, `year` (though arguably discrete if dataset contained more years), `cyl`, `trans`, `drv`, `fl`, `class`.
+
+`displ` is certainly continuous, and although `cty` and `hwy` are always integers, they are in fact continuous since you can have any mileage - the whole values are due to rounding.
+
+#### Part 2
+
+Omitted to keep solutions short
+
+#### Part 3
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+```
+
+This is not a good idea. There is no order for car classes so it makes no sense to map them to the size aesthetic.
+
+#### Part 4
+
+Colour is a good aesthetic for categorical data provided that there aren't too many levels (also be weary of colour-blindness). Shape is also a a good choice though colour is better for immediately showing patterns.
+
+Colour can also be a good aesthetic for a continuous variable if you choose a good palette. Transparency can be hard to interpret and size comes with the nuance that we may interpret either width or area as changing aesthetic - it is often unclear.
+
+#### Part 5
+
+This is only my opinion: (Best) colour, size, transparency (worst)
+
+### Common Problems
+
+#### Part 1
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = cty, shape = class))
+```
+
+The SUVs have gone! The shape palette can only handle factors with at most 6 levels. Here `class` has 7 so the last is omitted.
+
+#### Part 2
+
+We forgot to wrap the mappings in `mapping = aes(...)`.
+
+#### Part 3
+
+`Month` is stored as a continuous variable. We need to wrap it in `factor()` to get the result we are after.
+
+#### Part 4
+
+`colour = 'blue'` should be outside of `aes()` since it is a manual mapping.
+
+#### Part 5
+
+Nothing happens, and at times this can be a good decision (say, adding redudancy in case you have a colour-blind viewer).
+
+## Facetting
+
+### Basic Facetting
+
+#### Part 1
+
+R tries it's best and gives you a subplot for each unique value in the continuous variable. This can mean that some subplots only have one point on them.
+
+#### Part 2
+
+It means that no cars have that combination of drive-type and cyclinder-count.
+
+#### Part 3
+
+The `.` means to not have a facetting variable for either the row or column (depending whether it's placed before or after the `~`).
+
+#### Part 4
+
+I think R4DS gives the perfect answer to this:
+
+> Advantages of encoding class with facets instead of color include the ability to encode more distinct categories. For me, it is difficult to distinguish between the colors of "midsize" and "minivan".
+
+> Given human visual perception, the max number of colors to use when encoding unordered categorical (qualitative) data is nine, and in practice, often much less than that. Displaying observations from different categories on different scales makes it difficult to directly compare values of observations across categories. However, it can make it easier to compare the shape of the relationship between the x and y variables across categories.
+
+> Disadvantages of encoding the class variable with facets instead of the color aesthetic include the difficulty of comparing the values of observations between categories since the observations for each category are on different plots. Using the same x- and y-scales for all facets makes it easier to compare values of observations across categories, but it is still more difficult than if they had been displayed on the same plot. Since encoding class within color also places all points on the same plot, it visualizes the unconditional relationship between the x and y variables; with facets, the unconditional relationship is no longer visualized since the points are spread across multiple plots.
+
+> The benefits encoding a variable through facetting over color become more advantageous as either the number of points or the number of categories increase. In the former, as the number of points increases, there is likely to be more overlap.
+
+> It is difficult to handle overlapping points with color. Jittering will still work with color. But jittering will only work well if there are few points and the classes do not overlap much, otherwise, the colors of areas will no longer be distinct, and it will be hard to pick out the patterns of different categories visually. Transparency (alpha) does not work well with colors since the mixing of overlapping transparent colors will no longer represent the colors of the categories. Binning methods use already color to encode density, so color cannot be used to encode categories.
+
+> As noted before, as the number of categories increases, the difference between colors decreases, to the point that the color of categories will no longer be visually distinct.
+
+#### Part 5
+
+`nrow` and `ncol` fix either the number of rows or columns in the resulting grid. A useful option is `scales` which can be used to control whether each subplot should the same x and y scales.
+
+`facet_grid` doesn't have `nrow` and `ncol` parameters since the number of rows and columns in the grid are controlled directly be the number of levels in the facetting variables.
+
+#### Part 6
+
+Our computer screens are typically landscape so it makes sense to have plots that are wider than they are tall.
+
+### Combining Facets with Aesthetics
+
+#### Part 1
+
+We'll skip to part 2
+
+#### Part 2
+
+```{r}
+ggplot(data = iris) +
+  geom_point(mapping = aes(x = Petal.Length, 
+                           y = Petal.Width,
+                           col = Species),
+             show.legend = FALSE) +
+  facet_wrap(~Species)  # may want to add `scales = 'free'`
+```
+
+#### Part 3
+
+```{r}
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = hwy, y = cty, size = displ, col = class)) +
+  facet_grid(drv~cyl)
+```
+
+## Going Beyond
+
+### Labelling
+
+#### Part 1
+
+It allows you to add/change the plot title, subtitle, caption, legend labels and axis labels.
+
+#### Part 2
+
+```{r}
+ggplot(data = mtcars) +
+  geom_point(mapping = aes(x = disp, y = hp, col = factor(cyl))) +
+  labs(x = 'Engine Size', y = 'Gross Horsepower',
+       col = 'Number of Cylinders',
+       title = 'A plot of horsepower against engine size',
+       caption = 'Source: Motor Trend magazine (1974)')
+```
+
+#### Part 3
+
+This one is up to you
+
+### Diamonds and Overplotting
+
+#### Part 1
+
+Here are the first few rows.
+
+```{r}
+head(diamonds)
+```
+
+#### Part 2
+
+```{r}
+ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price))
+```
+
+This plot is very difficult to read because there is significant overplotting.
+
+#### Part 3
+
+Reducing transparency of all points might help so we can see which areas of the plot have a higher density.
+
+```{r}
+ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price), alpha = 0.1)
+```
+
+### Explanatory and Response Variables
+
+#### Part 1
+
+Typically you choose the variable on the y-axis to be the one you suspect is influenced by the value of the variable on the x-axis.
+
+#### Part 2
+
+No harm in having a search even if you are familiar.
+
+### Positional Arguments
+
+#### Part 1
+
+Yup.
+
+#### Part 2
+
+Sure does.
+
+#### Part 3
+
+Aye aye.
+
+#### Part 4
+
+Ah, no.
+
+#### Part 5
+
+Indeed.
