@@ -10,7 +10,6 @@ Remember, before you can use the tidyverse, you need to load the package.
 library(tidyverse)
 ```
 
-
 ## Coding Basics
 
 #### R as a Calculator 1
@@ -20,7 +19,7 @@ library(tidyverse)
 1. Create a sequence using the `seq()` function starting at 0 and ending at 100 assigning the output to an object called `integers`
 2. Create a new vector `squares` which contains the square of every value in `x`. Remember most mathematical functions in R act on each element individually. You might want to use the `^` operator.
 3. Create a data frame with these two vectors as columns by running `tibble(integers, squares)`. Assign the output to an object called `squares_df`
-4. Use `ggplot()` to produce either a scatter or line plot of these two variables
+4. Use `ggplot()` to produce either a scatter or line plot of these two variables (or both at the same time if you're feeling brave!)
 
 #### R as a Calculator 2
 
@@ -42,14 +41,14 @@ ggplot(data = mpg) +
 
 ### The 'People' Dataset
 
-1. Read the `people.csv` file from this session's `data` folder. Make sure you specify that `sex` and `race` are factors (categorical variables) and that `earn` and `age` or integers.
-2. How does level of education affect salary? Make a scatter plot to find out. You should set `position = 'jitter'` in the `geom_point()` function to avoid overplotting and perhaps also set transparency to `0.5`.
+1. Read the `people.csv` file from this session's `data` folder. Make sure you specify that `sex` and `race` are factors (categorical variables) and that `earn` and `age` are integers.
+2. How does level of education affect salary? Make a scatter plot to find out. You should set `position = 'jitter'` in the `geom_point()` function to avoid over-plotting and perhaps also set transparency to `0.5`.
 3. Facet the above plot by `sex`, colouring the points too. Make sure you hide the legend with `show.legend = FALSE`
-4. Label the plot using the `labs()` function
+4. Label the plot using the `labs()` function (see end of exercise sheet one)
 5. Create a new plot showing how earnings change with age. Use `geom_smooth()` to show the general trend 
 6. Set the colour aesthetic in the above plot to represent the `race` variable. Include errors and set the thickness of each line to `2`
 
-## Inline CSVs
+## In-line CSVs
 
 1. Read the following in-line CSV into R (Unknown is used here to represent a missing value)
 
@@ -81,7 +80,7 @@ Mumbai, 438, 12442373"
 2. Use `str()`, `head()`, `summary()` and two new functions, `glimpse()` and `names()` to get used to the dataset structure. Note that I have renamed columns to make them easy to type
 3. Plot a line graph of `mean_temp` against the date
 4. Add a trend curve over the top of this using `geom_smooth()`. You can either keep or remove the error region depending on what you think looks best
-5. How is total rainfall affected by cloud coverage (`mean_cloud`)? Make a scatter plot to find out. Set `position = 'jitter'` to avoid overplotting
+5. How is total rainfall affected by cloud coverage (`mean_cloud`)? Make a scatter plot to find out. Set `position = 'jitter'` to avoid over-plotting
 6. Oktas is a confusing unit. Instead of setting `x = mean_cloud` try `x = mean_cloud / 8` to give cloud coverage as a proportion.
 
 ### Datasets from the Web
@@ -98,9 +97,9 @@ movies <- movies %>%
   mutate(`Worldwide Gross` = as.double(str_replace(`Worldwide Gross`, '\\$', '')))
 ```
 
-5. Make a scatter plot of `Worldwide Gross` against `Audience score %` coloured by `Genre`. When using a column name with a space you need to surround the name with backticks (\`)
+5. Make a scatter plot of `Worldwide Gross` against `Audience score %` coloured by `Genre`. When using a column name with a space you need to surround the name with back-ticks (\`)
 
-## Fixed Width File
+## Fixed Width Files
 
 ### The Weather Dataset 2
 
@@ -117,7 +116,7 @@ movies <- movies %>%
 2. Make a line plot of chick weight against time. Group by chick and colour by diet
 3. What happens if you forget to group by chick?
 4. The graph in (2) is very busy. Instead of using `geom_line`, use `geom_smooth` with the colour aesthetic set to `Diet`. There is no need to specify the group in this case - why? Hide the error regions with `se=FALSE`
-5. Overlay the data points coloured by diet also. Add a jitter to prevent overfitting and reduce transparency so this doesn't distract from the trend lines
+5. Overlay the data points coloured by diet also. Add a jitter to prevent over-fitting and reduce transparency so this doesn't distract from the trend lines
 6. Label the plot
 
 ### Smoothing Methods
