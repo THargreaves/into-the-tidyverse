@@ -17,20 +17,20 @@ library(tidyverse)
 (**Taken form R4DS**)
 
 1. Create a sequence using the `seq()` function starting at 0 and ending at 100 assigning the output to an object called `integers`
-2. Create a new vector `squares` which contains the square of every value in `x`. Remember most mathematical functions in R act on each element individually. You might want to use the `^` operator.
+2. Create a new vector `squares` which contains the square of every value in `integers`. Remember most mathematical functions in R act on each element individually. You might want to use the `^` operator.
 3. Create a data frame with these two vectors as columns by running `tibble(integers, squares)`. Assign the output to an object called `squares_df`
 4. Use `ggplot()` to produce either a scatter or line plot of these two variables (or both at the same time if you're feeling brave!)
 
 #### R as a Calculator 2
 
-1. Create a new sequence called `x` containing 1000 numbers spaced uniformly between -6 and 6. You can do this by adding the `length.out` parameter to `seq()` and setting it to `1000` (this parameter must be specified by name)
+1. Create a new sequence called `x` containing 1000 numbers spaced uniformly between -6 and 6. You can do this by adding the `length.out` parameter to `seq()` and setting it to `1000` (this parameter must be specified by name, inside of the brackets)
 2. Calculate the sine of each value in `x` using `sin()` and assign the value to an object called `y`
 3. Create a dataframe as before and plot a line graph
 4. Change the line colour to any one of your choosing, set the `linetype` to `2` (dashed), and `size` to 1.5
 
 #### Specifying Parameters by Position
 
-1. Which parameters from the following code can you call without specifying their name? 
+1. Which parameters from the following code can you use without specifying their name? 
 
 ```{r eval=FALSE}
 ggplot(data = mpg) +
