@@ -1,16 +1,61 @@
 An Introduction to the Tidyverse | Session Two
 ====================================
 author: Tim Hargreaves
-date: [Session Date TBC]
+date: 2019-10-03
 width: 1440
 height: 900
 css: presentation.css
+
+
 
 Recap
 ====================================
 type: section
 
+Basic Scatter Plots
+====================================
 
+* The basic structure of the code needed to generate a scatter plot is
+
+
+```r
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(x = <VAR1>, 
+                                y = <VAR2>, 
+                                <FURTHER MAPPINGS>))
+```
+
+* Further mappings include `col`/`colour`/`color`, `size`, `alpha`, `shape`
+* We manually set aesthetics by placing them outside of `aes()`
+
+Faceting
+====================================
+
+* We can facet a plot in one of two ways
+
+
+```r
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>)) +
+  facet_wrap(~ <VAR>)
+```
+
+
+```r
+ggplot(data = <DATA>) +
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>)) +
+  facet_grid(<ROW_VAR> ~ <COL_VAR>)
+```
+
+Working with Data Frames
+====================================
+
+* Useful functions for inspecting dataframes are
+  * `head()`, `tail()`,
+  * `summary()`
+  * `str()`
+  * `$`, `[[...]]`
+* We get more information about a dataset using `?dataset_name`
 
 Back to the Basics
 ====================================
@@ -432,7 +477,7 @@ Aside: Vectors
 
 * In R, a vector is a collection of elements of the same type
 * There are integer vectors, character vectors, *double* vectors, and many more
-* Vectors are created using the `c()` function. This standards for **c**ombine
+* Vectors are created using the `c()` function. This stands for **c**ombine
 
 
 ```r
@@ -500,7 +545,7 @@ More Delimited Files
 ====================================
 
 * `read_csv2()` - semicolon-separated files
-* `read_tsv()` - read tab-dseparated files
+* `read_tsv()` - read tab-separated files
 * `read_delim()` - reads files with any delimiter
 
 
@@ -580,7 +625,7 @@ Importing fixed-width files (cont.)
 ====================================
 
 * When a fixed-width file has columns separated by white-space, you can use the `read_table()` function
-* This will automatically guess the column postions so you only need to enter a path to a file
+* This will automatically guess the column positions so you only need to enter a path to a file
 * However, it isn't always the smartest when the file has a header so it is best to skip the header and manually specify the column names
 
 
@@ -612,7 +657,7 @@ Manual Column Types
 * R4DS now spends a dozen or so pages discussing how to control the parsing of column types
 * This is worth a read if you're interested but I will summarise the main points in a few slides
 
-* `readr` uses a heuristic to figure out the type of each column form the first 1000 rows
+* `readr` uses a heuristic to figure out the type of each column from the first 1000 rows
 * This means that it can sometimes get these wrong
 * In this case, it is worth re-importing but with column types specified manually
 * The most common issues are integers being read as *doubles*, factors (categorical variables) being read as strings, or dates being read as strings
@@ -683,13 +728,13 @@ ggplot(Orange) +
   geom_line(aes(x = age, y = circumference, col = Tree), size = 2)
 ```
 
-<img src="session_two_presentation-figure/unnamed-chunk-31-1.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" style="display: block; margin: auto;" />
+<img src="session_two_presentation-figure/unnamed-chunk-34-1.png" title="plot of chunk unnamed-chunk-34" alt="plot of chunk unnamed-chunk-34" style="display: block; margin: auto;" />
 
 Smooth Fitted Lines (cont.)
 ====================================
 
 * A similar geometry is `geom_smooth()`. This adds a smooth fitted line to a plot
-* This can be combined with `geom_point()` to creat the following graph
+* This can be combined with `geom_point()` to create the following graph
 * Use can use the `se` parameter to control whether confidence intervals are shown. These are best turned off for now
 
 
@@ -699,7 +744,7 @@ ggplot(Orange) +
   geom_point(aes(x = age, y = circumference, col = Tree), size = 2)
 ```
 
-<img src="session_two_presentation-figure/unnamed-chunk-32-1.png" title="plot of chunk unnamed-chunk-32" alt="plot of chunk unnamed-chunk-32" style="display: block; margin: auto;" />
+<img src="session_two_presentation-figure/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" style="display: block; margin: auto;" />
 
 Global Aesthetics
 ====================================
@@ -716,12 +761,12 @@ ggplot(Orange, aes(x = age, y = circumference, col = Tree)) +
   geom_point(aes(size = circumference))
 ```
 
-<img src="session_two_presentation-figure/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" style="display: block; margin: auto;" />
+<img src="session_two_presentation-figure/unnamed-chunk-36-1.png" title="plot of chunk unnamed-chunk-36" alt="plot of chunk unnamed-chunk-36" style="display: block; margin: auto;" />
 
 Aesthetics for line graphs
 ====================================
 
 * Both line graph geometries both come with a `linetype` aesthetic to control what type of line is used
-* This should have a categorical variable mapped to it or manually set to a positive integer value
+* This should have a categorical variable mapped to it or manually set to a positive integer value/[name of a line type](http://www.sthda.com/english/wiki/ggplot2-line-types-how-to-change-line-types-of-a-graph-in-r-software)
 * Both aesthetics also has a `group()` aesthetic which allows you to separate the full data set before generating the lines (see exercises for examples of this)
 * This can be set to `-1` to use no grouping
