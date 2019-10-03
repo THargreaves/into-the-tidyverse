@@ -21,3 +21,5 @@ This section will be updated as resources are added.
 * [Presentation](https://thargreaves.github.io/introtothetidyverse/resources/session_two/session_two_presentation.html)
 
 * [Exercises](https://thargreaves.github.io/introtothetidyverse/resources/session_two/session_two_exercises.nb.html#/)
+
+* [Data](https://github.com/THargreaves/introtothetidyverse/tree/master/resources/session_two/data)
