@@ -1,0 +1,486 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Two Solutions"
+output: html_notebook
+---
+
+As always, we start by loading the tidyverse package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Coding Basics
+
+### R as a Calculator 1
+
+#### Part 1
+
+```{r}
+# notice that we don't have to use `to =` and `from = `
+# since these parameters can be recognised by postiion
+integers <- seq(0, 100)
+```
+
+#### Part 2
+
+```{r}
+squares <- integers ^ 2
+```
+
+#### Part 3
+
+```{r}
+squares_df <- tibble(integers, squares)
+```
+
+Let's have a look at the first four rows of `squares_df` just to make sure that everything is as expected.
+
+```{r}
+head(squares_df, n = 4)
+```
+
+#### Part 4
+
+```{r}
+# no need to specify `data =` or `mapping =`
+ggplot(squares_df) +
+  geom_point(aes(x = integers, y = squares))
+```
+
+### R as a calculator
+
+#### Part 1
+
+```{r}
+x <- seq(-6, 6, length.out = 1000)
+```
+
+NB: Another interesting parameter of `seq` is `by = ` which determines what gap should be between each value in the sequence.
+
+#### Part 2
+
+```{r}
+# note - R uses radians!
+y <- sin(x)
+```
+
+#### Part 3
+
+```{r}
+# you can call this whatever you want
+sin_df <- tibble(x, y)
+```
+
+#### Part 4
+
+```{r}
+ggplot(sin_df) +
+  geom_line(aes(x = x, y = y), col = 'orange', linetype = 2, size = 1.5)
+```
+
+### Specifying Parameters by Position
+
+#### Part 1
+
+`data` and `mapping` are perhaps the most obvious ones but it turns out that you can actually remove `x = ` and `y = ` too (though in my personal opinion, it is unclear to do so). `colour = ` must be specified though.
+
+## Reading CSVs
+
+Remember to set your working directory first with `Session > Set Working Directory...` in the top bar of RStudio
+
+### The 'People' Dataset
+
+#### Part 1
+
+```{r}
+people <- read_csv('data/people.csv', 
+                   col_types = cols(
+                     sex = col_factor(),
+                     race = col_factor(),
+                     earn = col_integer(),
+                     age = col_integer()
+                   ))
+```
+
+#### Part 2
+
+```{r}
+ggplot(people) +
+  geom_point(aes(x = ed, y = earn), position = 'jitter', alpha = 0.5)
+```
+
+It appears that increasing education is weakly correlated with earnings up to education level 12 (TODO: what does this represent) although after this point, increasing education doesn't seem to have much affect on typical earnings although it does appear to unlock access to many high paid jobs.
+
+#### Part 3
+
+```{r}
+ggplot(people) +
+  geom_point(aes(x = ed, y = earn, col = sex), position = 'jitter', alpha = 0.5, show.legend = FALSE) +
+  facet_wrap(~sex)  
+```
+
+#### Part 4
+
+```{r}
+ggplot(people) +
+  geom_point(aes(x = ed, y = earn, col = sex), position = 'jitter', alpha = 0.5, show.legend = FALSE) +
+  facet_wrap(~sex)  +
+  labs(x = 'Level of Education',
+       y = 'Earnings',
+       title = 'A plot showing the relationship between earnings and education level',
+       subtitle = 'Split by sex')
+```
+
+#### Part 5
+
+```{r}
+ggplot(people) +
+  geom_smooth(aes(x = age, y = earn))
+```
+
+#### Part 6
+
+```{r}
+ggplot(people) +
+  geom_smooth(aes(x = age, y = earn, col = race), size = 2)
+```
+
+NB: Here error bars are useful. It appears from the smoothed curve alone that being a race other than white, black, or Hispanic may relate to having large earnings later in life. This pattern is most likely due to a single outlier. We can spot this because the errors on the `other` curve are very large for high age, signifying uncertainly in the curve's position.
+
+### In-line CSVs
+
+#### Part 1
+
+```{r}
+# skip = 3 since first empty line still counts as a line
+read_csv(
+  "
+  Employee Database Version 3
+  
+  name, age, job
+  John, 34, Analyst
+  Ann, 44, Consultant
+  Barry, 24, Unknown
+  Freya, Unknown, Developer",
+  skip = 3,
+  na = 'Unknown'
+)
+```
+
+#### Part 2
+
+```{r}
+read_csv(
+  "
+  Shanghai, 6341, 24183300
+  Tokyo, 627, 13515271
+  Seoul, 605, 9806000
+  >> Note: Mumbai was previously called Bombai
+  Mumbai, 438, 12442373",
+  skip = 1,
+  comment = '>>',
+  col_names = c('City', 'Area', 'Population')
+)
+```
+
+### The Weather Dataset 1
+
+#### Part 1
+
+```{r}
+weather <- read_csv('data/camborne_may_oct_2015.csv',
+                    skip = 5,
+                    na = 'n/a')
+```
+
+#### Part 2
+
+To avoid flooding this document we will just have a look at the new functions.
+
+```{r}
+glimpse(weather)
+```
+
+```{r}
+names(weather)
+```
+
+#### Part 3
+
+```{r}
+ggplot(weather) +
+  geom_line(aes(x = date, y = mean_temp))
+```
+
+#### Part 4
+
+I will also colour this line red to distinguish it from the rest of the data.
+
+```{r}
+# aesthetics placed here so that they are inherited by both geometries
+ggplot(weather, aes(x = date, y = mean_temp)) +
+  geom_line() +
+  geom_smooth(col = 'red', se = FALSE)
+```
+
+#### Part 5
+
+```{r}
+ggplot(weather, aes(x = mean_cloud, y = total_rainfall)) +
+  geom_point(position = 'jitter')
+```
+
+It appears that more cloud does not necessarily mean more rain but is often a requirement for a lot of rain.
+
+#### Part 6
+
+```{r}
+ggplot(weather, aes(x = mean_cloud / 8, y = total_rainfall)) +
+  geom_point(position = 'jitter') +
+  labs(x = 'Cloud Coverage (Proportion of Sky)')
+```
+
+### Datasets from the Web
+
+#### Part 1
+
+I hope that this presents no difficulties.
+
+#### Part 2
+
+I will save this in my data folder as `movies.csv`.
+
+#### Part 3
+
+```{r}
+# this dataset is fairly clean so we can import it straight in
+movies <- read_csv('data/movies.csv')
+```
+
+#### Part 4
+
+```{r}
+movies <- movies %>%
+  mutate(Genre = ifelse(Genre %in% c('Comdy', 'comedy'), 'Comedy', Genre)) %>%
+  mutate(Genre = ifelse(Genre %in% c('Romence', 'romance'), 'Romance', Genre)) %>%
+  mutate(`Worldwide Gross` = as.double(str_replace(`Worldwide Gross`, '\\$', '')))
+```
+
+#### Part 5
+
+```{r}
+ggplot(movies) +
+  geom_point(aes(x = `Audience score %`, y = `Worldwide Gross`, col = Genre))
+```
+
+## Fixed-width Files
+
+### The Weather Dataset 2
+
+#### Part 1
+
+```{r}
+# override previous weather variable
+weather <- read_table('data/beijing_may_oct_1987.txt',
+                      skip = 5,
+                      na = 'n/a',
+                      col_types = cols(
+                        beaufort = col_factor()
+                      ))
+```
+
+Let's take a look at the first few rows to make sure everything is as expected.
+
+```{r}
+head(weather)
+```
+
+#### Part 2
+
+```{r}
+ggplot(weather) +
+  geom_line(aes(x = date, y = wind_speed, col = beaufort))
+```
+
+#### Part 3
+
+```{r}
+ggplot(weather) +
+  geom_line(aes(x = date, y = wind_speed, col = beaufort, group = -1))
+```
+
+#### Part 4
+
+There are a few ways to do this depending on which parameters you use for `read_fwf()`. I will use the named column positions approach. See `?read_fwf` for more details.
+
+```{r}
+read_fwf('data/beijing_may_oct_1987.txt',
+         skip = 6,
+         na = 'n/a',
+         col_positions = fwf_cols(
+           date = c(2, 11),
+           temperature = c(14, 24),
+           rainfall = c(27, 34),
+           pressure = c(39, 46),
+           wind_speed = c(49, 58),
+           beaufort = c(63, 70)
+         ))
+```
+
+## Line Geometries
+
+### Groups
+
+#### Part 1
+
+There are many methods we can use to learn more about this dataset - `str()`, `summary()`, `head()`, `names`, etc. But I will use `?ChickWeight`. This contains detailed descriptions of the columns.
+
+#### Part 2
+
+```{r}
+ggplot(ChickWeight) +
+  geom_line(aes(x = Time, y = weight, col = Diet, group = Chick))
+```
+
+#### Part 3
+
+You get a mess:
+
+```{r}
+ggplot(ChickWeight) +
+  geom_line(aes(x = Time, y = weight, col = Diet))
+```
+ 
+Here the data from all chicks on the same diet is collected into a single line and so at each unit of time where we measured weight, we get a vertical line, representing multiple measurements.
+
+#### Part 4
+
+```{r}
+ggplot(ChickWeight) +
+  geom_smooth(aes(x = Time, y = weight, col = Diet), se = FALSE)
+```
+
+We don't need to specify grouping since `geom_smooth()` is designed to take all data and combine it together to form a summary.
+
+#### Part 5
+
+```{r}
+ggplot(ChickWeight, aes(x = Time, y = weight, col = Diet)) +
+  geom_smooth(se = FALSE) +
+  geom_point(position = 'jitter', alpha = 0.5)
+```
+
+#### Part 6
+
+Using `?ChickWeight` will help us a lot here
+
+```{r}
+ggplot(ChickWeight, aes(x = Time, y = weight, col = Diet)) +
+  geom_smooth(se = FALSE) +
+  geom_point(position = 'jitter', alpha = 0.5) +
+  labs(x = 'Days since birth',
+       y = 'Weight (g)',
+       col = 'Diet',
+       title = 'A plot showing the weight changes of chicks on four different diets')
+```
+
+### Smoothing Methods
+
+#### Part 1
+
+```{r}
+ggplot(iris) +
+  geom_point(aes(x = Sepal.Width, y = Sepal.Length, col = Species))
+```
+
+#### Part 2
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, col = Species)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = 'lm')
+```
+
+#### Part 3
+
+We'll look at LOESS since GAMs are generally more applicable to larger datasets
+
+```{r}
+ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, col = Species)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = 'loess')
+```
+
+#### Part 4
+
+The default for small datasets is LOESS and for large it is GAMs. This dataset is small so `geom_smooth` uses LOESS.
+
+## Going Beyond
+
+### Theming Graphs
+
+#### Part 1
+
+I will make a plot of highway mileage vs city mileage
+
+```{r}
+ggplot(mpg) +
+  geom_point(aes(x = hwy, y = cty))
+```
+
+#### Part 2
+
+```{r}
+ggplot(mpg) +
+  geom_point(aes(x = hwy, y = cty)) +
+  labs(x = 'Highway Mileage',
+       y = 'City Mileage',
+       title = 'A graph comparing city and highway mileage for various cars')
+```
+
+#### Part 3
+
+```{r}
+ggplot(mpg) +
+  geom_point(aes(x = hwy, y = cty)) +
+  labs(x = 'Highway Mileage',
+       y = 'City Mileage',
+       title = 'A graph comparing city and highway mileage for various cars') +
+  theme_minimal()
+```
+
+#### Part 4
+
+Another theme I like is `theme_bw()` which is an understated black and white design.
+
+```{r}
+ggplot(mpg) +
+  geom_point(aes(x = hwy, y = cty)) +
+  labs(x = 'Highway Mileage',
+       y = 'City Mileage',
+       title = 'A graph comparing city and highway mileage for various cars') +
+  theme_bw()
+```
+
+### ggplot Objects
+
+#### Part 1
+
+Done.
+
+#### Part 2
+
+This has saved the plot we created to the object `p`. Typing `p` will now generate the plot.
+
+#### Part 3
+
+Done.
+
+#### Part 4
+
+This has created the plot we had before with an additional smoothing layer.
+
+### Scripting
+
+I will leave this for you to look at yourself.
