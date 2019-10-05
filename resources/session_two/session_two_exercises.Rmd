@@ -12,7 +12,7 @@ library(tidyverse)
 
 ## Coding Basics
 
-#### R as a Calculator 1
+### R as a Calculator 1
 
 (**Taken form R4DS**)
 
@@ -21,14 +21,14 @@ library(tidyverse)
 3. Create a data frame with these two vectors as columns by running `tibble(integers, squares)`. Assign the output to an object called `squares_df`
 4. Use `ggplot()` to produce either a scatter or line plot of these two variables (or both at the same time if you're feeling brave!)
 
-#### R as a Calculator 2
+### R as a Calculator 2
 
 1. Create a new sequence called `x` containing 1000 numbers spaced uniformly between -6 and 6. You can do this by adding the `length.out` parameter to `seq()` and setting it to `1000` (this parameter must be specified by name, inside of the brackets)
 2. Calculate the sine of each value in `x` using `sin()` and assign the value to an object called `y`
 3. Create a dataframe as before and plot a line graph
 4. Change the line colour to any one of your choosing, set the `linetype` to `2` (dashed), and `size` to 1.5
 
-#### Specifying Parameters by Position
+### Specifying Parameters by Position
 
 1. Which parameters from the following code can you use without specifying their name? 
 
@@ -48,7 +48,7 @@ ggplot(data = mpg) +
 5. Create a new plot showing how earnings change with age. Use `geom_smooth()` to show the general trend 
 6. Set the colour aesthetic in the above plot to represent the `race` variable. Include errors and set the thickness of each line to `2`
 
-## In-line CSVs
+### In-line CSVs
 
 1. Read the following in-line CSV into R (Unknown is used here to represent a missing value)
 
@@ -99,7 +99,7 @@ movies <- movies %>%
 
 5. Make a scatter plot of `Worldwide Gross` against `Audience score %` coloured by `Genre`. When using a column name with a space you need to surround the name with back-ticks (\`)
 
-## Fixed Width Files
+## Fixed-width Files
 
 ### The Weather Dataset 2
 
