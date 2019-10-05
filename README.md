@@ -24,6 +24,8 @@ This section will be updated as resources are added.
 
 * [Data](https://github.com/THargreaves/introtothetidyverse/tree/master/resources/session_two/data)
 
+* [Solutions](https://thargreaves.github.io/introtothetidyverse/resources/session_two/session_two_solutions.nb.html#/)
+
 ## Help
 
 ### Importing Datasets
