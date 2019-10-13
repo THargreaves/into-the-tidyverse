@@ -1,16 +1,87 @@
-An Introduction to the Tidyverse | Session Two
+An Introduction to the Tidyverse | Session Three
 ====================================
 author: Tim Hargreaves
-date: [Session Date TBC]
+date: 2019-10-17
 width: 1440
 height: 900
 css: presentation.css
+
+
 
 Recap
 ====================================
 type: section
 
+Vectors and Arithmetic
+====================================
 
+* You typically create a vector in R using the `c()` function
+
+
+```r
+x <- c(1, 4, 9)
+x
+```
+
+```
+[1] 1 4 9
+```
+
+* You can create a vector whose entries are an arithmetic sequence using `seq()`
+
+
+```r
+seq(-5, 5, length.out = 6)
+```
+
+```
+[1] -5 -3 -1  1  3  5
+```
+
+* Most arithmetical operators in R are _vectorised_
+
+
+```r
+sqrt(x)
+```
+
+```
+[1] 1 2 3
+```
+
+Reading CSVs
+====================================
+
+* We read CSVs in R using the `read_csv()` function from the `readr` package
+* The first argument we pass in is the path to the file we want to import
+* This path should be relative to our current working directory
+
+
+```r
+# import a csv file at ~/project_name/data/my_data.csv
+setwd('~/project_name') # or use Session > Set Working Director > ...
+
+read_csv('data/my_data.csv')
+```
+
+readr Parameters
+====================================
+
+* Sometimes you need to specify additional parameters when reading files. These include:
+  * `skip = n` - skip the first `n` lines of the file
+  * `comment = '{char}'` - ignore lines which begin with `{char}`
+  * `col_names = FALSE` - the file has no column names and we don't know them
+  * `col_names = c('col1_name', ...)` - the file has no column names but we do know them
+  * `na = '{char}'` - import `{char}` as a missing value
+  * `col_types = cols(col1 = col_{type}(), ...)` - override types of columns
+
+Line Plots
+====================================
+
+* Line plots can be made using `geom_line()` or `geom_smooth()`
+* Key aesthetics are `linetype` and `group`
+* Remove error bars with `se = FALSE`
+* Choose which smoothing method to use with `method = 'lm'/'loess'/'gam'` 
 
 Back to the Basics
 ====================================
@@ -177,7 +248,7 @@ type: sub-section
 * It is very useful to be able to compare two values and ask how they relate - Is one larger than the other? Are they the same value?
 * We can go even further by stringing these comparisons together using Boolean operators (and, or, etc.)
 
-Ordering Comparisions
+Ordering Comparisons
 ====================================
 
 
@@ -216,7 +287,7 @@ Ordering Comparisions
 [1] TRUE
 ```
 
-Equality Comparisions
+Equality Comparisons
 ====================================
 
 
@@ -257,7 +328,7 @@ Equality Comparisions
 [1] TRUE
 ```
 
-Comparisions on Vectors
+Comparisons on Vectors
 ====================================
 
 * All comparisons in R are _vectorised_. This means that they act element-wise on vectors
@@ -467,8 +538,8 @@ left: 70%
 
 * `dplyr` is the third tidyverse package that we will be looking at
 *  It has five main features, referred to as the `dplyr` _verbs_
-*  These allow you to transform a dataset by creating new variables or summaries
-*  You can also use these to reorder your observations to a dataset easier to work with
+*  These allow you to filter a dataste or transform it by creating new variables/summaries
+*  You can also use these to reorder your observations to make a dataset easier to work with
 
 ***
 
@@ -494,7 +565,6 @@ The dplyr Verbs (cont.)
   * The first argument is a data frame
   * The subsequent arguments describe what to do with the data frame, using the variable names (without quotes)
   * The result is a new data frame
-
 
 
 
@@ -628,37 +698,6 @@ filter(df, !is.na(x))
 2     3     6
 ```
 
-Handling Missing Values
-====================================
-
-* In many cases you may want to either remove missing values or look only at rows which contain a missing value
-* The `is.na()` function can be used to this extent
-
-
-```r
-df <- tibble(x = c(1, NA, 3), y = c(4, 5, 6))
-filter(df, is.na(x))
-```
-
-```
-# A tibble: 1 x 2
-      x     y
-  <dbl> <dbl>
-1    NA     5
-```
-
-```r
-filter(df, !is.na(x))
-```
-
-```
-# A tibble: 2 x 2
-      x     y
-  <dbl> <dbl>
-1     1     4
-2     3     6
-```
-
 Arrange Rows
 ====================================
 type: sub-section
@@ -671,6 +710,7 @@ Introduction
 
 
 ```r
+# order by class, break ties with year
 arrange(mpg, class, year)
 ```
 
@@ -845,6 +885,8 @@ select(iris, Sepal.Length:Petal.Length)
 Selecting Ranges (cont.)
 ====================================
 
+* This also works with `-`
+
 
 ```r
 select(iris, -(Sepal.Length:Petal.Length))
@@ -1015,7 +1057,7 @@ mutate(times,
 Useful Creation Functions (cont.)
 ====================================
 
-* Cummulative aggregates: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`, `cummean()`
+* Cumulative aggregates: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`, `cummean()`
 
 
 ```r
@@ -1046,9 +1088,6 @@ mutate(tibble(time = c(1147, 1252)), afternoon = time >= 1200)
 1  1147 FALSE    
 2  1252 TRUE     
 ```
-
-Group By/Ranking?
-====================================
 
 Summarise Values
 ====================================
@@ -1092,7 +1131,7 @@ profits <- tibble(day = c('Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'),
 
 
 ```r
-by_wkdy = group_by(profits, wkdy)
+by_wkdy <- group_by(profits, wkdy)
 ```
 
 
@@ -1115,7 +1154,7 @@ Multiple Summaries
 
 
 ```r
-by_species = group_by(iris, Species)
+by_species <- group_by(iris, Species)
 ```
 
 
@@ -1134,7 +1173,6 @@ summarise(by_species, mean_sepal_len = mean(Sepal.Length),
 3 virginica            6.59    50                  1.1
 ```
 
-
 Grouping by multiple variables
 ====================================
 
@@ -1142,12 +1180,12 @@ Grouping by multiple variables
 
 
 ```r
-mon_split = mutate(airquality, mon_half = ifelse(Day <= 15, 'Start', 'End'))
+mon_split <- mutate(airquality, mon_half = ifelse(Day <= 15, 'Start', 'End'))
 ```
 
 
 ```r
-airquality_grpd = group_by(mon_split, Month, mon_half)
+airquality_grpd <- group_by(mon_split, Month, mon_half)
 ```
 
 
@@ -1192,7 +1230,7 @@ airquality %>%
 Combining dpylr with ggplot
 ====================================
 
-* Question: of all large diamonds of colour `G`, what is the median volmue (assume approximately ellisoidal) for each cut?
+* Question: of all large diamonds of colour `G`, what is the median volume (assume approximate ellipsoidality) for each cut?
 
 
 ```r
