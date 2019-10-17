@@ -12,7 +12,6 @@ Remember, before you can use the tidyverse, you need to load the package.
 library(tidyverse)
 ```
 
-
 ## Back to the Basics
 
 #### R for statistics
@@ -61,7 +60,7 @@ FALSE & !FALSE | TRUE
 #### The Weather Dataset
 
 1. Import the `camborne_may_oct_2015.csv` file from the data folder and assign this to the variable `weather`. For more detailed instructions, see the exercises for session two
-2. Remember to specify the `NA` character `'n/a'`
+2. Remember to specify the `NA` character `'n/a', set the `Date` column to have be `col_date()`, and skip the first few lines.
 
 ## The dpylr verbs
 
@@ -71,8 +70,8 @@ FALSE & !FALSE | TRUE
 
 1. How many automatic cars by Audi are in the `mpg` dataset?
 2. Who makes the only two cars with a highway mileage above 41 miles/gallon?
-3. Are there any there are flowers in the `iris` dataset with petals that are wider than they are long?
-4. What is the carat of the highest priced diamond in the the `diamond` dateset? (A condition such as `price == max(price)` may be useful)
+3. Are there any flowers in the `iris` dataset with petals that are wider than they are long?
+4. What is the carat of the highest priced diamond in the the `diamond` dataset? (A condition such as `price == max(price)` may be useful)
 5. For each year in the `mpg` dataset, which car has the smallest engine size? Question 4 may be helpful. Note that you can use `group_by()` before `filter()` to change the scope of any aggregate functions
 6. Select all flowers from the `iris` dataset where either the petal length is greater than 6.4 or the petal width is greater than 2.4 (there should be 7 of these)
 7. Which observations in the `Ozone` dataset are missing a reading for `Ozone`
@@ -80,16 +79,16 @@ FALSE & !FALSE | TRUE
 #### The Weather Dataset
 
 1. What was the hottest day in the weather dataset we imported above?
-2. What was the interquartile range of the mean windspeed for each day?
+2. What was the interquartile range of the mean wind speed for each day?
 3. How many days did the wind blow in a south-south-easterly direction?
-4. Select all observations that occured after 2015-10-23 (use `date > 2015-10-23` as your comparison)
+4. Select all observations that occurred after 2015-10-23 (use `date > 2015-10-23` as your comparison)
 5. Look at the help page for `between`. How can you use this to find all days where the total rainfall was between 16 and 24 Is this inclusive?
 
 ### Arrange
 
 #### Built-in Datasets
 
-1. Now using `arrange()` find the car in the `mpg` dataset with the best city milage. What about the worst?
+1. Now using `arrange()` find the car in the `mpg` dataset with the best city mileage. What about the worst?
 2. Order the `iris` dataset by the product of the petal length and width (Note: you don't need to create a new variable using `mutate` to do this)
 3. Look at the column types when you print `mpg` and `diamonds` to the console. What order do you get when you arrange `mpg` by `class` and what order do you get when you arrange `diamonds` by `cut`. Why is this?
 4. Order the cars in `mpg` by the difference between their city and highway mileage (biggest difference first) - if you wanted to do this properly you should use the `abs()` function, or you can use a filter to check that there are no cars with city mileage higher than highway mileage
@@ -97,7 +96,7 @@ FALSE & !FALSE | TRUE
 #### The Weather Dataset
 
 1. Arrange the weather dataset first by `mean_windspeed_beaufort` then by decreasing mean temperature
-2. Use `arrange()` to put the observation with missing mean windspeed at the top. Hint: use `is.na()` remembering that `FALSE` comes before `TRUE` in ordering
+2. Use `arrange()` to put the observation with missing mean wind speed at the top. Hint: use `is.na()` remembering that `FALSE` comes before `TRUE` in ordering
 3. Group the dataset by `mean_windspeed_beaufort`. Arrange the observations by how much each day's rainfall deviates from the mean of the group
 4. Order the dataset by the 'complexity' of `max_gust_direction_cardinal` (number of letters in the direction name). `nchar()` may be helpful - see the first example in the corresponding help page
 
@@ -126,24 +125,24 @@ select(mpg, 1, 2, 4, 11)
 
 #### Built-in Datasets
 
-1. Create a new column called `cty_km_l` which measures the city mileage in kilometers per litre (Hint: 1 mile ~ 1.6 km, 1 gallon ~ 3.8 litres)
+1. Create a new column called `cty_km_l` which measures the city mileage in kilometres per litre (Hint: 1 mile ~ 1.6 km, 1 gallon ~ 3.8 litres)
 2. Create column called `max_dimension` for the `diamonds` dataset which contains the maximum of the values in the columns `x`, `y`, `z`
 3. Read the help page for `transmutate()`
 4. The `mpg` dataset currently has `trans` stored as a character. Convert this to a factor using `mutate()` and the `factor()` function
 5. Create a column called `is_automatic` which is `TRUE` if and only if a given car has automatic transmission. Don't forget to use `==` for comparison
 6. `mutate` can be combined with `group_by` to change the scope of aggregate functions. Use this to create a new variable in the `mpg` dataset called `best_in_class` which is `TRUE` if and only if the highway mileage is the highest out of all other cars in that class. (Hint: First group by class then use `hwy == max(hwy)`)
-7. Create a new colum in the `diamonds` dataset called `expensive` which is `TRUE` if and only if the price of the diamond is above the upper quartile of all prices
+7. Create a new column in the `diamonds` dataset called `expensive` which is `TRUE` if and only if the price of the diamond is above the upper quartile of all prices
 
 #### The Weather Dataset
 
-1. Calculate the cummulative total rainfall for each day in the weather dataset. What about the cummulative maximum?
-2. Overwrite the `mean_temp` column by converting to fahreheit (see presentation for conversion)
+1. Calculate the cumulative total rainfall for each day in the weather dataset. What about the cumulative maximum?
+2. Overwrite the `mean_temp` column by converting to Fahrenheit (see presentation for conversion)
 3. Look at the help document for `lag()` and `lead()`. Use one of these to find the daily difference in mean pressure
 4a. **(HARD)** There are proper ways to handle date columns but these can get quite complicated. A simple trick is to use the `substr()` function. Read the help docs on this function and then try to use it to create a new variable containing the month in numeric form (though stored as a character)
 4b. You can then convert these characters to integers by using another mutate with the `as.integer()` function
 4c. To convert these to dates the last step is to use either the `month.abb` or `month.name` built-in object with a mutate. Something similar to this will do: `month_word_col = month.name[month_number_col]`, replacing `month_word_col`, `month_number_col` with desired names
 5. **(VERY HARD)** What is the output of `as.integer(weather$date)`? Create a column in the dataset representing the numerical form of the date.
-April 1st 2015 was a Wednesday, use some modular arithmatic to create a column containing the date of the week as a number - e.g. Thursday = 4. (Hint: `(date_numeric + 1) %% 7 + 1`)
+April 1st 2015 was a Wednesday, use some modular arithmetic to create a column containing the date of the week as a number - e.g. Thursday = 4. (Hint: `(date_numeric + 1) %% 7 + 1`)
 6. Use the `ifelse()` function twice to create a number column called `classification`. If `total_rainfall > 3` then `classification` should be 'wet'. Otherwise if `mean_cloud` is less than 4 then `classification` should be 'sunny'. If neither of these then `classification` should 'cloudy'
 
 ### Summarise
@@ -155,12 +154,12 @@ April 1st 2015 was a Wednesday, use some modular arithmatic to create a column c
 3. What are the median values for each of the 4 numeric columns in the `iris` dataset?
 4. What is the price of the least expensive diamond of each cut?
 5. What is the mean ozone for each month in the `airquality` dataset? Make sure you ignore `NA`s
-6. For each cut and color in the diamonds dataset, what is the range (`diff(range(...))`) of the carats?
+6. For each cut and colour in the diamonds dataset, what is the range (`diff(range(...))`) of the carats?
 
 #### The Weather Dataset
 
 1. What was the median total rainfall over the span of the dataset?
-2. What is the mean windspeed for each Beaufort classification
+2. What is the mean wind speed for each Beaufort classification
 3. Run the following code to create a column for the month, day, whether it is a weekday, and whether it is a bank holiday. 
 
 ```{r}
@@ -173,7 +172,7 @@ weather_expanded <- mutate(weather,
                                                                     '2015-08-31'))
 ```
 
-4. Does this dataset suggest that it rains more on bank holidays? Find the mean total rainfall for bank holidays and not bank holidays to see. (For the statistically minded, you can use an unpaired, equal variance t-test to check this rigourously - it turns out there isn't enough evidence to reach a significance of 5%)
+4. Does this dataset suggest that it rains more on bank holidays? Find the mean total rainfall for bank holidays and not bank holidays to see. (For the statistically minded, you can use an unpaired, equal variance t-test to check this rigorously - it turns out there isn't enough evidence to reach a significance of 5%)
 5. Find the maximum total sunshine for each day of the week
 6. What is the average maximum gust speed for each cardinal direction?
 7. How many days of each month was the humidity 100%? Remember that `TRUE` is stored as `1` under the hood
@@ -203,9 +202,9 @@ Use the extended weather dataset from before for this question
 
 1. Read the help page for `ranking`. In particular try to understand the difference between `row_number()`, `min_rank()`, `dense_rank()`. The others are of less use
 2. For each date in the extended weather dataset, rank observations (think about which ranking method is most appropriate) by how much rainfall they had compared to other observations _in the same month_. Select only observations which have the 2nd highest amount of rainfall for each month
-3. For each year in the `mpg` dataset, rank the cars by city mileage so that the lowest milage is ranked first. Select the cars that are ranked number one for each year
+3. For each year in the `mpg` dataset, rank the cars by city mileage so that the lowest mileage is ranked first. Select the cars that are ranked number one for each year
 
-### Ungrouping
+### Un-grouping
 
 1. Try running the following code. What error message do you get?
 2. Run the code line by line, where do things go wrong?
