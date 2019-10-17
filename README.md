@@ -32,7 +32,7 @@ This section will be updated as resources are added.
 
 * [Exercises](https://thargreaves.github.io/introtothetidyverse/resources/session_three/session_three_exercises.nb.html#/)
 
-* [Data](https://github.com/THargreaves/introtothetidyverse/tree/master/resources/session_threeo/data)
+* [Data](https://github.com/THargreaves/introtothetidyverse/tree/master/resources/session_three/data)
 
 ## Help
 
