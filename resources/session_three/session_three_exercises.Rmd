@@ -88,7 +88,11 @@ FALSE & !FALSE | TRUE
 
 #### Built-in Datasets
 
+<<<<<<< HEAD
 1. Now, using `arrange()`, find the car in the `mpg` dataset with the best city mileage. What about the worst?
+=======
+1. Now using `arrange()` find the car in the `mpg` dataset with the best city mileage. What about the worst?
+>>>>>>> 428e31f973b654df8e2804f7faaa8904a8d846df
 2. Order the `iris` dataset by the product of the petal length and width (Note: you don't need to create a new variable using `mutate` to do this)
 3. Look at the column types when you print `mpg` and `diamonds` to the console. What order do you get when you arrange `mpg` by `class` and what order do you get when you arrange `diamonds` by `cut`. Why is this?
 4. Order the cars in `mpg` by the difference between their city and highway mileage (biggest difference first) - if you wanted to do this properly you should use the `abs()` function, or you can use a filter to check that there are no cars with city mileage higher than highway mileage
@@ -125,12 +129,20 @@ select(mpg, 1, 2, 4, 11)
 
 #### Built-in Datasets
 
+<<<<<<< HEAD
 1. Using the `mpg` dataset, create a new column called `cty_km_l` which measures the city mileage in kilometres per litre (Hint: 1 mile ~ 1.6 km, 1 gallon ~ 3.8 litres)
+=======
+1. Create a new column called `cty_km_l` which measures the city mileage in kilometres per litre (Hint: 1 mile ~ 1.6 km, 1 gallon ~ 3.8 litres)
+>>>>>>> 428e31f973b654df8e2804f7faaa8904a8d846df
 2. Create column called `max_dimension` for the `diamonds` dataset which contains the maximum of the values in the columns `x`, `y`, `z`
 3. Read the help page for `transmutate()`
 4. The `mpg` dataset currently has `trans` stored as a character. Convert this to a factor using `mutate()` and the `factor()` function
 5. Create a column called `is_automatic` which is `TRUE` if and only if a given car has automatic transmission. Don't forget to use `==` for comparison
+<<<<<<< HEAD
 6. `mutate` can be combined with `group_by` to change the scope of aggregate functions. Use this to create a new variable in the `mpg` dataset called `best_in_class` which is `TRUE` if and only if the highway mileage is the highest out of all other cars in that class. (Hint: first group by class then use `hwy == max(hwy)`)
+=======
+6. `mutate` can be combined with `group_by` to change the scope of aggregate functions. Use this to create a new variable in the `mpg` dataset called `best_in_class` which is `TRUE` if and only if the highway mileage is the highest out of all other cars in that class. (Hint: First group by class then use `hwy == max(hwy)`)
+>>>>>>> 428e31f973b654df8e2804f7faaa8904a8d846df
 7. Create a new column in the `diamonds` dataset called `expensive` which is `TRUE` if and only if the price of the diamond is above the upper quartile of all prices
 
 #### The Weather Dataset
@@ -141,8 +153,13 @@ select(mpg, 1, 2, 4, 11)
 4a. **(HARD)** There are proper ways to handle date columns but these can get quite complicated. A simple trick is to use the `substr()` function. Read the help docs on this function and then try to use it to create a new variable containing the month in numeric form (though stored as a character)
 4b. You can then convert these characters to integers by using another mutate with the `as.integer()` function
 4c. To convert these to dates the last step is to use either the `month.abb` or `month.name` built-in object with a mutate. Something similar to this will do: `month_word_col = month.name[month_number_col]`, replacing `month_word_col`, `month_number_col` with desired names
+<<<<<<< HEAD
 5a. **(VERY HARD)** What is the output of `as.integer(weather$date)`? Create a column in the dataset representing the numerical form of the date.
 5b, April 1st 2015 was a Wednesday, use some modular arithmetic to create a column containing the date of the week as a number - e.g. Thursday = 4. (Hint: `(date_numeric + 1) %% 7 + 1`)
+=======
+5. **(VERY HARD)** What is the output of `as.integer(weather$date)`? Create a column in the dataset representing the numerical form of the date.
+April 1st 2015 was a Wednesday, use some modular arithmetic to create a column containing the date of the week as a number - e.g. Thursday = 4. (Hint: `(date_numeric + 1) %% 7 + 1`)
+>>>>>>> 428e31f973b654df8e2804f7faaa8904a8d846df
 6. Use the `ifelse()` function twice to create a number column called `classification`. If `total_rainfall > 3` then `classification` should be 'wet'. Otherwise if `mean_cloud` is less than 4 then `classification` should be 'sunny'. If neither of these then `classification` should 'cloudy'
 
 ### Summarise
