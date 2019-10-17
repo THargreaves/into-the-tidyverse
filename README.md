@@ -26,6 +26,14 @@ This section will be updated as resources are added.
 
 * [Solutions](https://thargreaves.github.io/introtothetidyverse/resources/session_two/session_two_solutions.nb.html#/)
 
+### Session Three
+
+* [Presentation](https://thargreaves.github.io/introtothetidyverse/resources/session_three/session_three_presentation.html)
+
+* [Exercises](https://thargreaves.github.io/introtothetidyverse/resources/session_three/session_three_exercises.nb.html#/)
+
+* [Data](https://github.com/THargreaves/introtothetidyverse/tree/master/resources/session_threeo/data)
+
 ## Help
 
 ### Importing Datasets
