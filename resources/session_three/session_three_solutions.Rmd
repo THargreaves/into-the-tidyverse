@@ -1,0 +1,740 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Three Solutions"
+output: html_notebook
+---
+
+As always, we start by loading the tidyverse package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Back to the Basics
+
+### R for statistics
+
+#### Part 1
+
+```{r}
+x <- mpg$displ
+```
+
+#### Part 2
+
+```{r}
+mean(x)
+```
+
+```{r}
+median(x)
+```
+
+#### Part 3
+
+`range()` gives us both the minimum and maximum in a vector of length two.
+
+```{r}
+range(x)
+```
+
+Or we can use `min()` and `max()` to get each of these independently.
+
+```{r}
+min(x)
+```
+
+```{r}
+max(x)
+```
+
+#### Part 4
+
+The lower and upper quartile can be found using
+
+```{r}
+quantile(x)[1]
+```
+
+```{r}
+quantile(x)[4]
+```
+
+For the interquartile range we can either subtract the larger of these from the smaller or use `IQR()` directly.
+
+```{r}
+IQR(x)
+```
+
+#### Part 5
+
+```{r}
+var(x)
+```
+
+```{r}
+sd(x)
+```
+
+As expected, we have.
+
+```{r}
+near(var(x), sd(x) ^ 2)
+```
+
+### Missing Values
+
+#### Part 1
+
+`NA` represents a missing/unknown value. If we add 5 to an unknown value then we don't know what the result we be. Hence `5 + NA` returns `NA`.
+
+```{r}
+5 + NA
+```
+
+#### Part 2
+
+```{r}
+all(is.na(c(
+  5 + NA,
+  5 - NA,
+  5 * NA,
+  5 / NA,
+  5 ^ NA
+)))
+```
+
+This rule follows for all of the standard arithmetic operators. In fact, (pretty much) every operator will have this behaviour.
+
+#### Part 3
+
+```{r}
+median(c(2, 6, 3, 4, NA), na.rm = TRUE)
+```
+
+#### Part 4
+
+We know that any real number (except zero, which we ignore) to the power of zero is one. It therefore doesn't matter what the original `NA` was in almost every circumstance. Hence `NA ^ 0` returns `1`
+
+```{r}
+NA ^ 0
+```
+
+Using similar logic we get that `NA | TRUE` returns `TRUE` and `NA & FALSE` returns `FALSE`.
+
+The general rule is that whenever we apply an operator to a missing value that would always return the same value if known, the result is the same as what would normally be returned.
+
+### Arithmetic with Boolean Values
+
+#### Part 1
+
+```{r}
+5 + TRUE
+```
+
+Under-the-hood, `TRUE` is stored as `1`, and so when we use `TRUE` in an arithmetic operation, it gets converted to this numeric form.
+
+#### Part 2
+
+Likewise `FALSE` is stored as `0` so `5 + FALSE` is `5`.
+
+#### Part 3
+
+Since `TRUE` represents `1` and `FALSE` represents `0`, the sum of a logical vector will return the number of `TRUE` values.
+
+#### Part 4
+
+Similar to before, but `mean()` will give the proportion of true values.
+
+#### Part 5
+
+`FALSE < TRUE` is the same as `0 < 1` which is clearly true. This means that `FALSE` values will be sorted before `TRUE` values by default when we use `arrange()`.
+
+### Comparisons and Boolean Operators
+
+#### Part 1
+
+Replacing the comparisons with their logical values we get `(TRUE & FALSE) | TRUE`. `TRUE & FALSE` becomes `FALSE` leaving us with `FALSE | TRUE` which is TRUE.
+
+#### Part 2
+
+Due to floating point errors, it is not the case that `sqrt(2) ^ 2 == 2` though it is true that `near(sqrt(2) ^ 2, 2)`. This therefore evaluates to `FALSE | !TRUE` which is `FALSE | FALSE`, which finally becomes `FALSE`.
+
+#### Part 3
+
+Looking at `?Syntax`, we see that the order of operations for Boolean operators is `!` then `&`, then `|`. 
+
+We therefore first evaluate `!FALSE` to get `TRUE`. Then we look at `FALSE & TRUE` to get `FALSE`. Lastly we have `FALSE | TRUE` which is `TRUE`. Note that if we had evaluated `|` before `&`, we have obtained the opposite result.
+
+## Import Recap
+
+### The Weather Dataset
+
+#### Part 1/2
+
+```{r}
+weather <- read_csv('data/camborne_may_oct_2015.csv',
+                    na = 'n/a',
+                    skip = 5,
+                    col_types = cols(date = col_date()))
+```
+
+## The dpylr verbs
+
+### Filter
+
+#### Built-in Datasets
+
+##### Part 1
+
+We can use the `filter()` verb to extract all automatic cars by Audi and read the number of observations from the top of the printed out tibble. Alternatively, we can wrap the output in `nrow()`
+
+```{r}
+nrow(filter(mpg, trans == 'auto(l5)', manufacturer == 'audi'))
+```
+
+There are 5 such cars.
+
+##### Part 2
+
+```{r}
+filter(mpg, hwy > 41)
+```
+
+These two cars are by Volkswagen.
+
+##### Part 3
+
+```{r}
+filter(iris, Petal.Width > Petal.Length)
+```
+
+We are returned an empty tibble so there are not any plants in the dataset with this property.
+
+##### Part 4
+
+```{r}
+filter(diamonds, price == max(price))
+```
+
+The highest price is $18,823 (currency obtained from `?diamonds`) and the carat of this diamond is 2.29.
+
+##### Part 5
+
+```{r}
+mpg_grpd <- group_by(mpg, year)
+filter(mpg_grpd, displ == min(displ))
+```
+
+There are actually multiple cars sharing the minimum engine size for each year although they are all of the same make and model.
+
+Note that we could have used a pipe (`%>%`) instead of creating `mpg_grpd`.
+
+##### Part 6
+
+```{r}
+filter(iris, Petal.Length > 6.4 | Petal.Width > 2.4)
+```
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+filter(weather, mean_temp == max(mean_temp))
+```
+
+The hottest day was the 30th of June.
+
+##### Part 2
+
+Don't forget to use `na.rm = TRUE`.
+
+```{r}
+IQR(weather$mean_windspeed, na.rm = TRUE)
+```
+
+##### Part 3
+
+```{r}
+nrow(filter(weather, mean_wind_direction_cardinal == 'SSE'))
+```
+
+##### Part 4
+
+```{r}
+filter(weather, date > '2015-10-23')
+```
+
+##### Part 5
+
+```{r}
+filter(weather, between(total_rainfall, 16, 24))
+```
+
+### Arrange
+
+#### Built-in Datasets
+
+##### Part 1
+
+If we arrange by city milage in descending order, then the top line in the dataset will contain the car with the best city mileage.
+
+```{r}
+arrange(mpg, desc(cty))
+```
+
+This is a Volkswagen Beetle. If we wanted the worst, we would simply omit `desc()`.
+
+##### Part 2
+
+```{r}
+arrange(iris, Petal.Length * Petal.Width)
+```
+
+##### Part 3
+
+We actually don't need to print the tables. The function `glimpse()` will give us these types.
+
+```{r}
+glimpse(mpg)
+```
+
+```{r}
+glimpse(diamonds)
+```
+
+`class` is a character variable and so this column will be ordered alphabetically. Meanwhile, `cut` is an ordinal (ordered) variable and so will be ordered in the same way as the undersying order assigned to the column.
+
+##### Part 4
+
+```{r}
+arrange(mpg, hwy - cty)
+```
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+arrange(weather, mean_windspeed_beaufort, mean_temp)
+```
+
+##### Part 2
+
+```{r}
+arrange(weather, !is.na(mean_windspeed))
+```
+
+There is only one observation with missing mean windspeed. Note, we could have used `desc()` instead of `!`.
+
+##### Part 3
+
+```{r}
+weather_grpd <- group_by(weather, mean_windspeed_beaufort)
+arrange(weather_grpd, abs(total_rainfall - mean(total_rainfall)))
+```
+
+The `abs()` is optional. It depends on how you interpretted the question.
+
+As mentioned before, we could have used a pipe (`%>%`) instead of a temporary dataframe.
+
+##### Part 4
+
+```{r}
+arrange(weather, nchar(max_gust_direction_cardinal))
+```
+
+
+#### The Weather Dataset
+
+### Select
+
+#### Built-in Datasets
+
+##### Part 1
+
+```{r}
+select(iris, Species, everything())
+```
+
+##### Part 2
+
+```{r}
+rename(mpg, eng_size = displ)
+```
+
+##### Part 3
+
+```{r}
+select(diamonds, -price)
+```
+
+##### Part 4
+
+Select the 1st, 2nd, 4th, and 11th column of the `mpg` dataset.
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+select(weather, date, starts_with('mean_'))
+```
+
+##### Part 2
+
+```{r}
+select(weather, date, contains('wind'))
+```
+
+##### Part 3
+
+```{r}
+select(weather, date, contains('cardinal_direction'))
+```
+
+##### Part 4
+
+```{r}
+3:6
+```
+
+In general, `m:n` returns a vector containing the integers from m to n (inclusive).
+
+We can therefore select the first 5 columns using.
+
+```{r}
+select(weather, 1:5)
+```
+
+##### Part 5
+
+```{r}
+select(weather, mean_temp:max_humidity)
+```
+
+### Mutate
+
+#### Built-in Datasets
+
+##### Part 1
+
+```{r}
+mutate(mpg, cty_km_l = cty * 1.6 / 3.8)
+```
+
+Remember that this new column will be added at the end.
+
+##### Part 2
+
+```{r}
+mutate(diamonds, max_dimension = max(x, y, z))
+```
+
+##### Part 3
+
+N/A
+
+##### Part 4
+
+```{r}
+mutate(mpg, trans = factor(trans))
+```
+
+##### Part 5
+
+```{r}
+mutate(mpg, is_automatic = trans == 'auto(l5)')
+```
+
+##### Part 6
+
+```{r}
+mpg_grpd <- group_by(mpg, class)
+mutate(mpg_grpd, best_in_class = hwy == max(hwy))
+```
+
+##### Part 7
+
+```{r}
+mutate(diamonds, expensive = price > quantile(price)[3])
+```
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+mutate(weather, cum_rainfall = cumsum(total_rainfall))
+```
+
+```{r}
+mutate(weather, most_rainfall = cummax(total_rainfall))
+```
+
+##### Part 2
+
+```{r}
+mutate(weather, mean_temp = mean_temp * 1.8 + 32)
+```
+
+##### Part 3
+
+```{r}
+mutate(weather, pressure_diff = mean_pressure - lag(mean_pressure))
+```
+
+##### Part 4
+
+```{r}
+mutate(weather, month = substr(date, 6, 7),
+                month = as.integer(month),
+                month = month.name[month])
+```
+
+##### Part 5
+
+```{r}
+head(as.integer(weather$date))
+```
+
+These are numeric representations for the dates. Specifically, they are the number of days since 1970-01-01 (known as the Unix epoch).
+
+```{r}
+mutate(weather, 
+       date_numeric = as.integer(weather$date),
+       day_of_week = (date_numeric + 1) %% 7 + 1)
+```
+
+#####  Part 6
+
+```{r}
+mutate(weather, 
+       classification = ifelse(total_rainfall > 3, 'wet',
+                               ifelse(mean_cloud < 4, 'sunny', 'cloudy')))
+```
+
+### Summarise
+
+#### Built-in Datasets
+
+##### Part 1
+
+```{r}
+summarise(mpg, cty_var = var(cty), hwy_var = var(hwy))
+```
+
+##### Part 2
+
+I will start using the pipe operator from this point onwards.
+
+```{r}
+mpg %>%
+  group_by(class) %>%
+  summarise(count = n())
+```
+
+##### Part 3
+
+```{r}
+summarise(iris,
+          Petal.Length.Median = median(Petal.Length),
+          Petal.Width.Median = median(Petal.Width),
+          Sepal.Length.Median = median(Sepal.Length),
+          Sepal.Width.Median = median(Sepal.Width))
+```
+
+There is actually an easier way to do this using `summarise_at()` though this set of functions can be quite difficult to get your head around.
+
+##### Part 4
+
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  summarise(min(price))
+```
+
+##### Part 5
+
+```{r}
+airquality %>%
+  group_by(Month) %>%
+  summarise(MeanOzone = mean(Ozone, na.rm = TRUE))
+```
+
+##### Part 6
+
+```{r}
+diamonds %>%
+  group_by(cut, color) %>%
+  summarise(range = diff(range(carat)))
+```
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+summarise(weather, median_rainfall = median(total_rainfall))
+```
+
+##### Part 2
+
+We will use a pipe for these next few parts to avoid having to use temporary objects.
+
+```{r}
+group_by(weather, mean_windspeed_beaufort) %>%
+  summarise(mean_windspeed = mean(mean_windspeed)) %>%
+  # remove missing values
+  filter(!is.na(mean_windspeed))
+```
+
+##### Part 3
+
+```{r}
+weather_expanded <- mutate(weather, 
+                           month = month.abb[as.integer(substr(date, 6, 7))],
+                           day = (as.integer(date) + 1) %% 7 + 1,
+                           weekday = between(day, 1, 5),
+                           bank_holiday = as.character(date) %in% c('2015-05-04',
+                                                                    '2015-05-25',
+                                                                    '2015-08-31'))
+```
+
+##### Part 4
+
+```{r}
+group_by(weather_expanded, bank_holiday) %>%
+summarise(mean_rainfall = mean(total_rainfall))
+```
+
+##### Part 5
+
+```{r}
+group_by(weather_expanded, day) %>%
+  summarise(max_sunshine = max(total_sunshine))
+```
+
+##### Part 6
+
+```{r}
+group_by(weather, max_gust_direction_cardinal) %>%
+  summarise(max_gust_speed = max(max_gust))
+```
+
+##### Part 7
+
+```{r}
+group_by(weather_expanded, month) %>%
+  summarise(num_days_100_percent_humid = sum(max_humidity == 100))
+```
+
+##### Part 8
+
+```{r}
+group_by(weather_expanded, weekday) %>%
+  summarise(cloud_variance = var(mean_cloud))
+```
+
+### Pipelines
+
+#### Built-in Datasets
+
+##### Part 1
+
+```{r}
+mpg %>%
+  filter(class != '2-seater') %>%
+  mutate(efficiency = (cty + hwy) / 2) %>%
+  group_by(manufacturer) %>%
+  summarise(max_efficiency = max(efficiency)) %>%
+  arrange(desc(max_efficiency))
+```
+
+##### Part 2
+
+```{r}
+iris %>%
+  mutate(Petal.Area = Petal.Width * Petal.Length,
+         Sepal.Area = Sepal.Width * Sepal.Length) %>%
+  ggplot(aes(x = Petal.Area, y = Sepal.Area, col = Species)) +
+    geom_point() +
+    geom_smooth(method = 'lm')
+```
+
+##### Part 3
+
+N/A
+
+#### The Weather Dataset
+
+##### Part 1
+
+```{r}
+weather_expanded %>%
+  filter(month == 'May') %>%
+  group_by(day) %>%
+  summarise(max_pressure = max(mean_pressure)) %>%
+  arrange(max_pressure)
+```
+
+##### Part 2
+
+```{r}
+weather_expanded %>%
+  filter(weekday) %>%
+  group_by(month) %>%
+  mutate(did_rain = total_rainfall > 0) %>%
+  summarise(mean(did_rain))
+```
+
+##### Part 3
+
+N/A
+
+## Going Beyond
+
+### Ranking
+
+#### Part 1
+
+Done.
+
+#### Part 2
+
+A dense rank makes the most sense here since we want to select all days with the second highest for each month.
+
+```{r}
+weather_expanded %>%
+  group_by(month) %>%
+  # low values have low rank so negate total_rainfall
+  mutate(rain_rank = dense_rank(-total_rainfall)) %>%
+  filter(rain_rank == 2)
+```
+
+#### Part 3
+
+```{r}
+mpg %>%
+  group_by(year) %>%
+  mutate(mileage_rank = dense_rank(cty)) %>%
+  filter(mileage_rank == 1) %>%
+  # we no longer need the rank column
+  select(-mileage_rank)
+```
+
+### Un-grouping
+
+#### Part 1
+
+We recieve the error ``Error: Column `Class` can't be modified because it's a grouping variable``.
+
+#### Part 2
+
+The error occurs when we run the `mutate` function.
+
+#### Part 3
+
+The problem is that we didn't ungroup before applying the mutate. We are therefore still grouped by `Class` and `Age` which means that we are not allowed to modify either of these until we have ungrouped.
+
