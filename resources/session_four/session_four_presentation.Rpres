@@ -358,7 +358,7 @@ Where Are We?
 
 * We now make a return to the transformation part of the data analysis pipeline
 * It's rare that a data analysis project will only concern a single table of data so in this section we learn how to combine tables to answer questions we are interested in
-* We will be using `dpylr` to help us do this using a new set of functions from the package
+* We will be using `dplyr` to help us do this using a new set of functions from the package
 
 ![Data Analysis Map - Transform](images/data_analysis_map_transform.png)
 
@@ -379,8 +379,8 @@ Introduction
 * A mutating join allows you to combine variables from two tables
 * This is performed by matching observations on a collection of columns (or single column) known as the key
 * There are different types of joins which handle missing values in different ways
-* Any join takes two main arguments
-  * A table to be joined with
+* Any join takes three main arguments
+  * Two tables which will be joined together
   * A single column name or vector of column names to be used as the key
 * The output of a join contains the shared keys as well as the other columns from both tables
   
@@ -430,7 +430,7 @@ Right Join
 * It preserves all keys that come from the table used as the right argument
 
 ```{r}
-left_join(band_members, band_instruments, by = 'name')
+right_join(band_members, band_instruments, by = 'name')
 ```
 
 * Here the result contains all 3 musicians featured in the `band_instruments` table
