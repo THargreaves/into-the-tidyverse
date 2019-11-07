@@ -76,7 +76,7 @@ Data Representations
 * You can represent the same underlying data in multiple ways
 * The following example shows four different ways to organise the same data
 * Each dataset shows the same values of four variables, `country`, `year`, `population`, and `cases`
-* Only one of these is tidy data. Which will discuss which one this is at a later point
+* Only one of these is tidy data. We will discuss which one this is at a later point
 
 
 
@@ -206,7 +206,7 @@ Tidy Data (cont.)
 * This interrelationship leads to an even simpler set of practical instructions:
 
   1. Put each dataset in tibble
-  2. Put each variable in it's own column
+  2. Put each variable in its own column
 
 
 * According to these rules, only the first representation is tidy
@@ -253,7 +253,7 @@ table4a
 * Here we have two columns, `1999` and `2000`, which do not represent variables
 * Instead they represent specific values of the `year` variable
 * As a consequence, it also violates the second rule - each observation must have its own row
-* This is because each row two observations, one from each year
+* This is because each row corresponds to two observations, one from each year
 
 Tidying the Dataset
 ====================================
@@ -294,7 +294,7 @@ table4a %>%
 Diagramming the Transformation
 ====================================
 
-* We can use the following diagram to show the gathering process we just performed:
+* We can use the following diagram to show the gathering process we just performed.
 
 ![Gathering](images/gathering.png)
 
@@ -369,7 +369,7 @@ table2 %>%
 Diagramming the Transformation
 ====================================
 
-* We can use the following diagram to show the spreading process we just performed:
+* We can use the following diagram to show the spreading process we just performed.
 
 ![Gathering](images/spreading.png)
 
@@ -378,6 +378,7 @@ Spreading and Gathering
 
 * As you might be able to guess from the common `key` and `value` arguments, `spread()` and `gather()` are opposites of each other and can be used to reverse each other's effects
 * `gather()` makes wide tables narrower and longer, whereas `spread()` makes long tables shorter and wider
+* A general rule of thumb is that wide tables are best for looking at data, whereas tall tables are best for performing analysis.
 
 Separating
 ====================================
@@ -446,7 +447,7 @@ table3 %>%
 Diagramming the Transformation
 ====================================
 
-* We can use the following diagram to show the spreading process we just performed:
+* We can use the following diagram to show the spreading process we just performed.
 
 ![Separating](images/separating.png)
 
@@ -511,10 +512,13 @@ table5 %>%
 6 China       2000  213766/1280428583
 ```
 
+* `unite()` does not have a `convert` parameter so we would have to perform this conversion manually
+* In this case we would use `mutate(year = as.integer(year))`
+
 Diagramming the Transformation
 ====================================
 
-* We can use the following diagram to show the spreading process we just performed:
+* We can use the following diagram to show the spreading process we just performed.
 
 ![Separating](images/uniting.png)
 
@@ -530,7 +534,7 @@ Where Are We?
 ====================================
 
 * We now make a return to the transformation part of the data analysis pipeline
-* It's rare that a data analysis only contains a single table of data so in this section we learn how to combine tables to answer questions we are interested in
+* It's rare that a data analysis project will only concern a single table of data so in this section we learn how to combine tables to answer questions we are interested in
 * We will be using `dpylr` to help us do this using a new set of functions from the package
 
 ![Data Analysis Map - Transform](images/data_analysis_map_transform.png)
@@ -599,8 +603,7 @@ Inner Join
 
 
 ```r
-band_members %>%
-  inner_join(band_instruments, by = 'name')
+inner_join(band_members, band_instruments, by = 'name')
 ```
 
 ```
@@ -622,8 +625,7 @@ Left Join
 
 
 ```r
-band_members %>%
-  left_join(band_instruments, by = 'name')
+left_join(band_members, band_instruments, by = 'name')
 ```
 
 ```
@@ -645,8 +647,7 @@ Right Join
 
 
 ```r
-band_members %>%
-  left_join(band_instruments, by = 'name')
+left_join(band_members, band_instruments, by = 'name')
 ```
 
 ```
@@ -668,8 +669,7 @@ Full Join
 
 
 ```r
-band_members %>%
-  full_join(band_instruments, by = 'name')
+full_join(band_members, band_instruments, by = 'name')
 ```
 
 ```
@@ -710,7 +710,7 @@ names(band_instruments2)
 
 
 ```r
-band_members %>% inner_join(band_instruments2, by = c("name" = "artist"))
+inner_join(band_members, band_instruments2, by = c("name" = "artist"))
 ```
 
 ```
