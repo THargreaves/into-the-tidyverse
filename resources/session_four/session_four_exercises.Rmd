@@ -1,0 +1,208 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Four Exercises"
+output: html_notebook
+---
+
+Remember, before you can use the tidyverse, you need to load the package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Tidy Data
+
+Note that the sample tables used in the presentation can be accessed once the tidyverse is imported by using `table1`, `table2`, `table3`, `table4a`, and `table4b`.
+
+#### Understanding Tidy-ness
+
+1. (**Taken form R4DS**) Using prose, describe to your partner how the variables and observations are organised in each of the sample tables
+2. Discuss with your partner whether the weather dataset tidy data?
+3. Which of the following representations of the `ChickWeight` dataset is tidy? Why are the others not?
+
+```{r echo=FALSE}
+ChickWeight %>%
+  as_tibble() %>%
+  spread(key = 'Time', value = 'weight') %>%
+  rename_at(3:14, ~paste0('Day ', .)) %>%
+  head()
+```
+
+```{r}
+ChickWeight %>%
+  as_tibble() %>%
+  head()
+```
+
+```{r}
+ChickWeight %>%
+  as_tibble() %>%
+  unite("Weight/Time", weight, Time, sep = '/') %>%
+  head()
+```
+
+4. You want to create a line plot showing how mobile phone usage has changed over time in the seven main geographic regions. Which of the following tables is this easiest to do with?
+
+```{r}
+WorldPhones %>% 
+  as_tibble() %>%
+  mutate(Year = c(1951, 1956:1961)) %>%
+  select(Year, everything())
+```
+
+```{r}
+WorldPhones %>% 
+  as_tibble() %>%
+  mutate(Year = c(1951, 1956:1961)) %>%
+  select(Year, everything()) %>%
+  gather(key = 'Country', value = 'Number of Phones', N.Amer:Mid.Amer) %>%
+  head(n = 10)
+```
+
+5. Which of the above forms is best if you just wish to view the raw data?
+
+### Spreading and Gathering
+
+(**Taken form R4DS**)
+
+1. Why are `gather()` and `spread()` not perfectly symmetrical? Carefully consider the following example:
+
+```{r}
+stocks <- tibble(
+  year = c(2015, 2015, 2016, 2016),
+  half = c(1, 2, 1, 2),
+  return = c(1.88, 0.59, 0.92, 0.17)
+)
+stocks %>%
+  spread(year, return) %>%
+  gather("year", "return", `2015`, `2016`)
+```
+
+(Hint: look at the variable types and think about column _names_.)
+
+2. Both `spread()` and `gather()` have a `convert` argument. What does it do?
+
+3. Why does this code fail?
+
+```{r eval=FALSE}
+table4a %>%
+  gather(1999, 2000, key = "year", value = "cases")
+#> Error in eval(expr, envir, enclos):
+#> Position must be between 0 and n
+```
+
+4. Why does spreading this tibble fail? How could you add a new column to fix the problem? Look at the help page for `distinct()`. Could this offer an alternative solution?
+
+```{r}
+people <- tribble(
+  ~name,             ~key,    ~value,
+  #-----------------|--------|------
+  "Phillip Woods",   "age",       45,
+  "Phillip Woods",   "height",   186,
+  "Phillip Woods",   "age",       50,
+  "Jessica Cordero", "age",       37,
+  "Jessica Cordero", "height",   156
+)
+```
+
+5. Tidy this simple tibble. Do you need to spread or gather it? What are the variables?
+
+```{r}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+
+### Separating and Uniting
+
+(**Taken form R4DS**)
+
+1. What do the `extra` and `fill` arguments do in `separate()`? Experiment with the various options for the following two toy datasets:
+
+```{r}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("one", "two", "three"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("one", "two", "three"))
+```
+
+2. Both `unite()` and `separate()` have a `remove` argument. What does it do? Why would you set it to `FALSE`?
+
+3. (**HARD**) Compare and contrast `separate()` and `extract()`. Why are there three variations of separation (by position, by separator, and with groups), but only one unite?
+
+### A Practical Example
+
+1. Import the file `olympics.csv` from this session's data folder
+2. Explore the dataset using `summary()`, `head()` and `str()`
+3. Recreate the following plot
+
+```{r echo=FALSE}
+read_csv("data/olympics.csv", col_types = cols()) %>%
+  group_by(Team, Year, Medal) %>%
+  summarise(Count = n()) %>%
+  spread(Medal, Count) %>%
+  mutate(Total = sum(Bronze, Silver, Gold, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = Total, col = Team)) +
+    geom_line(size = 2) +
+    theme_light() +
+    labs(y = "Total Number of Medals",
+         title = "Olympic Medal Counts in a Selection of Eastern European Countries",
+         col = "Country")
+```
+
+## Relational Data
+
+### Built-in Datasets
+
+1. Install the package `nycflights13` using `install.packages()` and load it with `library()`
+2. Take a look at the columns of the `planes`, `flights`, and `carrier` datasets. The following diagram may help with understanding the relations.
+
+[Relations in the nycflights13 database](images/relational-nycflights.png)
+
+3. Join the `flights` and `carrier` datasets using the shared column `carrier`. Only include observations that appear in the `flights` dataset
+4. What is the mean arrival delay for each carrier?
+5. Join the `planes` and `flights` datasets using the shared column `carrier`. Only include observations that appear in both datasets
+6. What is the shortest length of flight for each plane?
+7. Which join should we use to fill in the blank below? The goal is to find the total number of sales for each _current_ employee and see how this correlates with years of experience.
+
+```{r eval=FALSE}
+current_employees <- tibble(name = c('Ann', 'Brian', 'Dan', 'Elsa'),
+                            years_experience = c(2.5, 4, 1.5, 0))
+sales <- tibble(value = c(7, 5, 8, 4, 9, 4, 8, 5, 6, 7, 2, 5, 6, 2),
+                name = c('Brian', 'Ann', 'Brian', 'Dan', 'Brian', 'Cat', 'Brian',
+                         'Ann', 'Ann', 'Dan', 'Dan', 'Cat', 'Ann', 'Dan'))
+
+sales %>%
+  {???}_join(current_employees, by = 'name') %>%
+  group_by(name, years_experience) %>%
+  summarise(total_sales = sum(value)) %>%
+  mutate(total_sales = ifelse(is.na(total_sales), 0, total_sales)) %>%
+  ggplot(aes(x = years_experience, y = total_sales)) +
+    geom_point() +
+    geom_smooth(method = 'lm')
+```
+
+
+### The Weather Dataset
+
+1. Cleaned CSVs of the Exexcel large dataset can now be found [here](https://github.com/THargreaves/edexcel-large-dataset-extractor)
+2. Import two locations for the same year into R, select a column of interest in both of them and join the datasets
+3. Produce a graphic showing how the variable in both locations differ
+4. Attempt to replicate the workflow at the end of this week's presentation
+
+## Going Beyond
+
+### Missing Values
+
+1. What does the `complete()` function do? When might you want to use it?
+2. What does the `fill()` function do? When might you want to use it?
+3. How do the `fill` arguments for `spread()` and `complete()` differ?
+4. What does the direction argument to `fill()` do?
+
+### Filtering Joins
+
+1. Read the documentation for `semi_join()` and `anti_join()`
+2. Using the `flights` and `planes` datasets imported above, filter `planes` to only show planes that have flown at least 100 times
