@@ -1,0 +1,320 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Four Solutions"
+output: html_notebook
+---
+
+As always, we start by loading the tidyverse package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Tidy Data
+
+### Understanding Tidy-ness
+
+#### Part 1
+
+In the first table, each row represents a country/year combination. The columns `cases` and `population` contains the values of those variables.
+
+In the second table, each row corresponds to a country/year/variable combination. The column count contains the values of both the variabels `cases` and `population` depending on which row we look at.
+
+In the third table, each row represents a country/year combination as in the first, but now the `rate` column contains values of both the variables `cases` and `population`.
+
+The last table is split into two. The first relates to the number of cases and the latter to the populations. Within each table, each row represents a country and each column represents a value of the `year` variable and the cells are the value of the table's variable for that country and year.
+
+#### Part 2
+
+The weather dataset is indeed tidy. Each row corresponds to a specific day and all of the columns represent variables that can be measured for each observation. No cell shares more than one value. 
+
+#### Part 3
+
+THe first form is not tidy. Here the columns `Day 0`, `Day 2`, etc. are values of the variable `Time`.
+
+The second table is indeed tidy. Each column represents a variable and our data is in one table.
+
+The last table is not tidy since there are cells containing more than one value.
+
+#### Part 4
+
+The latter table is much easier to work with. Since the variable `Country` has its own column rather than having its values spread out across multiple columns, we can easily map the colour aesthetic to this variable.
+
+#### Part 5
+
+The first table is much better if we only plan to look at the data. It is much easier to find the mobile phone usage of a particular region in a particular year in this format and we can also see how different regions compare in a given year without having to filter the dataset first unlike with the latter form.
+
+### Spreading and Gathering
+
+#### Part 1
+
+We we spread a numeric column, its values will be converted to strings since they are now used as column names. When we gather these values back, by default, they will remain as strings leaving us with a character column.
+
+#### Part 2
+
+The above issue can be solved using `convert = TRUE`. This will look at any new columns created by `gather()` and `spread()` an use a heuristic to assign them a (hopefully) correct type.
+
+#### Part 3
+
+We need to put numeric column names in backticks ('`'). Otherwise, in this case, R will look for the 1999th and 2000th column. Since these don't exist, we recieve an error. This also offers us a useful way to gather columns for which we know their place in the dataset but not their names.
+
+**Bonus Tip**: We could use something like `3:ncol(my_dataframe)` to gather all columns including and after the third regardless of how many their are or what they are called.
+
+#### Part 4
+
+We can't spread this tibble because we have two ages for the name 'Phillip Woods'. There are two reasons this may be and we would handle each of them differently. 
+
+The first reason could be that there are just two people called Phillip Woods and we are just missing the height for the latter. If this is the case, we need a way to distingish the Phillips from each other. We can do this by adding a new column which will contain a distinct observation count. We can do this in the following way.
+
+```{r echo=FALSE}
+people <- tribble(
+  ~name,             ~key,    ~value,
+  #-----------------|--------|------
+  "Phillip Woods",   "age",       45,
+  "Phillip Woods",   "height",   186,
+  "Phillip Woods",   "age",       50,
+  "Jessica Cordero", "age",       37,
+  "Jessica Cordero", "height",   156
+)
+```
+
+```{r}
+people2 <- people %>%
+  group_by(name, key) %>%
+  mutate(obs = row_number())
+people2
+```
+
+Now when we spread the key/value pair, we don't recieve an error.
+
+```{r}
+people2 %>%
+  spread(key, value)
+```
+
+We could now drop the `obs` column using `select()`.
+
+<hr>
+
+Another possibility is that this is just a data entry. We can therefore remove the duplicate by using the `distinct()` function with `.keep_all` set to `TRUE`.
+
+```{r}
+people %>%
+  distinct(name, key, .keep_all = TRUE) %>%
+  spread(key, value)
+```
+
+This will only keep the first occurence of each name/key pair. If you wanted to keep a specific pair (say, the highest age) using a filter would be more appropriate.
+
+#### Part 5
+
+We can tidy this tibble using gather. This is because the columns `male` and `female` are actually values of the variable `sex`.
+
+```{r echo=FALSE}
+preg <- tribble(
+  ~pregnant, ~male, ~female,
+  "yes",     NA,    10,
+  "no",      20,    12
+)
+```
+
+```{r}
+preg %>%
+  gather(male, female, key = 'sex', value = 'count')
+```
+
+### Separating and Uniting
+
+#### Part 1
+
+The `extra` parameter controls what happens when a value is split into too many pieces. There are three valid options:
+
+* "warn" (the default) will emit a warning and drop extra values
+
+* "drop" will drop any extra values but without warning you
+
+* "merge" will only make as many splits as you specify with `into` and then use the rest of the string without splitting as the last value.
+
+The `fill` parameter does the opposite, controlling what to do when a value is split into too few pieces. It again has three valid options:
+
+* "warn" (the default) will emit a warning and fill with missing values on the right
+
+* "right" will fill with missing values on the right but without warning
+
+* "left" will fill with missing values on the left
+
+#### Part 2
+
+The `remove` argument controls whether or not the columns used as input to `unite()` and `separate()` should be removed after use. By default it is set to `TRUE` (i.e. these columns are removed). You may want to set this to `FALSE` if you were to separate a column in multiple ways and so don't want it to disappear after the first call. 
+
+#### Part 3
+
+`separate()` splits a column into multiple columns by separator, if the `sep` argument is a character vector, or by character positions, if `sep` is numeric.
+
+`extract()` on the otherhand uses a regular expression to specify groups in a character vector use these as the values of the new columns. This is certainly more flexible that `separate()` and allows you to ignore parts of the original strings when extracting.
+
+Both `separate()` and `extract()` convert a single column to many columns whereas `unite` converts many columns into one with a choice of separator to include between the column values.
+
+With `extract()` and `separate()` only one column can be choses, but there are many choices regarding how to split this column into many. With `unite()` however, there are many choices of which columns to combine, but only a single choice as to how to combine their contents.
+
+### A Practical Example
+
+We will complete all parts in one go.
+
+```{r}
+read_csv('data/olympics.csv', col_types = cols(Year = col_integer())) %>%
+  filter(Team %in% 
+      c('Belgium', 'France', 'Germany', 'Great Britain', 'Italy', 'Spain')) %>%
+  group_by(Team, Year, Medal) %>%
+  summarise(Count = n()) %>%
+  spread(Medal, Count) %>%
+  mutate(Total = sum(Bronze, Silver, Gold, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = Total, col = Team)) +
+    geom_line(size = 2) +
+    labs(
+      y = "Total Number of Medals",
+      col = "Country",
+      title = "Olympic Medal Counts in a Selection of Eastern European Countries"
+    ) +
+    # remove the grey background
+    theme_light()
+  
+```
+
+### Relational Data
+
+#### Built-in Datasets
+
+##### Part 1
+
+```{r}
+library(nycflights13)
+```
+
+##### Part 2
+
+Done.
+
+##### Part 3
+
+We will look at the column names to show that the tables have been joined.
+
+```{r}
+flights %>%
+  left_join(airlines, by = 'carrier') %>%
+  names()
+```
+
+We can see `name` from the `airlines` table showing that our join was successful.
+
+##### Part 4
+
+```{r}
+flights %>%
+  left_join(airlines, by = 'carrier') %>%
+  group_by(name) %>%
+  summarise(mean_arrival_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  # arrange so that worst delay is at the top
+  arrange(desc(mean_arrival_delay))
+```
+
+Note that we need to remove `NA`s.
+
+##### Part 5
+
+As before,
+
+```{r}
+flights %>%
+  inner_join(planes, by = 'tailnum') %>%
+  names()
+```
+
+Note that we now have too year columns, `year.x` and `year.y`. The first is the year that a flight took place and the latter is the year a plane was registered. We could rename these if we so wished.
+
+##### Part 6
+
+```{r}
+flights %>%
+  inner_join(planes, by = 'tailnum') %>%
+  group_by(model) %>%
+  summarise(shortest_flight = min(air_time, na.rm = TRUE)) %>%
+  arrange(shortest_flight)
+```
+
+##### Part 7
+
+A right join is appropriate. We want observations for every current employee regardless of whether they have made any sales (as we later replace no sales with a total of zero). We also don't want any ex-employees to be included even if they appear in the sales dataset.
+
+#### The Weather Dataset
+
+##### Part 1
+
+Great!
+
+##### Part 2
+
+```{r}
+heathrow <- read_csv(paste0("https://raw.githubusercontent.com/THargreaves/",
+                            "edexcel-large-dataset-extractor/master/output/",
+                            "heathrow_2015.csv"), col_types = cols())
+leuchars <- read_csv(paste0("https://raw.githubusercontent.com/THargreaves/",
+                            "edexcel-large-dataset-extractor/master/output/",
+                            "leuchars_2015.csv"), col_types = cols())
+```
+
+We'll only keep columns of interest.
+
+```{r}
+heathrow <- heathrow %>%
+  select(date, mean_temperature)
+leuchars <- leuchars %>%
+  select(date, mean_temperature)
+```
+
+And we join. Any join will do since the data is complete.
+
+```{r}
+weather <- heathrow %>%
+  inner_join(leuchars, by = "date", suffix = c('.heathrow', '.leuchars'))
+```
+
+We manually specify the suffixes for duplicate column names using `suffix = ...`.
+
+##### Part 3
+
+I will ask how well the temperatures correlate.
+
+```{r}
+ggplot(weather, aes(x = mean_temperature.heathrow, 
+                    y = mean_temperature.leuchars)) +
+  geom_point(col = 'orange') +
+  geom_smooth(method = 'lm', col = 'grey30', se = FALSE) + 
+  theme_minimal() +
+  labs(x = "Mean Temperature in Heathrow (°C)",
+       y = "Mean Temperature in Leuchars (°C)",
+       title = "Correlation between temperatures in Heathrow and Leuchars")
+```
+
+## Going Beyond
+
+### Missing Values
+
+These questions can all be answered by looking at the relevant help documents. Remember, you can access these using the `?` operator.
+
+### Filtering Joins
+
+#### Part 1
+
+As above.
+
+#### Part 2
+
+```{r}
+planes %>%
+  semi_join(
+    flights %>% group_by(tailnum) %>% filter(n() >= 400),
+    by = 'tailnum'
+  )
+```
+
