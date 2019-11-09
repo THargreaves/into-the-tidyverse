@@ -28,13 +28,13 @@ ChickWeight %>%
   head()
 ```
 
-```{r}
+```{r echo=FALSE}
 ChickWeight %>%
   as_tibble() %>%
   head()
 ```
 
-```{r}
+```{r echo=FALSE}
 ChickWeight %>%
   as_tibble() %>%
   unite("Weight/Time", weight, Time, sep = '/') %>%
@@ -43,14 +43,14 @@ ChickWeight %>%
 
 4. You want to create a line plot showing how mobile phone usage has changed over time in the seven main geographic regions. Which of the following tables is this easiest to do with?
 
-```{r}
+```{r echo=FALSE}
 WorldPhones %>% 
   as_tibble() %>%
   mutate(Year = c(1951, 1956:1961)) %>%
   select(Year, everything())
 ```
 
-```{r}
+```{r echo=FALSE}
 WorldPhones %>% 
   as_tibble() %>%
   mutate(Year = c(1951, 1956:1961)) %>%
@@ -160,12 +160,12 @@ read_csv("data/olympics.csv", col_types = cols()) %>%
 1. Install the package `nycflights13` using `install.packages()` and load it with `library()`
 2. Take a look at the columns of the `planes`, `flights`, and `carrier` datasets. The following diagram may help with understanding the relations.
 
-[Relations in the nycflights13 database](images/relational-nycflights.png)
+![Relations in the nycflights13 database](images/relational-nycflights.png)
 
-3. Join the `flights` and `carrier` datasets using the shared column `carrier`. Only include observations that appear in the `flights` dataset
+3. Join the `flights` and `airlines` datasets using the shared column `carrier`. Only include observations that appear in the `flights` dataset
 4. What is the mean arrival delay for each carrier?
-5. Join the `planes` and `flights` datasets using the shared column `carrier`. Only include observations that appear in both datasets
-6. What is the shortest length of flight for each plane?
+5. Join the `planes` and `flights` datasets using the shared column `tailnum`. Only include observations that appear in both datasets
+6. What is the shortest length of flight for plane model?
 7. Which join should we use to fill in the blank below? The goal is to find the total number of sales for each _current_ employee and see how this correlates with years of experience.
 
 ```{r eval=FALSE}
@@ -205,4 +205,4 @@ sales %>%
 ### Filtering Joins
 
 1. Read the documentation for `semi_join()` and `anti_join()`
-2. Using the `flights` and `planes` datasets imported above, filter `planes` to only show planes that have flown at least 100 times
+2. Using the `flights` and `planes` datasets imported above, filter `planes` to only show planes that have flown at least 400 times
