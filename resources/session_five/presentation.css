@@ -1,0 +1,18 @@
+.reveal code {
+  border-radius: 5px; 
+  border: 1px solid #BCBEC0;
+  padding: 5px;
+}
+
+.reveal pre code {
+  border-radius: 0; 
+  border: 0;
+}
+
+.reveal .progress {
+  height: 10px;
+}
+
+.reveal .controls {
+  bottom: 10px;
+}
