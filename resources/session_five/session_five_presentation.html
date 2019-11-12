@@ -1344,9 +1344,9 @@ ggplot(data = diamonds) + geom_bar(mapping = aes(x = cut, fill = cut))
 <div class="slideContent" >
 <ul>
 <li>ggplot comes with several complete themes which control all non-data display</li>
-<li>The default theme is <code>theme_default()</code> - which ironically is one of the ugliest</li>
-<li>You can find a list of all themes by looking at the help page for any theme (i.e. <code>?theme_default</code>)</li>
-<li>Some good-looking themes to try out include <code>theme_grey()</code>, <code>theme_bw()</code>, and <code>theme_minimal()</code></li>
+<li>The default theme is <code>theme_grey()</code> - which ironically is one of the ugliest</li>
+<li>You can find a list of all themes by looking at the help page for any theme (e.g. <code>?theme_grey</code>)</li>
+<li>Some good-looking themes to try out include <code>theme_classic()</code>, <code>theme_bw()</code>, and <code>theme_minimal()</code></li>
 <li>You can change the theme of a plot by adding a theme function as a new layer</li>
 </ul>
 
@@ -1364,7 +1364,7 @@ ggplot(data = diamonds) + geom_bar(mapping = aes(x = cut, fill = cut))
 <div class="slideContent" >
 <ul>
 <li>The default theme for each plot you create can be found by calling <code>theme_get()</code></li>
-<li>At the start of a new R session, this will always be <code>theme_classic()</code></li>
+<li>At the start of a new R session, this will always be <code>theme_grey()</code></li>
 <li>You can override this default by using, say, <code>theme_set(theme_minimal())</code></li>
 <li><code>theme_set()</code> returns the old theme when called</li>
 <li>It is good practice to use <code>old_theme &lt;- theme_set(theme_minimal())</code> so that the original theme can be restored if needed</li>

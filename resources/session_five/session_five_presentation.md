@@ -374,9 +374,9 @@ Complete Themes
 ====================================
 
 * ggplot comes with several complete themes which control all non-data display
-* The default theme is `theme_default()` - which ironically is one of the ugliest
-* You can find a list of all themes by looking at the help page for any theme (i.e. `?theme_default`)
-* Some good-looking themes to try out include `theme_grey()`, `theme_bw()`, and `theme_minimal()`
+* The default theme is `theme_grey()` - which ironically is one of the ugliest
+* You can find a list of all themes by looking at the help page for any theme (e.g. `?theme_grey`)
+* Some good-looking themes to try out include `theme_classic()`, `theme_bw()`, and `theme_minimal()`
 * You can change the theme of a plot by adding a theme function as a new layer
 
 
@@ -391,7 +391,7 @@ Default Themes
 ====================================
 
 * The default theme for each plot you create can be found by calling `theme_get()`
-* At the start of a new R session, this will always be `theme_classic()`
+* At the start of a new R session, this will always be `theme_grey()`
 * You can override this default by using, say, `theme_set(theme_minimal())`
 * `theme_set()` returns the old theme when called
 * It is good practice to use `old_theme <- theme_set(theme_minimal())` so that the original theme can be restored if needed
