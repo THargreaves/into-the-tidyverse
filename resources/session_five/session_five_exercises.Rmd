@@ -1,0 +1,105 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Five Exercises"
+output: html_notebook
+---
+
+**Note:** This exercise sheet is much shorter than the rest to allow more time in preparation for the DataViz Battle. If you feel like you need more practice with these topics, please have a look at the last part of chapter 3 from [R4DS](https://r4ds.had.co.nz/data-visualisation.html).
+
+Remember, before you can use the tidyverse, you need to load the package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Missing Pieces
+
+### R Scripts
+
+1. Create an R Script that will produce a histogram of the city mileages in the `mpg` dataset
+2. Run this script
+3. Why is it important to include library imports at the start of our R scripts?
+4. Create an R Script containing a pipeline that takes the `diamonds` dataset, groups by `color`, and summarises the mean of each group
+5. Leave a blank line and then add code to create a bar chart of the classes in `mpg`
+6. Place your cursor on the first line of the script. What happens when you use `ctrl-enter`? What code is executed? Where does your cursor move to?
+
+### Saving output
+
+1. Write the head of the `iris` dataset to a CSV file called 'iris.csv'
+2. Now, append the tail of the same dataset to the same CSV file
+3. Instead, overwrite the existing CSV with just the head
+4. What happens if you try to write a CSV to a directory (folder) that doesn't exist?
+5. Create a jittered scatter plot of highway mileage against engine size for the `mpg` dataset.  Use `ggsave()` to save the output as a PNG image
+6. Create a boxplot of price for each cut in the `diamonds` dataset. Save this as an A5 PDF. You may find the `units = "cm` argument useful.
+
+## Advanced Data Visualisation
+
+### Statistical Transformations
+
+1. In our proportional bar chart we had to write `group = -1`. Why was that needed and what would happen without it?
+
+```{r eval=FALSE}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = -1))
+```
+
+2. What are the default stats for `geom_line()`, `geom_histogram()`, and `geom_density()`?
+
+3. What variables does `stat_smooth()` compute? What parameters control its behaviour?
+
+### Positional Adjustments
+
+1. Create a bar chart of the `cut` variable from the `diamonds` dataset filled by `clarity`. Use `position = "identity"` and set transparency to a low value so all bars are visible. Is this a good plot?
+
+2. Repeat the above plot but now use `position = "dodge"` and then `position = "fill"`
+
+3. Which of the above plots is best for answering questions regarding what distribution the clarities have for each cut?
+ 
+4. Create a jitter plot both by using `geom_point()` with `position = "jitter"` and `geom_jitter()`
+
+5. What parameters can be used to control the behaviour of `geom_jitter()`? Instead of using `position = "jitter"`, use `position = position_jitter(...)` and confirm that you can pass in these same parameters
+
+6. Compare and contrast the use of `geom_jitter()` and `geom_count()` in plotting `hwy` against `cty` with the `mpg` dataset
+
+### Coordinate Systems
+
+1. Create a horizontal bar plot of the mean price for each cut for the `diamonds` dataset. You will need to use `group_by()`, `summarise()` and then either `geom_col()` or `geom_bar()` with `stat = "identity"`
+
+2. Create a bar plot of the cylinder numbers in the `mpg` dataset and convert it into a Coxcomb plot using `coord_polar("y")` (alternatively use `coord_flip()` followed by `coord_polar()`)
+
+3. Create a pie chart of any appropriate variable you wish from the `diamonds` dataset
+
+4. What does the plot below tell you about the relationship between city and highway mileage in the `mpg` dataset? Why is `coord_fixed()` important and what does `geom_abline()` do?
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point() + 
+  geom_abline() +
+  coord_fixed()
+```
+
+### Theming
+
+1. Create hex plot of petal length and width with the `iris` dataset. Apply different themes to this and decide on your favourite
+
+2. Create a scatter plot of sepal length by width coloured by species. Use `theme(legend.position = "bottom")` to move the legend. What about `"left"` and `"top"`? What does `legend.position = "none"` do?
+
+3. Create a plot of your choice and use the `theme()` function to make the gridlines green
+
+4. How can we use theming to improve the look of the pie chart we generated earlier?
+
+## Going Beyond
+
+The DataViz battle is your opportunity to 'go beyond' so this section will be short this week. All it will contain are some suggested areas to look at to help improve your plot and improve your chances of winning the prize for an innovative plot.
+
+### Further Research
+
+1. Look at the latest ggplot cheatsheet [here](https://rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf). What geometries have we not mentioned? 
+
+2. Read the section titled 'Statistical transformations' from Chapter 3 of [R4DS](https://r4ds.had.co.nz/data-visualisation.html). This goes into more detail regarding the interplay between stats and geometries. Try creating a bar chart using `stat_count()`
+
+3. Look at the help page for `coord_cartesian()`. How can we use this to zoom in on our plot
+
+4. Read [this](http://www.sthda.com/english/wiki/ggplot2-axis-scales-and-transformations) guide on axis scale and transformations in ggplot. In particular, have a look at the `scale_*_date()` family of functions
+
+5. Read [this](https://ggplot2.tidyverse.org/reference/labeller.html) page of the ggplot documentation, showing how to setup custom facet labels
