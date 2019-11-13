@@ -1,10 +1,10 @@
 # An Introduction to the Tidyverse
 
-## About this repository
+## About This Repository
 
 This repository contains slides, exercise sheets, and solution sheets for my course, 'An Introduction to the Tidyverse'. This was first taught at Alsager Sixth Form during the Autumn term of 2019 and has since been adapted for use at the Macclesfield AstraZeneca coding network. This repository is twinned with [this other repository](https://github.com/THargreaves/edexcel-large-dataset-extractor) which contains a script to extract and clean the contents of the Edexcel large dataset into CSV files as well as the output of running said script. The repository is designed to be completely self-contained, with any images and data used in the presentations or exercises included in each session's data folder. You can use the navigation links below to find relevant resources and below that a few words of guidance can be found.
 
-## About the course
+## About the Course
 
 'An Introduction to the Tidyverse' does exactly what it says on the tin. This is an intensive 5-week course which aims to take someone from a coding-zero to tidyverse-hero in as little time as possible. Each session is composed of a rapid-fire presentation introducing different elements of the tidyverse as well as an exercise sheet to help consolidate the ideas presented in the slideshow.
 
