@@ -65,7 +65,7 @@ ggplot(data = diamonds) +
 
 1. Create a horizontal bar plot of the mean price for each cut for the `diamonds` dataset. You will need to use `group_by()`, `summarise()` and then either `geom_col()` or `geom_bar()` with `stat = "identity"`
 
-2. Create a bar plot of the cylinder numbers in the `mpg` dataset and convert it into a Coxcomb plot using `coord_polar("y")` (alternatively use `coord_flip()` followed by `coord_polar()`)
+2. Create a bar plot of the cylinder numbers in the `mpg` dataset and convert it into a Coxcomb plot using `coord_polar()`
 
 3. Create a pie chart of any appropriate variable you wish from the `diamonds` dataset
 
