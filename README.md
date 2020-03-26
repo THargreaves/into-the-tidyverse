@@ -62,6 +62,8 @@ Below you can find links to the content for each session. Note, that when attemp
 
 * [Exercises](https://thargreaves.github.io/introtothetidyverse/resources/session_five/session_five_exercises.nb.html#/)
 
+* [Solutions](https://thargreaves.github.io/introtothetidyverse/resources/session_five/session_five_solutions.nb.html#/)
+
 ## Help
 
 ### Importing Datasets

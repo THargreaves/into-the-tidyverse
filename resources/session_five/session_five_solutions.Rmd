@@ -1,0 +1,263 @@
+---
+title: "An Introduction to the Tidyverse"
+subtitle: "Session Four Solutions"
+output: html_notebook
+---
+
+As always, we start by loading the tidyverse package.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+
+## Missing Pieces
+
+### R Scripts
+
+#### Part 1 & 2
+
+You'll have to trust me that I've done these.
+
+#### Part 3
+
+If you only load R packages via the console, when you share your script the new user will have to figure out which packages need to be loaded by looking at the code or responding to R's error messages. It would be much easier for them if you imported libraries at the top of the script so it becomes clear what is needed and all imports will happen automatically.
+
+Remember, there is no harm in importing a library twice so feel free to load a package via the console alongside including imports at the top of your script. Also, note that it is generally made practice to include `install.packages(...)` in your code. Leave package installation up to the user but make this easier by including your imports at the top of the script to be easily referenced.
+
+#### Part 4 & 5
+
+We're having to do a lot of trusting today.
+
+#### Part 6
+
+R will run all code that makes up the pipeline then move the cursor to the start of the next block of code, skipping the whitespace.
+
+### Saving Output
+
+#### Part 1
+
+```{r eval=FALSE}
+write_csv(head(iris), "iris.csv")
+```
+
+#### Part 2
+
+```{r eval=FALSE}
+write_csv(tail(iris), "iris.csv", append = TRUE)
+```
+
+#### Part 3
+
+```{r eval=FALSE}
+write_csv(head(iris), "iris.csv")
+```
+
+#### Part 4
+
+```{r eval=FALSE}
+write_csv(iris, "non_existant_folder/iris.csv")
+```
+
+```{r echo=FALSE}
+warning('Error in open.connection(path, "wb") : cannot open the connection')
+```
+
+#### Part 5
+
+Even though we don't have to specify the plot to save (ggplot will default to using the last displayed one), if we want to save without explicitly plotting the graph, we will need to pass the plot in directly using the second parameter of the `ggsave()` function.
+
+```{r eval=FALSE}
+p <- ggplot(mpg, aes(displ, hwy)) +
+  geom_point()
+ggsave('mpg_plot.png', p)
+```
+
+#### Part 6
+
+```{r eval=FALSE}
+p <- ggplot(diamonds, aes(cut, price)) +
+  geom_boxplot()
+ggsave('diamond_plot.pdf', p, width = '21', height = '14.8', units = 'cm')
+```
+
+## Advanced Data Visualisation
+
+### Statistical Transformations
+
+#### Part 1
+
+The default grouping variable for a bar chart is the variable mapped to the x aesthetic. Therefore, if we don't specify `group = -1` (i.e. don't use groups), each bar will have a height of one since it makes up the entire proportion of its group. 
+
+```{r}
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x = cut, y = ..prop..))
+```
+
+#### Part 2
+
+As mentioned in the presentation, the help documents for the relevant functions will be useful. The default stats are:
+
+* `geom_line()` — `"identity"`
+* `geom_histogram()` — `"bin"`
+* `geom_density()` — `"density"`
+
+#### Part 3
+
+Again, the help files can help.
+
+The computed variables are `y`, `ymin`, `ymax`, and `se`. There are many parameters which control the behaviour of `stat_smooth()`, the most important of which being `method`, `formula`, and `level` (width of confidence intervals).
+
+### Positional Arguments
+
+#### Part 1
+
+```{r}
+ggplot(diamonds, aes(cut, fill = clarity)) +
+  geom_bar(position = 'identity', alpha = 0.2)
+```
+
+It is incredibly difficult to read this plot. 
+
+#### Part 2
+
+A much more appropriate approach would be to have the bars side-by-side using `position = "dodge"`.
+
+```{r}
+ggplot(diamonds, aes(cut, fill = clarity)) +
+  geom_bar(position = 'dodge')
+```
+
+Notice that we no longer need to set the transparency of the bars since there is no overlap. Alternatively, we could use `position = "fill"`.
+
+```{r}
+ggplot(diamonds, aes(cut, fill = clarity)) +
+  geom_bar(position = 'fill')
+```
+
+#### Part 3
+
+The last plot (`postion = "fill"`) is the most appropriate for this use case since we don't have to worry about the exact quantities of each cut-clarity pair but rather how the cut impacts the distribution of the clarity.
+
+#### Part 4
+
+```{r}
+ggplot(iris, aes(Petal.Length, Petal.Width)) +
+  geom_point(position = 'jitter')
+
+ggplot(iris, aes(Petal.Length, Petal.Width)) +
+  geom_jitter()
+```
+
+Even though the exact positions of the points in each plot is different since the jitter uses different random noise for each plot, the same effect is achieved with both methods.
+
+#### Part 5
+
+The help pages tells us that we can use the two parameters `width` and `height` to control the amount of jitter in the horizontal and vertical directions, respectively. These can be used in `position_jitter()` as follows.
+
+```{r}
+ggplot(iris, aes(Petal.Length, Petal.Width)) +
+  geom_point(position = position_jitter(width = 0, height = 10))
+```
+
+Here we only jitter heights. This plot is of little use, however, since we have jittered by too much in the vertical direction to see where points originally were close to.
+
+#### Part 6
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) +
+  geom_jitter()
+```
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) +
+  geom_count()
+```
+
+Whereas, `geom_jitter()` adds random noise to the point positions, `geom_count()` does not displace and points but rather changes the point size to reflect how many points were overlapping.
+
+`geom_jitter()` is a favourable method since it is just as easy to read the plot as before, although this is at the cost of losing the original data values.
+
+`geom_count()` is a strong method if you wish to retain the original data values whilst still avoiding overplotting. The cost of this is that the plot is slightly harder to read. This approach can also introduce ambiguity since it's unclear whether the area or radius of the points is proportional to the number of overlapping points.
+
+### Coordinate Systems
+
+#### Part 1
+
+We will use `geom_col()`.
+
+```{r}
+diamonds %>%
+  group_by(cut) %>%
+  summarise(mean_price = mean(price)) %>%
+  ggplot(aes(cut, mean_price)) +
+    geom_col() +
+    coord_flip()
+```
+
+#### Part 2
+
+I've also changed the bar fill/colour to make the plot clearer to read.
+
+```{r}
+ggplot(mpg, aes(cyl)) +
+  geom_bar(colour = "black", fill = "white") +
+  coord_polar()
+```
+
+#### Part 3
+
+```{r}
+ggplot(diamonds, aes(x = -1, fill = cut)) +
+  geom_bar(position = 'fill') +
+  coord_polar("y") + 
+  labs(x = "")
+```
+
+#### Part 4
+
+The plot tells you that the highway mileage is typically a fixed amount greater than the city mileage. We use `coord_fixed()` so that an increase of a given length in the x-axis is the same as for the y-axis. This helps us to see the gradient of the points. We use `geom_abline()` to add the line $y=x$ to the plot. We could have used the `a` and `b` aesthetics to instead draw an arbritary line $y = bx+a$.
+
+### Theming
+
+#### Part 1
+
+My favourite theme is `theme_minimal()`.
+
+```{r}
+ggplot(iris, aes(Petal.Length, Petal.Width)) +
+  geom_hex() +
+  theme_minimal()
+```
+
+#### Part 2
+
+Many of these parameter values should be self-intuitive. We use `legend.position = "none"` to hide the legend.
+
+#### Part 3
+
+```{r}
+ggplot(mpg, aes(hwy, cty)) +
+  geom_point() +
+  theme(panel.grid = element_line(colour = 'green'))
+```
+
+Ugly, but there you go.
+
+#### Part 4
+
+Here are some ideas. Can you do better?
+
+```{r}
+ggplot(diamonds, aes(x = -1, fill = cut)) +
+  geom_bar(position = 'fill') +
+  coord_polar("y") + 
+  labs(x = "", y = "", fill = "Cut") +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_blank(),
+    panel.grid = element_blank(),
+    legend.position = "bottom"
+  )
+```
+
