@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to the Tidyverse"
+title: "Into the Tidyverse"
 subtitle: "Session One Exercises"
 output: html_notebook
 ---
@@ -9,7 +9,6 @@ Remember, before you can use the tidyverse, you need to load the package.
 ```{r message=FALSE}
 library(tidyverse)
 ```
-
 
 ## First Steps
 

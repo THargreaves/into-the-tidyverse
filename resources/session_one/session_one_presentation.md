@@ -1,4 +1,4 @@
-An Introduction to the Tidyverse | Session One
+Into the Tidyverse | Session One
 ====================================
 author: Tim Hargreaves
 date: 2019-09-26
@@ -11,7 +11,7 @@ Accessing Resources
 
 These slides, as well as other resources for the course, can be found on the corresponding GitHub repository:
 
-https://github.com/THargreaves/introtothetidyverse
+https://github.com/THargreaves/into-the-tidyverse
 
 I will also send a copy out via email at the end of the session.
 
@@ -311,18 +311,18 @@ mpg
 
 ```
 # A tibble: 234 x 11
-   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
-   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
- 1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
- 2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
- 3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
- 4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
- 5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
- 6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
- 7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
- 8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
- 9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
-10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
+   manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
+   <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>
+ 1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p     comp~
+ 2 audi         a4         1.8  1999     4 manual~ f        21    29 p     comp~
+ 3 audi         a4         2    2008     4 manual~ f        20    31 p     comp~
+ 4 audi         a4         2    2008     4 auto(a~ f        21    30 p     comp~
+ 5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p     comp~
+ 6 audi         a4         2.8  1999     6 manual~ f        18    26 p     comp~
+ 7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p     comp~
+ 8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p     comp~
+ 9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p     comp~
+10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p     comp~
 # ... with 224 more rows
 ```
 
