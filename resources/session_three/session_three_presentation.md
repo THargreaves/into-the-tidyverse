@@ -1,4 +1,4 @@
-An Introduction to the Tidyverse | Session Three
+Into the Tidyverse | Session Three
 ====================================
 author: Tim Hargreaves
 date: 2019-10-17
@@ -582,10 +582,10 @@ filter(mpg, cty > 30, cyl == 4)
 
 ```
 # A tibble: 2 x 11
-  manufacturer model  displ  year   cyl trans drv     cty   hwy fl    class
-  <chr>        <chr>  <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
-1 volkswagen   jetta    1.9  1999     4 manu~ f        33    44 d     comp~
-2 volkswagen   new b~   1.9  1999     4 manu~ f        35    44 d     subc~
+  manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
+  <chr>        <chr>   <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>  
+1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
+2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
 ```
 
 * **Warning:** Don't confuse `==` with `=` else you'll get the error 
@@ -604,11 +604,11 @@ filter(mpg, model == 'land cruiser wagon 4wd' | displ > 6.8)
 
 ```
 # A tibble: 3 x 11
-  manufacturer model  displ  year   cyl trans drv     cty   hwy fl    class
-  <chr>        <chr>  <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
-1 chevrolet    corve~   7    2008     8 manu~ r        15    24 p     2sea~
-2 toyota       land ~   4.7  1999     8 auto~ 4        11    15 r     suv  
-3 toyota       land ~   5.7  2008     8 auto~ 4        13    18 r     suv  
+  manufacturer model      displ  year   cyl trans  drv     cty   hwy fl    class
+  <chr>        <chr>      <dbl> <int> <int> <chr>  <chr> <int> <int> <chr> <chr>
+1 chevrolet    corvette     7    2008     8 manua~ r        15    24 p     2sea~
+2 toyota       land crui~   4.7  1999     8 auto(~ 4        11    15 r     suv  
+3 toyota       land crui~   5.7  2008     8 auto(~ 4        13    18 r     suv  
 ```
 
 * Another useful operator is `%in%` which checks if a value is in a vector
@@ -716,18 +716,18 @@ arrange(mpg, class, year)
 
 ```
 # A tibble: 234 x 11
-   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
-   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
- 1 chevrolet    corv~   5.7  1999     8 manu~ r        16    26 p     2sea~
- 2 chevrolet    corv~   5.7  1999     8 auto~ r        15    23 p     2sea~
- 3 chevrolet    corv~   6.2  2008     8 manu~ r        16    26 p     2sea~
- 4 chevrolet    corv~   6.2  2008     8 auto~ r        15    25 p     2sea~
- 5 chevrolet    corv~   7    2008     8 manu~ r        15    24 p     2sea~
- 6 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
- 7 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
- 8 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
- 9 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
-10 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+   manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
+   <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>
+ 1 chevrolet    corvette   5.7  1999     8 manual~ r        16    26 p     2sea~
+ 2 chevrolet    corvette   5.7  1999     8 auto(l~ r        15    23 p     2sea~
+ 3 chevrolet    corvette   6.2  2008     8 manual~ r        16    26 p     2sea~
+ 4 chevrolet    corvette   6.2  2008     8 auto(s~ r        15    25 p     2sea~
+ 5 chevrolet    corvette   7    2008     8 manual~ r        15    24 p     2sea~
+ 6 audi         a4         1.8  1999     4 auto(l~ f        18    29 p     comp~
+ 7 audi         a4         1.8  1999     4 manual~ f        21    29 p     comp~
+ 8 audi         a4         2.8  1999     6 auto(l~ f        16    26 p     comp~
+ 9 audi         a4         2.8  1999     6 manual~ f        18    26 p     comp~
+10 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p     comp~
 # ... with 224 more rows
 ```
 
@@ -743,18 +743,18 @@ arrange(mpg, class, desc(year))
 
 ```
 # A tibble: 234 x 11
-   manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
-   <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
- 1 chevrolet    corv~   6.2  2008     8 manu~ r        16    26 p     2sea~
- 2 chevrolet    corv~   6.2  2008     8 auto~ r        15    25 p     2sea~
- 3 chevrolet    corv~   7    2008     8 manu~ r        15    24 p     2sea~
- 4 chevrolet    corv~   5.7  1999     8 manu~ r        16    26 p     2sea~
- 5 chevrolet    corv~   5.7  1999     8 auto~ r        15    23 p     2sea~
- 6 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
- 7 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
- 8 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
- 9 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
-10 audi         a4 q~   2    2008     4 auto~ 4        19    27 p     comp~
+   manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
+   <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>
+ 1 chevrolet    corvette   6.2  2008     8 manual~ r        16    26 p     2sea~
+ 2 chevrolet    corvette   6.2  2008     8 auto(s~ r        15    25 p     2sea~
+ 3 chevrolet    corvette   7    2008     8 manual~ r        15    24 p     2sea~
+ 4 chevrolet    corvette   5.7  1999     8 manual~ r        16    26 p     2sea~
+ 5 chevrolet    corvette   5.7  1999     8 auto(l~ r        15    23 p     2sea~
+ 6 audi         a4         2    2008     4 manual~ f        20    31 p     comp~
+ 7 audi         a4         2    2008     4 auto(a~ f        21    30 p     comp~
+ 8 audi         a4         3.1  2008     6 auto(a~ f        18    27 p     comp~
+ 9 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p     comp~
+10 audi         a4 quat~   2    2008     4 auto(s~ 4        19    27 p     comp~
 # ... with 224 more rows
 ```
 

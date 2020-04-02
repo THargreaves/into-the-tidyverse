@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to the Tidyverse"
+title: "Into the Tidyverse"
 subtitle: "Session Three Solutions"
 output: html_notebook
 ---
