@@ -39,7 +39,7 @@ This repository contains slides, exercise sheets, and solution sheets for my cou
 
 'Into the Tidyverse' does exactly what it says on the tin. This is an intensive 5-week course which aims to take someone from a coding-zero to tidyverse-hero in as little time as possible. Each session is composed of a rapid-fire presentation introducing different elements of the tidyverse as well as an exercise sheet to help consolidate the ideas presented in the slideshow.
 
-For more information on the structure and contents of this course, please take a look at the following [introductory presentation](https://github.com/THargreaves/into-the-tidyverse/blob/master/Course%20Summary.pptx).
+For more information on the structure and contents of this course, please take a look at the following [introductory presentation](https://github.com/THargreaves/into-the-tidyverse/raw/master/Course%20Summary.pptx).
 
 The contents of presentation are designed to be dense so don't worry if everything seems a bit intimidating. It takes far too long to memorise the exact function calls and parameter names of a new programming language, and so I don't make any attempt to teach this. Instead, the goal of this course is to have a scan through the tidyverse landscape and point out some of the key landmarks. Since the contents of the presentations are so dense, they become a good reference guide. Then, all you need to do is remember where to find those landmarks and look up the specifics of what you are trying to do as you go. This is often how real junior programmers work and you shouldn't be ashamed of doing so too; in fact I'd argue that it is one of the best ways to learn.
 
