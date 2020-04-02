@@ -1,8 +1,39 @@
 # Into the Tidyverse
 
+_Slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'_
+
+**Shameless Plug Warning***
+
+These resources took over one hundred hours to develop. If you find them useful, please consider connecting with me on [LinkedIn](https://www.linkedin.com/in/tim-hargreaves/) and endorsing me for R, Teaching, and Communication.
+
+## FAQs
+
+### The Tidy-what?
+
+The tidyverse is a collection of tools for the programming language R used for working with data. It was designed from the ground up to have a clear and consistent design philosophy, making it as easy as possible to learn how to work with data. From data importing, to cleaning, and visualisation to modelling, the tidyverse has you covered. If you are looking for a way to step up from tools such as Excel, Tableau, and PowerBI with as little difficulty as possible, the tidyverse welcomes you.
+
+### What are the prerequisites for the course?
+
+Nothing but a passion to learn!
+
+### How do I report a mistake?
+
+Spotted a mistake, dead link, or have suggestions for improvements? Report these [here](https://github.com/THargreaves/into-the-tidyverse/issues/new)
+
+***
+
+Navigation:
+
+* [FAQs](#faqs)
+* [About This Repository](#about-this-repository)
+* [About the Course](#about-the-course)
+* [Getting Started](#about-the-course)
+* [Quick Access to Resources](#quick-access-to-resources)
+* [Help](#help)
+
 ## About This Repository
 
-This repository contains slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'. This was first taught at Alsager Sixth Form during the Autumn term of 2019 and has since been adapted for use at the Macclesfield AstraZeneca coding network. This repository is twinned with [this other repository](https://github.com/THargreaves/edexcel-large-dataset-extractor) which contains a script to extract and clean the contents of the Edexcel large dataset into CSV files as well as the output of running said script. The repository is designed to be completely self-contained, with any images and data used in the presentations or exercises included in each session's data folder. You can use the navigation links below to find relevant resources and below that a few words of guidance can be found.
+This repository contains slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'. This was first taught at Alsager Sixth Form during the Autumn term of 2019 and has since been adapted for use at the AstraZeneca Code Club. This repository is twinned with this [other repository](https://github.com/THargreaves/edexcel-large-dataset-extractor) which contains a script to extract and clean the contents of the Edexcel large dataset into CSV files as well as the output of running said script. The repository is designed to be completely self-contained, with any images and data used in the presentations or exercises included in each session's data folder. You can use the navigation links below to find relevant resources and below that, a few words of guidance can be found.
 
 ## About the Course
 
@@ -10,11 +41,20 @@ This repository contains slides, exercise sheets, and solution sheets for my cou
 
 For more information on the structure and contents of this course, please take a look at the following [introductory presentation](https://github.com/THargreaves/into-the-tidyverse/blob/master/Course%20Summary.pptx).
 
-The contents of presentation are designed to be dense so don't worry if everything seems a bit intimidating. It takes far too long to memorise the exact function calls and parameter names of a new programming language and so I don't make any attempt to teach this. Instead, the goal of this course is to have a scan through the tidyverse landscape and point out some of the key landmarks. Since the contents of the presentations are so dense, then all you need to do is remember where to find those landmarks and look up the specifics of what you are trying to do as you go. This is often how real junior programmers work and you shouldn't be ashamed of doing so too; in fact I'd argue that it is one of the best ways to learn.
+The contents of presentation are designed to be dense so don't worry if everything seems a bit intimidating. It takes far too long to memorise the exact function calls and parameter names of a new programming language, and so I don't make any attempt to teach this. Instead, the goal of this course is to have a scan through the tidyverse landscape and point out some of the key landmarks. Since the contents of the presentations are so dense, they become a good reference guide. Then, all you need to do is remember where to find those landmarks and look up the specifics of what you are trying to do as you go. This is often how real junior programmers work and you shouldn't be ashamed of doing so too; in fact I'd argue that it is one of the best ways to learn.
 
 My main word of guidance is 'practice'. Practice, practice, practice. You can read through these slides as many times as your heart disires and it is likely most of it will soon be forgotten. Instead, scan through the presentations so you know what tools are available and where to find them and then get straight onto the exercise sheets. If you reach a hurdle, have a look back through the slides. Wash, rinse, repeat and soon you'll by a tidyverse star!
 
-## Navigation
+## Getting Started
+
+This course will use an editor called RStudio. You have two options:
+
+1. Download and install first [R](https://www.r-project.org/) and then [RStudio](https://rstudio.com/) on your local machine
+2. Sign up for [RStudio Cloud](https://rstudio.cloud/)
+
+I would advise the former if you have install rights on your computer. It is slightly more faffy to setup than the latter option but will be more stable in the long-run. If you have any trouble with this, [give me a shout](#general-help).
+
+## Quick Access to Resources
 
 Below you can find links to the content for each session. Note, that when attempting to download data for a given session, your browser may attempt to open CSVs directly. If this is the case, either right-click and select 'save as' or use `ctrl-S` to save a local copy.
 
@@ -76,4 +116,4 @@ If you are use RStudio cloud, you will need to open the `Files` panel and select
 
 ### General Help
 
-See the end of the session one presentation for ways to find general help. Also feel free to contact me by email.
+See the end of the session one presentation for ways to find general help. Also feel free to contact me by email or reach out to me on [LinkedIn](https://www.linkedin.com/in/tim-hargreaves/).
