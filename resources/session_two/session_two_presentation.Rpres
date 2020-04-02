@@ -1,4 +1,4 @@
-An Introduction to the Tidyverse | Session Two
+Into the Tidyverse | Session Two
 ====================================
 author: Tim Hargreaves
 date: 2019-10-03
