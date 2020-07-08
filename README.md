@@ -1,4 +1,4 @@
-# Into the Tidyverse
+_This repository is best accessed through its website, [www.intothetidyverse.com](https://www.intothetidyverse.com)._
 
 _Slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'_
 
