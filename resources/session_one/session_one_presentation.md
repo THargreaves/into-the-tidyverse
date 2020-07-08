@@ -1,7 +1,6 @@
 Into the Tidyverse | Session One
 ====================================
 author: Tim Hargreaves
-date: 2019-09-26
 width: 1440
 height: 900
 css: presentation.css
@@ -13,7 +12,9 @@ These slides, as well as other resources for the course, can be found on the cor
 
 https://github.com/THargreaves/into-the-tidyverse
 
-I will also send a copy out via email at the end of the session.
+An easier way to access these is through the course website:
+
+http://www.intothetidyverse.com
 
 Introductions
 ====================================
@@ -28,7 +29,6 @@ Who Am I?
 left: 70%
 
 * Tim Hargreaves
-* Ex-student of Alsager Sixth Form
 * Studying Mathematics and Statistics at the University of Warwick
 * Work heavily with data and machine-learning models
 * Currently undertaking a year-long placement at AstraZeneca
@@ -72,7 +72,7 @@ left: 70%
 This course differs from R4DS in two ways:
 
 * More focus on immediate gains rather than complete mastery of the tidyverse
-* Examples centre around the use of the A-Level weather dataset (once we know how to import it)
+* Exercises have a more practical focus
 
 ***
 
@@ -99,7 +99,14 @@ Sections of the R4DS book not covered in this course include:
 * Handling non-categorical text data
 * Iterative techniques (loops and maps)
 * Statistical modelling
-* Communicating results with wider audiencesss
+* Communicating results with wider audiences
+
+Teaching Style
+====================================
+
+* Fast and light
+* Goal is to show you what is available and where to find resources
+* Actual learning happens with practice
 
 Why Bother Learning the Tidyverse?
 ====================================
@@ -119,12 +126,11 @@ Why Bother Learning the Tidyverse?
 Course Agenda
 ====================================
 
-* The course will be ran weekly for six weeks
-* The last session will be a DataViz Battle (with prizes)
-* Each session will be split into three parts:
-  * Recap of the last session and answers to any common questions I have received
-  * Presentation covering new material alongside live-coding examples
-  * Time to apply the new techniques to a problem sheet
+* The course will be ran weekly for weeks
+* An optional session will be ran at the end to facilitate a DataViz Battle
+* Each week will have two sessions
+  * The first will introduce new material and work through some examples
+  * The second will allow time to apply the new techniques to a problem sheet
   
 The Tidy-what?
 ====================================
@@ -313,17 +319,17 @@ mpg
 # A tibble: 234 x 11
    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
    <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr> <chr>
- 1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p     comp~
- 2 audi         a4         1.8  1999     4 manual~ f        21    29 p     comp~
- 3 audi         a4         2    2008     4 manual~ f        20    31 p     comp~
- 4 audi         a4         2    2008     4 auto(a~ f        21    30 p     comp~
- 5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p     comp~
- 6 audi         a4         2.8  1999     6 manual~ f        18    26 p     comp~
- 7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p     comp~
- 8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p     comp~
- 9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p     comp~
-10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p     comp~
-# ... with 224 more rows
+ 1 audi         a4         1.8  1999     4 auto(l… f        18    29 p     comp…
+ 2 audi         a4         1.8  1999     4 manual… f        21    29 p     comp…
+ 3 audi         a4         2    2008     4 manual… f        20    31 p     comp…
+ 4 audi         a4         2    2008     4 auto(a… f        21    30 p     comp…
+ 5 audi         a4         2.8  1999     6 auto(l… f        16    26 p     comp…
+ 6 audi         a4         2.8  1999     6 manual… f        18    26 p     comp…
+ 7 audi         a4         3.1  2008     6 auto(a… f        18    27 p     comp…
+ 8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p     comp…
+ 9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p     comp…
+10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p     comp…
+# … with 224 more rows
 ```
 
 The mpg Data Frame (cont.)
