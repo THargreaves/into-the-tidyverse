@@ -1,6 +1,15 @@
 _This repository is best accessed through its website, [www.intothetidyverse.com](https://www.intothetidyverse.com)._
 
-_Slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'_
+Navigation:
+
+* [FAQs](#faqs)
+* [About This Repository](#about-this-repository)
+* [About the Course](#about-the-course)
+* [Getting Started](#about-the-course)
+* [Quick Access to Resources](#quick-access-to-resources)
+* [Help](#help)
+
+***
 
 **Shameless Plug Warning**
 
@@ -19,17 +28,6 @@ Nothing but a passion to learn!
 ### How do I report a mistake?
 
 Spotted a mistake, dead link, or have suggestions for improvements? Report these [here](https://github.com/THargreaves/into-the-tidyverse/issues/new)
-
-***
-
-Navigation:
-
-* [FAQs](#faqs)
-* [About This Repository](#about-this-repository)
-* [About the Course](#about-the-course)
-* [Getting Started](#about-the-course)
-* [Quick Access to Resources](#quick-access-to-resources)
-* [Help](#help)
 
 ## About This Repository
 
