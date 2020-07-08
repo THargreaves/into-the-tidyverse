@@ -92,7 +92,7 @@ ggplot(data = mpg) +
 (**Taken form R4DS**)
 
 1. What happens when you facet a continuous variable?
-2. What do the empty cells in a plot with `facet_grid(drv ~ cpl)` mean? How do they relate to this plot?
+2. What do the empty cells in a plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
 
 ```{r eval = FALSE}
 ggplot(data = mpg) +
