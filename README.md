@@ -31,7 +31,7 @@ Spotted a mistake, dead link, or have suggestions for improvements? Report these
 
 ## About This Repository
 
-This repository contains slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'. This was first taught at Alsager Sixth Form during the Autumn term of 2019 and has since been adapted for use at the AstraZeneca Code Club. This repository is twinned with this [other repository](https://github.com/THargreaves/edexcel-large-dataset-extractor) which contains a script to extract and clean the contents of the Edexcel large dataset into CSV files as well as the output of running said script. The repository is designed to be completely self-contained, with any images and data used in the presentations or exercises included in each session's data folder. You can use the navigation links below to find relevant resources and below that, a few words of guidance can be found.
+This repository contains slides, exercise sheets, and solution sheets for my course, 'Into the Tidyverse'. This was first taught at Alsager Sixth Form during the Autumn term of 2019 and has since been adapted for use at the AstraZeneca Code Club and Data Science Academy. The repository is designed to be completely self-contained, with any images and data used in the presentations or exercises included in each session's data folder. You can use the navigation links below to find relevant resources and below that, a few words of guidance can be found.
 
 ## About the Course
 
@@ -115,3 +115,4 @@ If you are use RStudio cloud, you will need to open the `Files` panel and select
 ### General Help
 
 See the end of the session one presentation for ways to find general help. Also feel free to contact me by email or reach out to me on [LinkedIn](https://www.linkedin.com/in/tim-hargreaves/).
+
