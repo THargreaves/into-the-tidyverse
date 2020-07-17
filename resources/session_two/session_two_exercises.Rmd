@@ -74,15 +74,6 @@ Seoul, 605, 9806000
 Mumbai, 438, 12442373"
 ```
 
-### The Weather Dataset 1
-
-1. Read the `camborne_map_oct_2015.csv` file from this session's `data` folder. Make sure you correctly specify how many lines to skip and the symbol for missing data (`n/a`)
-2. Use `str()`, `head()`, `summary()` and two new functions, `glimpse()` and `names()` to get used to the dataset structure. Note that I have renamed columns to make them easy to type
-3. Plot a line graph of `mean_temp` against the date
-4. Add a trend curve over the top of this using `geom_smooth()`. You can either keep or remove the error region depending on what you think looks best
-5. How is total rainfall affected by cloud coverage (`mean_cloud`)? Make a scatter plot to find out. Set `position = 'jitter'` to avoid over-plotting
-6. Oktas is a confusing unit. Instead of setting `x = mean_cloud` try `x = mean_cloud / 8` to give cloud coverage as a proportion.
-
 ### Datasets from the Web
 
 1. Go to the following webpage - https://gist.github.com/tiangechen/b68782efa49a16edaf07dc2cdaa855ea - which contains data on the top grossing movies between 2007 and 2011
@@ -98,15 +89,6 @@ movies <- movies %>%
 ```
 
 5. Make a scatter plot of `Worldwide Gross` against `Audience score %` coloured by `Genre`. When using a column name with a space you need to surround the name with back-ticks (\`)
-
-## Fixed-width Files
-
-### The Weather Dataset 2
-
-1. Use the `read_table()` function to import the fixed-width file for weather in Beijing 1987. Make sure you specify that the column `beaufort` is a factor
-2. Make a plot of wind speed over time. Colour the line by `beaufort`. This will look weird, don't worry!
-3. Currently each value of `beaufort` is being used as its own group for `geom_line` but we are after one single line. How do we remove grouping?
-4. **(Hard)** Instead of using `read_table()` can you try to manually import the dataset using `read_fwf()`
 
 ## Line geometries
 

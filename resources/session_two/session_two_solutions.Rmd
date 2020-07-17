@@ -184,63 +184,6 @@ read_csv(
 )
 ```
 
-### The Weather Dataset 1
-
-#### Part 1
-
-```{r}
-weather <- read_csv('data/camborne_may_oct_2015.csv',
-                    skip = 5,
-                    na = 'n/a')
-```
-
-#### Part 2
-
-To avoid flooding this document we will just have a look at the new functions.
-
-```{r}
-glimpse(weather)
-```
-
-```{r}
-names(weather)
-```
-
-#### Part 3
-
-```{r}
-ggplot(weather) +
-  geom_line(aes(x = date, y = mean_temp))
-```
-
-#### Part 4
-
-I will also colour this line red to distinguish it from the rest of the data.
-
-```{r}
-# aesthetics placed here so that they are inherited by both geometries
-ggplot(weather, aes(x = date, y = mean_temp)) +
-  geom_line() +
-  geom_smooth(col = 'red', se = FALSE)
-```
-
-#### Part 5
-
-```{r}
-ggplot(weather, aes(x = mean_cloud, y = total_rainfall)) +
-  geom_point(position = 'jitter')
-```
-
-It appears that more cloud does not necessarily mean more rain but is often a requirement for a lot of rain.
-
-#### Part 6
-
-```{r}
-ggplot(weather, aes(x = mean_cloud / 8, y = total_rainfall)) +
-  geom_point(position = 'jitter') +
-  labs(x = 'Cloud Coverage (Proportion of Sky)')
-```
-
 ### Datasets from the Web
 
 #### Part 1
@@ -272,60 +215,6 @@ movies <- movies %>%
 ```{r}
 ggplot(movies) +
   geom_point(aes(x = `Audience score %`, y = `Worldwide Gross`, col = Genre))
-```
-
-## Fixed-width Files
-
-### The Weather Dataset 2
-
-#### Part 1
-
-```{r}
-# override previous weather variable
-weather <- read_table('data/beijing_may_oct_1987.txt',
-                      skip = 5,
-                      na = 'n/a',
-                      col_types = cols(
-                        beaufort = col_factor()
-                      ))
-```
-
-Let's take a look at the first few rows to make sure everything is as expected.
-
-```{r}
-head(weather)
-```
-
-#### Part 2
-
-```{r}
-ggplot(weather) +
-  geom_line(aes(x = date, y = wind_speed, col = beaufort))
-```
-
-#### Part 3
-
-```{r}
-ggplot(weather) +
-  geom_line(aes(x = date, y = wind_speed, col = beaufort, group = -1))
-```
-
-#### Part 4
-
-There are a few ways to do this depending on which parameters you use for `read_fwf()`. I will use the named column positions approach. See `?read_fwf` for more details.
-
-```{r}
-read_fwf('data/beijing_may_oct_1987.txt',
-         skip = 6,
-         na = 'n/a',
-         col_positions = fwf_cols(
-           date = c(2, 11),
-           temperature = c(14, 24),
-           rainfall = c(27, 34),
-           pressure = c(39, 46),
-           wind_speed = c(49, 58),
-           beaufort = c(63, 70)
-         ))
 ```
 
 ## Line Geometries
