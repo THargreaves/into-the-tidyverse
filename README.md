@@ -80,8 +80,6 @@ Below you can find links to the content for each session. Note, that when attemp
 
 * [Exercises](https://thargreaves.github.io/into-the-tidyverse/resources/session_three/session_three_exercises.nb.html#/)
 
-* [Data](https://github.com/THargreaves/into-the-tidyverse/tree/master/resources/session_three/data)
-
 * [Solutions](https://thargreaves.github.io/into-the-tidyverse/resources/session_three/session_three_solutions.nb.html#/)
 
 ### Session Four
