@@ -1,7 +1,6 @@
 Into the Tidyverse | Session Four
 ====================================
 author: Tim Hargreaves
-date: 2019-10-24
 width: 1440
 height: 900
 css: presentation.css
@@ -253,7 +252,17 @@ Spreading and Gathering
 
 * As you might be able to guess from the common `key` and `value` arguments, `spread()` and `gather()` are opposites of each other and can be used to reverse each other's effects
 * `gather()` makes wide tables narrower and longer, whereas `spread()` makes long tables shorter and wider
+* Collectively, these operations are known as pivoting (think pivot tables in Excel)
 * A general rule of thumb is that wide tables are best for looking at data, whereas tall tables are best for performing analysis.
+
+Aside: Pivoting
+====================================
+
+* Since tidyr 1.0.0 (September 2019), a new syntax for pivoting tables has been introduced
+* This uses two functions `pivot_longer()` and `pivot_wider()` which have a more intuitive syntax than `gather()` and `spread()`
+* As of writing this presentation, these functions are still in `experimental` lifecycle, and soon to move into `maturing` with tidyr 1.1.0
+* Even though this new syntax is more elegant, most examples and existing code uses the old syntax, so it is important to know this
+* You can, however, learn more about pivoting [here](https://tidyr.tidyverse.org/articles/pivot.html)
 
 Separating
 ====================================
@@ -478,112 +487,27 @@ sales %>%
   inner_join(employees, by = c('sold_by' = 'name'))
 ```
 
-Application to the Weather Dataset
+
+Aside: Tidy Data in Practice
 ====================================
 
-Question: How did daily total rainfall differ between 1987 and 2015 in Camborne?
+* How would we create this graph?
 
-```{r}
-# import tables using readr exported from Excel as CSV
-# keep only relevant columns
-# note: I had to manually go in and remove the last few lines of the CSV
-rainfall_1987 <- read_csv('data/camborne_may_oct_1987.csv',
-                          skip = 5,
-                          col_types = cols(.default = col_skip(),
-                                           Date = col_date('%d/%m/%Y'),
-                                           `Daily Total Rainfall (0900-0900) (mm)` = col_character())) %>%
-  rename(date = Date,
-         rainfall = `Daily Total Rainfall (0900-0900) (mm)`) %>%
-  mutate(rainfall = ifelse(rainfall == 'tr', '0', rainfall),
-         rainfall = as.numeric(rainfall))
-```
-
-We do the same for 2015 too creating `rainfall_2015`
-
-```{r echo = FALSE}
-rainfall_2015 <- read_csv('data/camborne_may_oct_2015.csv',
-                          skip = 5,
-                          col_types = cols(.default = col_skip(),
-                                        Date = col_date('%d/%m/%Y'),
-                                        `Daily Total Rainfall (0900-0900) (mm)` = col_character())) %>%
-  rename(date = Date,
-         rainfall = `Daily Total Rainfall (0900-0900) (mm)`) %>%
-  mutate(rainfall = ifelse(rainfall == 'tr', '0', rainfall),
-         rainfall = as.numeric(rainfall))
-```
-
-Application to the Weather Dataset (cont.)
-====================================
-
-```{r}
-rainfall_1987
-```
-
-***
-
-```{r}
-rainfall_2015
-```
-
-Application to the Weather Dataset (cont.)
-====================================
-
-* Extract day of year and drop old date column
-
-```{r}
-rainfall_1987 <- rainfall_1987 %>%
-  mutate(day_of_year = as.integer(format(date, '%j'))) %>%
-  select(-date)
-head(rainfall_1987)
-```
-
-* Again, we do the same for `rainfall_2015`
-
-```{r echo=FALSE}
-rainfall_2015 <- rainfall_2015 %>%
-  mutate(day_of_year = as.integer(format(date, '%j'))) %>%
-  select(-date)
-```
-
-Application to the Weather Dataset (cont.)
-====================================
-
-* We join the datasets
-* We can use any join type since all keys are shared
-
-```{r}
-rainfall_combi <- rainfall_1987 %>%
-  inner_join(rainfall_2015, by = 'day_of_year', 
-             suffix = c('.1987', '.2015'))
-head(rainfall_combi)
-```
-
-* We add suffixes to the column names using the `suffix` parameter
-
-Application to the Weather Dataset (cont.)
-====================================
-
-* This representation is not tidy so will be difficult to plot
-* Hence we use `gather()` to fix this
-
-```{r}
-rainfall_tidy <- rainfall_combi %>%
-  gather(rainfall.1987, rainfall.2015, key='year', value='rainfall') %>%
-  # change rainfall.1987 to just 1987
-  mutate(year = str_replace(year, 'rainfall\\.', ''))
-head(rainfall_tidy %>% arrange(day_of_year))
-```
-
-Application to the Weather Dataset (cont.)
-====================================
-
-* We are now ready to plot
-
-```{r fig.width = 16, fig.align = 'center'}
-ggplot(rainfall_tidy, aes(x = day_of_year, y = rainfall, col = year)) +
-  geom_point(size = 2) +
-  geom_line() +
-  labs(x = 'Day of Year', y = 'Total Rainfall (mm)', col = 'Year') +
-  theme_minimal()
+```{r echo=FALSE, fig.width = 16, fig.height = 8}
+mpg %>%
+    gather(key = "type", value = "mileage", hwy, cty) %>%
+    group_by(class, type) %>%
+    summarise(avg_mileage = mean(mileage)) %>%
+    ungroup() %>%
+    ggplot(aes(x = class, y = avg_mileage, fill = type)) +
+      geom_col(alpha = 0.5, col = "black", position = "dodge") +
+      labs(
+        x = "Class",
+        y = "Average Mileage",
+        fill = "Mileage Type",
+        title = paste("A comparison of average city and highway mileage for",
+                      "various classes of cars")
+      ) +
+      theme_minimal()
 ```
 
