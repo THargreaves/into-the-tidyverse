@@ -155,7 +155,7 @@ The `remove` argument controls whether or not the columns used as input to `unit
 
 Both `separate()` and `extract()` convert a single column to many columns whereas `unite` converts many columns into one with a choice of separator to include between the column values.
 
-With `extract()` and `separate()` only one column can be choses, but there are many choices regarding how to split this column into many. With `unite()` however, there are many choices of which columns to combine, but only a single choice as to how to combine their contents.
+With `extract()` and `separate()` only one column can be chosen, but there are many choices regarding how to split this column into many. With `unite()` however, there are many choices of which columns to combine, but only a single choice as to how to combine their contents.
 
 ### A Practical Example
 
