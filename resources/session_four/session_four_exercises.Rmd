@@ -185,14 +185,6 @@ sales %>%
     geom_smooth(method = 'lm')
 ```
 
-
-### The Weather Dataset
-
-1. Cleaned CSVs of the Exexcel large dataset can now be found [here](https://github.com/THargreaves/edexcel-large-dataset-extractor)
-2. Import two locations for the same year into R, select a column of interest in both of them and join the datasets
-3. Produce a graphic showing how the variable in both locations differ
-4. Attempt to replicate the workflow at the end of this week's presentation
-
 ## Going Beyond
 
 ### Missing Values

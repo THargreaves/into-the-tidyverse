@@ -246,56 +246,6 @@ flights %>%
 
 A right join is appropriate. We want observations for every current employee regardless of whether they have made any sales (as we later replace no sales with a total of zero). We also don't want any ex-employees to be included even if they appear in the sales dataset.
 
-#### The Weather Dataset
-
-##### Part 1
-
-Great!
-
-##### Part 2
-
-```{r}
-heathrow <- read_csv(paste0("https://raw.githubusercontent.com/THargreaves/",
-                            "edexcel-large-dataset-extractor/master/output/",
-                            "heathrow_2015.csv"), col_types = cols())
-leuchars <- read_csv(paste0("https://raw.githubusercontent.com/THargreaves/",
-                            "edexcel-large-dataset-extractor/master/output/",
-                            "leuchars_2015.csv"), col_types = cols())
-```
-
-We'll only keep columns of interest.
-
-```{r}
-heathrow <- heathrow %>%
-  select(date, mean_temperature)
-leuchars <- leuchars %>%
-  select(date, mean_temperature)
-```
-
-And we join. Any join will do since the data is complete.
-
-```{r}
-weather <- heathrow %>%
-  inner_join(leuchars, by = "date", suffix = c('.heathrow', '.leuchars'))
-```
-
-We manually specify the suffixes for duplicate column names using `suffix = ...`.
-
-##### Part 3
-
-I will ask how well the temperatures correlate.
-
-```{r}
-ggplot(weather, aes(x = mean_temperature.heathrow, 
-                    y = mean_temperature.leuchars)) +
-  geom_point(col = 'orange') +
-  geom_smooth(method = 'lm', col = 'grey30', se = FALSE) + 
-  theme_minimal() +
-  labs(x = "Mean Temperature in Heathrow (°C)",
-       y = "Mean Temperature in Leuchars (°C)",
-       title = "Correlation between temperatures in Heathrow and Leuchars")
-```
-
 ## Going Beyond
 
 ### Missing Values
