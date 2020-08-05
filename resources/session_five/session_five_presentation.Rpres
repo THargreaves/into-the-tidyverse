@@ -1,7 +1,6 @@
 Into the Tidyverse | Session Five
 ====================================
 author: Tim Hargreaves
-date: 2019-10-31
 width: 1440
 height: 900
 css: presentation.css
